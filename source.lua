@@ -154,7 +154,7 @@ do
         table.insert(connections, RunService.RenderStepped:Connect(function()
             if TipBar.Visible and TipBar.Text ~= "" then
                 local mousePos = input:GetMouseLocation()
-                TipBar.Position = UDim2.new(0, mousePos.X + 15, 0, mousePos.Y - 25)
+                TipBar.Position = UDim2.new(0, mousePos.X + 8, 0, mousePos.Y - 28)
             end
         end))
 
