@@ -122,13 +122,20 @@ do
         --//Tip bar
         local TipBar = util.new("TextLabel", {
             Parent = MasterContainer,
-            Size = UDim2.new(0,0,0,12),
-            Position = UDim2.new(0,0,1,-12),
+            Size = UDim2.new(0,0,0,24),
+            Position = UDim2.new(0,0,1,-24),
             ZIndex = 50,
-            TextColor3 = theme.TextColor,
-            Font = Enum.Font.Gotham,
-            TextSize = 10,
-            BackgroundColor3 = theme.BackColor,
+            TextColor3 = Color3.fromRGB(255, 255, 255),
+            Font = Enum.Font.GothamMedium,
+            TextSize = 13,
+            BackgroundColor3 = Color3.fromRGB(35, 35, 40),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            TextYAlignment = Enum.TextYAlignment.Center,
+        }, {
+            util.new("UIPadding", {
+                PaddingLeft = UDim.new(0, 10),
+                PaddingRight = UDim.new(0, 10),
+            })
         })
 
         --//Main containers
@@ -651,7 +658,7 @@ do
     function panel:SetTip(tipText)
         local TipBar = self.tab.library.TipBar
         TipBar.Text = tipText
-        TipBar.Size = UDim2.new(0,TipBar.TextBounds.X+2,0,12)
+        TipBar.Size = UDim2.new(0, TipBar.TextBounds.X + 20, 0, 24)
     end
 
     function panel:_GlobalTable()
