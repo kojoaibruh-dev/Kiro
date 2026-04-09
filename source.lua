@@ -211,10 +211,11 @@ do
         local LoadingCircle = util.new("ImageLabel", {
             Parent = LoadingScreen,
             Size = UDim2.new(0, 60, 0, 60),
-            Position = UDim2.new(0.5, -30, 0.5, -30),
+            Position = UDim2.new(0.5, -30, 0.5, -50),
             BackgroundTransparency = 1,
             Image = "rbxassetid://4965945816",
-            ImageColor3 = theme.Accent,
+            ImageColor3 = Color3.fromRGB(255, 255, 255),
+            ImageTransparency = 0,
             ZIndex = 101,
             Name = "LoadingCircle"
         })
@@ -226,31 +227,31 @@ do
             TextSize = 16,
             Font = Enum.Font.GothamBold,
             Size = UDim2.new(0, 200, 0, 30),
-            Position = UDim2.new(0.5, -100, 0.5, 40),
+            Position = UDim2.new(0.5, -100, 0.5, 20),
             BackgroundTransparency = 1,
+            TextTransparency = 0,
             ZIndex = 101,
             Name = "LoadingText"
         })
         
         --Spin animation
-        table.insert(connections, RunService.RenderStepped:Connect(function()
+        local spinConnection
+        spinConnection = RunService.RenderStepped:Connect(function()
             if LoadingScreen.Visible then
                 LoadingCircle.Rotation = LoadingCircle.Rotation + 5
             end
-        end))
+        end)
+        table.insert(connections, spinConnection)
         
         --Hide loading screen after delay
         task.spawn(function()
             wait(1.5)
             util.tween(LoadingScreen, { BackgroundTransparency = 1 }, 0.3)
-            for _, child in pairs(LoadingScreen:GetChildren()) do
-                if child:IsA("GuiObject") then
-                    util.tween(child, { ImageTransparency = 1 }, 0.3)
-                end
-            end
+            util.tween(LoadingCircle, { ImageTransparency = 1 }, 0.3)
             util.tween(LoadingText, { TextTransparency = 1 }, 0.3)
             wait(0.3)
             LoadingScreen.Visible = false
+            LoadingScreen:Destroy()
         end)
 
         --// Dragability
