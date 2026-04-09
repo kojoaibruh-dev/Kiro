@@ -122,20 +122,31 @@ do
         --//Tip bar
         local TipBar = util.new("TextLabel", {
             Parent = ScreenGui,
-            Size = UDim2.new(0, 0, 0, 24),
+            Size = UDim2.new(0, 0, 0, 18),
             Position = UDim2.new(0, 0, 0, 0),
             ZIndex = 150,
-            TextColor3 = Color3.fromRGB(255, 255, 255),
-            Font = Enum.Font.GothamMedium,
-            TextSize = 13,
-            BackgroundColor3 = Color3.fromRGB(35, 35, 40),
+            TextColor3 = Color3.fromRGB(240, 240, 240),
+            Font = Enum.Font.Gotham,
+            TextSize = 11,
+            BackgroundColor3 = Color3.fromRGB(25, 25, 30),
             TextXAlignment = Enum.TextXAlignment.Left,
             TextYAlignment = Enum.TextYAlignment.Center,
             Visible = false,
+            BorderSizePixel = 0,
         }, {
             util.new("UIPadding", {
-                PaddingLeft = UDim.new(0, 10),
-                PaddingRight = UDim.new(0, 10),
+                PaddingLeft = UDim.new(0, 8),
+                PaddingRight = UDim.new(0, 8),
+                PaddingTop = UDim.new(0, 3),
+                PaddingBottom = UDim.new(0, 3),
+            }),
+            util.new("UICorner", {
+                CornerRadius = UDim.new(0, 4),
+            }),
+            util.new("UIStroke", {
+                Color = Color3.fromRGB(60, 60, 65),
+                Thickness = 1,
+                Transparency = 0,
             })
         })
         
@@ -143,7 +154,7 @@ do
         table.insert(connections, RunService.RenderStepped:Connect(function()
             if TipBar.Visible and TipBar.Text ~= "" then
                 local mousePos = input:GetMouseLocation()
-                TipBar.Position = UDim2.new(0, mousePos.X + 15, 0, mousePos.Y - 30)
+                TipBar.Position = UDim2.new(0, mousePos.X + 15, 0, mousePos.Y - 25)
             end
         end))
 
@@ -671,7 +682,7 @@ do
             TipBar.Visible = false
         else
             TipBar.Visible = true
-            TipBar.Size = UDim2.new(0, TipBar.TextBounds.X + 20, 0, 24)
+            TipBar.Size = UDim2.new(0, TipBar.TextBounds.X + 16, 0, 18)
         end
     end
 
