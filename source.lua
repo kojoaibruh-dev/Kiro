@@ -214,7 +214,7 @@ do
             Position = UDim2.new(0.5, -30, 0.5, -50),
             BackgroundTransparency = 1,
             Image = "rbxassetid://4965945816",
-            ImageColor3 = Color3.fromRGB(255, 255, 255),
+            ImageColor3 = Color3.new(1, 1, 1),
             ImageTransparency = 0,
             ZIndex = 101,
             Name = "LoadingCircle"
@@ -226,10 +226,11 @@ do
             TextColor3 = theme.TextColor,
             TextSize = 16,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(0, 200, 0, 30),
-            Position = UDim2.new(0.5, -100, 0.5, 20),
+            Size = UDim2.new(1, 0, 0, 30),
+            Position = UDim2.new(0, 0, 0.5, 20),
             BackgroundTransparency = 1,
             TextTransparency = 0,
+            TextXAlignment = Enum.TextXAlignment.Center,
             ZIndex = 101,
             Name = "LoadingText"
         })
