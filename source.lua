@@ -121,22 +121,31 @@ do
 
         --//Tip bar
         local TipBar = util.new("TextLabel", {
-            Parent = MasterContainer,
-            Size = UDim2.new(0,0,0,24),
-            Position = UDim2.new(0,0,1,-24),
-            ZIndex = 50,
+            Parent = ScreenGui,
+            Size = UDim2.new(0, 0, 0, 24),
+            Position = UDim2.new(0, 0, 0, 0),
+            ZIndex = 150,
             TextColor3 = Color3.fromRGB(255, 255, 255),
             Font = Enum.Font.GothamMedium,
             TextSize = 13,
             BackgroundColor3 = Color3.fromRGB(35, 35, 40),
             TextXAlignment = Enum.TextXAlignment.Left,
             TextYAlignment = Enum.TextYAlignment.Center,
+            Visible = false,
         }, {
             util.new("UIPadding", {
                 PaddingLeft = UDim.new(0, 10),
                 PaddingRight = UDim.new(0, 10),
             })
         })
+        
+        --Update tooltip position to follow mouse
+        table.insert(connections, RunService.RenderStepped:Connect(function()
+            if TipBar.Visible and TipBar.Text ~= "" then
+                local mousePos = input:GetMouseLocation()
+                TipBar.Position = UDim2.new(0, mousePos.X + 15, 0, mousePos.Y - 30)
+            end
+        end))
 
         --//Main containers
         local TopBarContainer, ContentContainer = util.children(MasterContainer, {
@@ -658,7 +667,12 @@ do
     function panel:SetTip(tipText)
         local TipBar = self.tab.library.TipBar
         TipBar.Text = tipText
-        TipBar.Size = UDim2.new(0, TipBar.TextBounds.X + 20, 0, 24)
+        if tipText == "" then
+            TipBar.Visible = false
+        else
+            TipBar.Visible = true
+            TipBar.Size = UDim2.new(0, TipBar.TextBounds.X + 20, 0, 24)
+        end
     end
 
     function panel:_GlobalTable()
