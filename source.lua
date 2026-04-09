@@ -78,14 +78,14 @@ local theme = getgenv().theme or {
 
     Accent = Color3.fromRGB(255, 255, 255), --> Used for hover outlines, selected tab
 
-    NotSelectedTab = Color3.fromRGB(70, 70, 100), --> shows on all OTHER tabs
+    NotSelectedTab = Color3.fromRGB(70, 70, 70), --> shows on all OTHER tabs
 
     TextColor = Color3.fromRGB(255,255,255),
     SubTextColor = Color3.fromRGB(200,200,200),
 
 
-    ButtonTop = Color3.fromRGB(50, 50, 64), --Top color layer of the button.
-    ButtonBottom = Color3.fromRGB(58, 58, 85), --Under layer of the button -> reveals as tranparency lowers
+    ButtonTop = Color3.fromRGB(50, 50, 50), --Top color layer of the button.
+    ButtonBottom = Color3.fromRGB(58, 58, 58), --Under layer of the button -> reveals as tranparency lowers
 }
 
 --//Library
@@ -197,6 +197,61 @@ do
                 Name = "TabContentContainer"
             })
         })
+
+        --//Loading Animation
+        local LoadingScreen = util.new("Frame", {
+            Parent = MasterContainer,
+            Size = UDim2.new(1, 0, 1, 0),
+            BackgroundColor3 = theme.BackColor,
+            BackgroundTransparency = 0,
+            ZIndex = 100,
+            Name = "LoadingScreen"
+        })
+        
+        local LoadingCircle = util.new("ImageLabel", {
+            Parent = LoadingScreen,
+            Size = UDim2.new(0, 60, 0, 60),
+            Position = UDim2.new(0.5, -30, 0.5, -30),
+            BackgroundTransparency = 1,
+            Image = "rbxassetid://4965945816",
+            ImageColor3 = theme.Accent,
+            ZIndex = 101,
+            Name = "LoadingCircle"
+        })
+        
+        local LoadingText = util.new("TextLabel", {
+            Parent = LoadingScreen,
+            Text = "Loading...",
+            TextColor3 = theme.TextColor,
+            TextSize = 16,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(0, 200, 0, 30),
+            Position = UDim2.new(0.5, -100, 0.5, 40),
+            BackgroundTransparency = 1,
+            ZIndex = 101,
+            Name = "LoadingText"
+        })
+        
+        --Spin animation
+        table.insert(connections, RunService.RenderStepped:Connect(function()
+            if LoadingScreen.Visible then
+                LoadingCircle.Rotation = LoadingCircle.Rotation + 5
+            end
+        end))
+        
+        --Hide loading screen after delay
+        task.spawn(function()
+            wait(1.5)
+            util.tween(LoadingScreen, { BackgroundTransparency = 1 }, 0.3)
+            for _, child in pairs(LoadingScreen:GetChildren()) do
+                if child:IsA("GuiObject") then
+                    util.tween(child, { ImageTransparency = 1 }, 0.3)
+                end
+            end
+            util.tween(LoadingText, { TextTransparency = 1 }, 0.3)
+            wait(0.3)
+            LoadingScreen.Visible = false
+        end)
 
         --// Dragability
         local isDragging = false
