@@ -184,16 +184,16 @@ do
                 Name = "TopBarTitle"
             }),
         })
-        -- TopBarTitle.Size = UDim2.new(0,TopBarTitle.TextBounds.X, 0, 0)
-        --//TopBar 
+        
+        --//TopBar Version (next to title)
         local TopBarVersion = util.new("TextLabel", { -->version
             Parent = TopBarContainer,
             Text = version,
             TextColor3 = theme.SubTextColor,
-            TextXAlignment = Enum.TextXAlignment.Right,
+            TextXAlignment = Enum.TextXAlignment.Left,
             TextSize = 10,
             Font = Enum.Font.Gotham,
-            Position = UDim2.new(1,-7,0,3),
+            Position = UDim2.new(0, 8 + game:GetService("TextService"):GetTextSize(title, 14, Enum.Font.GothamBold, Vector2.new(math.huge, math.huge)).X + 8, 0, 10),
             Name = "Version"
         })
 
@@ -345,7 +345,7 @@ do
         }, library):_registerKeybind()
     end
 
-    function library:AddHomePage(discordLink)
+    function library:AddHomePage()
         -- Create home page tab
         local homeTab = tab.new(self, "Home", "Welcome", 0)
         table.insert(self.tabs, 1, homeTab)
@@ -554,144 +554,6 @@ do
             Position = UDim2.new(0, 76, 0, 50),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
-        })
-        
-        -- Discord Section (if link provided)
-        local discordYPos = 186
-        if discordLink and discordLink ~= "" then
-            local DiscordSection = util.new("Frame", {
-                Parent = HomeContainer,
-                Size = UDim2.new(1, -20, 0, 78),
-                Position = UDim2.new(0, 10, 0, discordYPos),
-                BackgroundColor3 = theme.UpperContainer,
-                Name = "DiscordSection"
-            }, {
-                util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
-                util.new("UIStroke", {
-                    Color = Color3.fromRGB(88, 101, 242),
-                    Thickness = 1.5,
-                    Transparency = 0.6,
-                }),
-                util.new("UIGradient", {
-                    Color = ColorSequence.new({
-                        ColorSequenceKeypoint.new(0, Color3.fromRGB(88, 101, 242)),
-                        ColorSequenceKeypoint.new(1, Color3.fromRGB(88, 101, 242))
-                    }),
-                    Transparency = NumberSequence.new({
-                        NumberSequenceKeypoint.new(0, 0.92),
-                        NumberSequenceKeypoint.new(1, 0.98)
-                    }),
-                    Rotation = 45
-                })
-            })
-            
-            util.new("TextLabel", {
-                Parent = DiscordSection,
-                Text = "Join Our Community",
-                TextColor3 = theme.TextColor,
-                TextSize = 14,
-                Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -20, 0, 20),
-                Position = UDim2.new(0, 12, 0, 10),
-                TextXAlignment = Enum.TextXAlignment.Left,
-                BackgroundTransparency = 1,
-            })
-            
-            util.new("TextLabel", {
-                Parent = DiscordSection,
-                Text = "Get updates, report bugs, and chat with the community!",
-                TextColor3 = theme.SubTextColor,
-                TextSize = 11,
-                Font = Enum.Font.Gotham,
-                Size = UDim2.new(1, -150, 0, 30),
-                Position = UDim2.new(0, 12, 0, 34),
-                TextXAlignment = Enum.TextXAlignment.Left,
-                TextWrapped = true,
-                BackgroundTransparency = 1,
-            })
-            
-            -- Join Discord Button
-            local JoinButton = util.new("TextButton", {
-                Parent = DiscordSection,
-                Size = UDim2.new(0, 125, 0, 34),
-                Position = UDim2.new(1, -137, 0, 32),
-                BackgroundColor3 = Color3.fromRGB(88, 101, 242),
-                Text = "Copy Link",
-                TextColor3 = Color3.fromRGB(255, 255, 255),
-                TextSize = 13,
-                Font = Enum.Font.GothamBold,
-            }, {
-                util.new("UICorner", {CornerRadius = UDim.new(0, 7)}),
-                util.new("UIStroke", {
-                    Color = Color3.fromRGB(255, 255, 255),
-                    Thickness = 0,
-                    Transparency = 1,
-                })
-            })
-            
-            JoinButton.MouseButton1Click:Connect(function()
-                setclipboard(discordLink)
-                self:Notify("Discord link copied to clipboard!")
-            end)
-            
-            JoinButton.MouseEnter:Connect(function()
-                util.tween(JoinButton, { BackgroundColor3 = Color3.fromRGB(71, 82, 196) }, 0.2)
-                util.tween(JoinButton.UIStroke, { Transparency = 0.7, Thickness = 1 }, 0.2)
-            end)
-            
-            JoinButton.MouseLeave:Connect(function()
-                util.tween(JoinButton, { BackgroundColor3 = Color3.fromRGB(88, 101, 242) }, 0.2)
-                util.tween(JoinButton.UIStroke, { Transparency = 1, Thickness = 0 }, 0.2)
-            end)
-            
-            discordYPos = discordYPos + 86
-        end
-        
-        -- Executor Info
-        local ExecutorInfo = util.new("Frame", {
-            Parent = HomeContainer,
-            Size = UDim2.new(1, -20, 0, 60),
-            Position = UDim2.new(0, 10, 0, discordYPos),
-            BackgroundColor3 = theme.UpperContainer,
-            Name = "ExecutorInfo"
-        }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
-            util.new("UIStroke", {
-                Color = theme.Accent,
-                Thickness = 1,
-                Transparency = 0.85,
-            }),
-            util.new("UIGradient", {
-                Color = ColorSequence.new({
-                    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
-                    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))
-                }),
-                Transparency = NumberSequence.new({
-                    NumberSequenceKeypoint.new(0, 0.95),
-                    NumberSequenceKeypoint.new(1, 1)
-                }),
-                Rotation = 90
-            }),
-            util.new("TextLabel", {
-                Text = (identifyexecutor and identifyexecutor() or "Unknown Executor"),
-                TextColor3 = theme.TextColor,
-                TextSize = 14,
-                Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -20, 0, 20),
-                Position = UDim2.new(0, 12, 0, 10),
-                TextXAlignment = Enum.TextXAlignment.Left,
-                BackgroundTransparency = 1,
-            }),
-            util.new("TextLabel", {
-                Text = "Fully supported and optimized",
-                TextColor3 = Color3.fromRGB(100, 255, 150),
-                TextSize = 11,
-                Font = Enum.Font.Gotham,
-                Size = UDim2.new(1, -20, 0, 16),
-                Position = UDim2.new(0, 12, 0, 34),
-                TextXAlignment = Enum.TextXAlignment.Left,
-                BackgroundTransparency = 1,
-            })
         })
         
         -- Update player count every 5 seconds
