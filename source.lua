@@ -181,9 +181,13 @@ do
                 TextSize = 14,
                 Font = Enum.Font.GothamBold,
                 Position = UDim2.new(0, 8, 0, 8),
+                BackgroundTransparency = 1,
                 Name = "TopBarTitle"
             }),
         })
+        
+        -- Calculate title width
+        local titleWidth = game:GetService("TextService"):GetTextSize(title, 14, Enum.Font.GothamBold, Vector2.new(1000, 1000)).X
         
         --//TopBar Version (next to title)
         local TopBarVersion = util.new("TextLabel", { -->version
@@ -193,7 +197,8 @@ do
             TextXAlignment = Enum.TextXAlignment.Left,
             TextSize = 10,
             Font = Enum.Font.Gotham,
-            Position = UDim2.new(0, 8 + game:GetService("TextService"):GetTextSize(title, 14, Enum.Font.GothamBold, Vector2.new(math.huge, math.huge)).X + 8, 0, 10),
+            Position = UDim2.new(0, 8 + titleWidth + 6, 0, 10),
+            BackgroundTransparency = 1,
             Name = "Version"
         })
 
@@ -408,9 +413,9 @@ do
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
             util.new("UIStroke", {
-                Color = Color3.fromRGB(100, 200, 255),
+                Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.8,
+                Transparency = 0.85,
             }),
             util.new("TextLabel", {
                 Text = "Players",
@@ -445,9 +450,9 @@ do
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
             util.new("UIStroke", {
-                Color = Color3.fromRGB(255, 150, 100),
+                Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.8,
+                Transparency = 0.85,
             }),
             util.new("TextLabel", {
                 Text = "Max Players",
@@ -897,30 +902,37 @@ do
         --//Tab Selector
         local TabSelector, TabSelectorColour = util.new("TextButton", { --> TabSelector
             Parent = library.TabSelectContainer,
-            Size = UDim2.new(1, -10, 0, 45), --> note: horizontal padding overriden by UIListLayour HorizontalAlignment property
+            Size = UDim2.new(1, -10, 0, 50),
             Position = UDim2.new(0, 5, 0, 5),
             BackgroundColor3 = theme.InnerContainer,
             LayoutOrder = id,
             Name = "TabSelector"
         }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
             util.new("Frame", {
-                Size = UDim2.new(0, 4, 1, 0),
+                Size = UDim2.new(0, 3, 1, -8),
+                Position = UDim2.new(0, 0, 0, 4),
                 BackgroundColor3 = theme.NotSelectedTab,
+                BorderSizePixel = 0,
+            }, {
+                util.new("UICorner", {CornerRadius = UDim.new(0, 4)})
             }),
             util.new("TextLabel", { --Title
                 Text = title,
                 TextColor3 = theme.TextColor,
-                TextSize = 14,
-                Font = Enum.Font.GothamMedium,
-                Position = UDim2.new(0, 12, 0, 8),
+                TextSize = 13,
+                Font = Enum.Font.GothamBold,
+                Position = UDim2.new(0, 14, 0, 10),
+                BackgroundTransparency = 1,
                 Name = "TopBarTitleText"
             }),
             util.new("TextLabel",  {
                 Text = desc,
                 TextColor3 = theme.SubTextColor,
-                TextSize = 11,
+                TextSize = 10,
                 Font = Enum.Font.Gotham,
-                Position = UDim2.new(0, 12, 0, 26),
+                Position = UDim2.new(0, 14, 0, 28),
+                BackgroundTransparency = 1,
                 Name = "TopBarTitleDesc"
             })
             
