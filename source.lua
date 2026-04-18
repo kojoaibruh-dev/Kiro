@@ -184,16 +184,16 @@ do
                 Name = "TopBarTitle"
             }),
         })
-        
+        -- TopBarTitle.Size = UDim2.new(0,TopBarTitle.TextBounds.X, 0, 0)
         --//TopBar 
         local TopBarVersion = util.new("TextLabel", { -->version
             Parent = TopBarContainer,
             Text = version,
             TextColor3 = theme.SubTextColor,
-            TextXAlignment = Enum.TextXAlignment.Left,
+            TextXAlignment = Enum.TextXAlignment.Right,
             TextSize = 10,
             Font = Enum.Font.Gotham,
-            Position = UDim2.new(0, 8 + TopBarTitle.TextBounds.X + 8, 0, 9),
+            Position = UDim2.new(1,-7,0,3),
             Name = "Version"
         })
 
@@ -1022,7 +1022,7 @@ end
 do
     function tab.new(library, title, desc, id)
         --//Tab Selector
-        local TabSelector = util.new("TextButton", { --> TabSelector
+        local TabSelector, TabSelectorColour = util.new("TextButton", { --> TabSelector
             Parent = library.TabSelectContainer,
             Size = UDim2.new(1, -14, 0, 50), --> note: horizontal padding overriden by UIListLayour HorizontalAlignment property
             Position = UDim2.new(0, 7, 0, 5),
@@ -1037,39 +1037,33 @@ do
                 Color = theme.InteractableOutline,
                 Thickness = 1,
                 Transparency = 0.7,
+            }),
+            util.new("Frame", {
+                Size = UDim2.new(0, 3, 1, -8),
+                Position = UDim2.new(0, 4, 0, 4),
+                BackgroundColor3 = theme.NotSelectedTab,
+            }, {
+                util.new("UICorner", {
+                    CornerRadius = UDim.new(0, 4)
+                })
+            }),
+            util.new("TextLabel", { --Title
+                Text = title,
+                TextColor3 = theme.TextColor,
+                TextSize = 13,
+                Font = Enum.Font.GothamBold,
+                Position = UDim2.new(0, 14, 0, 10),
+                Name = "TopBarTitleText"
+            }),
+            util.new("TextLabel",  {
+                Text = desc,
+                TextColor3 = theme.SubTextColor,
+                TextSize = 10,
+                Font = Enum.Font.Gotham,
+                Position = UDim2.new(0, 14, 0, 28),
+                Name = "TopBarTitleDesc"
             })
-        })
-        
-        local TabSelectorColour = util.new("Frame", {
-            Parent = TabSelector,
-            Size = UDim2.new(0, 3, 1, -8),
-            Position = UDim2.new(0, 4, 0, 4),
-            BackgroundColor3 = theme.NotSelectedTab,
-            BorderSizePixel = 0,
-        }, {
-            util.new("UICorner", {
-                CornerRadius = UDim.new(0, 4)
-            })
-        })
-        
-        util.new("TextLabel", { --Title
-            Parent = TabSelector,
-            Text = title,
-            TextColor3 = theme.TextColor,
-            TextSize = 13,
-            Font = Enum.Font.GothamBold,
-            Position = UDim2.new(0, 14, 0, 10),
-            Name = "TopBarTitleText"
-        })
-        
-        util.new("TextLabel",  {
-            Parent = TabSelector,
-            Text = desc,
-            TextColor3 = theme.SubTextColor,
-            TextSize = 10,
-            Font = Enum.Font.Gotham,
-            Position = UDim2.new(0, 14, 0, 28),
-            Name = "TopBarTitleDesc"
+            
         })
 
         
