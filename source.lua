@@ -387,13 +387,20 @@ do
                 }),
                 Rotation = 90
             }),
+            util.new("ImageLabel", {
+                Image = "rbxassetid://10723434711",
+                ImageColor3 = theme.Accent,
+                Size = UDim2.new(0, 18, 0, 18),
+                Position = UDim2.new(0, 14, 0, 14),
+                BackgroundTransparency = 1,
+            }),
             util.new("TextLabel", {
-                Text = "📊 Session Information",
+                Text = "Session Information",
                 TextColor3 = theme.TextColor,
                 TextSize = 16,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -20, 0, 26),
-                Position = UDim2.new(0, 14, 0, 12),
+                Size = UDim2.new(1, -44, 0, 26),
+                Position = UDim2.new(0, 38, 0, 12),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             })
@@ -412,13 +419,20 @@ do
                 Thickness = 1,
                 Transparency = 0.8,
             }),
+            util.new("ImageLabel", {
+                Image = "rbxassetid://10747360872",
+                ImageColor3 = Color3.fromRGB(100, 200, 255),
+                Size = UDim2.new(0, 16, 0, 16),
+                Position = UDim2.new(0, 10, 0, 7),
+                BackgroundTransparency = 1,
+            }),
             util.new("TextLabel", {
-                Text = "👥 Players",
+                Text = "Players",
                 TextColor3 = theme.TextColor,
                 TextSize = 13,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -14, 0, 18),
-                Position = UDim2.new(0, 10, 0, 6),
+                Size = UDim2.new(1, -32, 0, 18),
+                Position = UDim2.new(0, 30, 0, 6),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             })
@@ -449,13 +463,20 @@ do
                 Thickness = 1,
                 Transparency = 0.8,
             }),
+            util.new("ImageLabel", {
+                Image = "rbxassetid://10723407389",
+                ImageColor3 = Color3.fromRGB(255, 150, 100),
+                Size = UDim2.new(0, 16, 0, 16),
+                Position = UDim2.new(0, 10, 0, 7),
+                BackgroundTransparency = 1,
+            }),
             util.new("TextLabel", {
-                Text = "🎯 Max Players",
+                Text = "Max Players",
                 TextColor3 = theme.TextColor,
                 TextSize = 13,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -14, 0, 18),
-                Position = UDim2.new(0, 10, 0, 6),
+                Size = UDim2.new(1, -32, 0, 18),
+                Position = UDim2.new(0, 30, 0, 6),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             }),
@@ -544,14 +565,22 @@ do
         
         -- Account age
         local accountAge = player.AccountAge
+        util.new("ImageLabel", {
+            Parent = UserInfo,
+            Image = "rbxassetid://10723345518",
+            ImageColor3 = theme.SubTextColor,
+            Size = UDim2.new(0, 14, 0, 14),
+            Position = UDim2.new(0, 82, 0, 55),
+            BackgroundTransparency = 1,
+        })
         util.new("TextLabel", {
             Parent = UserInfo,
-            Text = "🎂 " .. accountAge .. " days old • Joined " .. os.date("%b %Y", os.time() - (accountAge * 86400)),
+            Text = accountAge .. " days old • Joined " .. os.date("%b %Y", os.time() - (accountAge * 86400)),
             TextColor3 = theme.SubTextColor,
             TextSize = 11,
             Font = Enum.Font.Gotham,
-            Size = UDim2.new(1, -92, 0, 16),
-            Position = UDim2.new(0, 82, 0, 54),
+            Size = UDim2.new(1, -106, 0, 16),
+            Position = UDim2.new(0, 100, 0, 54),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -561,7 +590,7 @@ do
         if discordLink and discordLink ~= "" then
             local DiscordSection = util.new("Frame", {
                 Parent = HomeContainer,
-                Size = UDim2.new(1, -20, 0, 85),
+                Size = UDim2.new(1, -20, 0, 75),
                 Position = UDim2.new(0, 10, 0, discordYPos),
                 BackgroundColor3 = theme.UpperContainer,
                 Name = "DiscordSection"
@@ -585,66 +614,94 @@ do
                 })
             })
             
+            -- Icon
+            util.new("ImageLabel", {
+                Parent = DiscordSection,
+                Image = "rbxassetid://10723434711",
+                ImageColor3 = theme.Accent,
+                Size = UDim2.new(0, 18, 0, 18),
+                Position = UDim2.new(0, 14, 0, 13),
+                BackgroundTransparency = 1,
+            })
+            
+            -- Title
             util.new("TextLabel", {
                 Parent = DiscordSection,
-                Text = "💬 Join Our Community",
+                Text = "Join Our Community",
                 TextColor3 = theme.TextColor,
                 TextSize = 15,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -20, 0, 22),
-                Position = UDim2.new(0, 14, 0, 12),
+                Size = UDim2.new(1, -44, 0, 22),
+                Position = UDim2.new(0, 38, 0, 12),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             })
             
+            -- Description
             util.new("TextLabel", {
                 Parent = DiscordSection,
                 Text = "Get updates, report bugs, and chat with the community!",
                 TextColor3 = theme.SubTextColor,
                 TextSize = 11,
                 Font = Enum.Font.Gotham,
-                Size = UDim2.new(1, -160, 0, 32),
-                Position = UDim2.new(0, 14, 0, 38),
+                Size = UDim2.new(1, -28, 0, 16),
+                Position = UDim2.new(0, 14, 0, 40),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 TextWrapped = true,
                 BackgroundTransparency = 1,
             })
             
-            -- Join Discord Button
+            -- Join Discord Button (centered at bottom)
             local JoinButton = util.new("TextButton", {
                 Parent = DiscordSection,
-                Size = UDim2.new(0, 130, 0, 36),
-                Position = UDim2.new(1, -144, 0, 36),
+                Size = UDim2.new(1, -28, 0, 0),
+                Position = UDim2.new(0, 14, 1, -10),
+                AnchorPoint = Vector2.new(0, 1),
+                BackgroundTransparency = 1,
+                Text = "",
+            })
+            
+            local ButtonInner = util.new("Frame", {
+                Parent = JoinButton,
+                Size = UDim2.new(0, 140, 0, 34),
+                Position = UDim2.new(0.5, 0, 0.5, 0),
+                AnchorPoint = Vector2.new(0.5, 0.5),
                 BackgroundColor3 = Color3.fromRGB(88, 101, 242),
-                Text = "Copy Link",
-                TextColor3 = Color3.fromRGB(255, 255, 255),
-                TextSize = 13,
-                Font = Enum.Font.GothamBold,
             }, {
                 util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
                 util.new("UIStroke", {
                     Color = Color3.fromRGB(255, 255, 255),
                     Thickness = 0,
                     Transparency = 1,
+                }),
+                util.new("TextLabel", {
+                    Text = "Copy Link",
+                    TextColor3 = Color3.fromRGB(255, 255, 255),
+                    TextSize = 13,
+                    Font = Enum.Font.GothamBold,
+                    Size = UDim2.new(1, 0, 1, 0),
+                    BackgroundTransparency = 1,
+                    TextXAlignment = Enum.TextXAlignment.Center,
+                    TextYAlignment = Enum.TextYAlignment.Center,
                 })
             })
             
             JoinButton.MouseButton1Click:Connect(function()
                 setclipboard(discordLink)
-                self:Notify("✅ Discord link copied to clipboard!")
+                self:Notify("Discord link copied to clipboard!")
             end)
             
             JoinButton.MouseEnter:Connect(function()
-                util.tween(JoinButton, { BackgroundColor3 = Color3.fromRGB(71, 82, 196) }, 0.2)
-                util.tween(JoinButton.UIStroke, { Transparency = 0.7, Thickness = 1 }, 0.2)
+                util.tween(ButtonInner, { BackgroundColor3 = Color3.fromRGB(71, 82, 196) }, 0.2)
+                util.tween(ButtonInner.UIStroke, { Transparency = 0.7, Thickness = 1 }, 0.2)
             end)
             
             JoinButton.MouseLeave:Connect(function()
-                util.tween(JoinButton, { BackgroundColor3 = Color3.fromRGB(88, 101, 242) }, 0.2)
-                util.tween(JoinButton.UIStroke, { Transparency = 1, Thickness = 0 }, 0.2)
+                util.tween(ButtonInner, { BackgroundColor3 = Color3.fromRGB(88, 101, 242) }, 0.2)
+                util.tween(ButtonInner.UIStroke, { Transparency = 1, Thickness = 0 }, 0.2)
             end)
             
-            discordYPos = discordYPos + 95
+            discordYPos = discordYPos + 85
         end
         
         -- Executor Info
@@ -672,23 +729,37 @@ do
                 }),
                 Rotation = 90
             }),
-            util.new("TextLabel", {
-                Text = "⚡ " .. (identifyexecutor and identifyexecutor() or "Unknown Executor"),
-                TextColor3 = theme.TextColor,
-                TextSize = 14,
-                Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -24, 0, 22),
-                Position = UDim2.new(0, 14, 0, 12),
-                TextXAlignment = Enum.TextXAlignment.Left,
+            util.new("ImageLabel", {
+                Image = "rbxassetid://10723407389",
+                ImageColor3 = theme.Accent,
+                Size = UDim2.new(0, 18, 0, 18),
+                Position = UDim2.new(0, 14, 0, 13),
                 BackgroundTransparency = 1,
             }),
             util.new("TextLabel", {
-                Text = "✓ Fully supported and optimized",
+                Text = (identifyexecutor and identifyexecutor() or "Unknown Executor"),
+                TextColor3 = theme.TextColor,
+                TextSize = 14,
+                Font = Enum.Font.GothamBold,
+                Size = UDim2.new(1, -44, 0, 22),
+                Position = UDim2.new(0, 38, 0, 12),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                BackgroundTransparency = 1,
+            }),
+            util.new("ImageLabel", {
+                Image = "rbxassetid://10709818534",
+                ImageColor3 = Color3.fromRGB(100, 255, 150),
+                Size = UDim2.new(0, 14, 0, 14),
+                Position = UDim2.new(0, 14, 0, 39),
+                BackgroundTransparency = 1,
+            }),
+            util.new("TextLabel", {
+                Text = "Fully supported and optimized",
                 TextColor3 = Color3.fromRGB(100, 255, 150),
                 TextSize = 11,
                 Font = Enum.Font.Gotham,
-                Size = UDim2.new(1, -24, 0, 16),
-                Position = UDim2.new(0, 14, 0, 38),
+                Size = UDim2.new(1, -44, 0, 16),
+                Position = UDim2.new(0, 32, 0, 38),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             })
@@ -720,15 +791,15 @@ do
         if not NotificationContainer then
             NotificationContainer = util.new("Frame", {
                 Parent = ScreenGui,
-                Size = UDim2.new(0, 300, 1, 0),
-                Position = UDim2.new(1, -310, 0, 10),
+                Size = UDim2.new(0, 280, 1, 0),
+                Position = UDim2.new(1, -290, 0, 10),
                 BackgroundTransparency = 1,
                 Name = "NotificationContainer",
                 ZIndex = 200
             }, {
                 util.new("UIListLayout", {
                     SortOrder = Enum.SortOrder.LayoutOrder,
-                    Padding = UDim.new(0, 8),
+                    Padding = UDim.new(0, 10),
                     VerticalAlignment = Enum.VerticalAlignment.Top,
                 })
             })
@@ -738,11 +809,12 @@ do
         local Notification = util.new("Frame", {
             Parent = NotificationContainer,
             Size = UDim2.new(1, 0, 0, 0),
-            BackgroundColor3 = theme.UpperContainer,
+            BackgroundColor3 = theme.BackColor,
             BackgroundTransparency = 1,
-            ZIndex = 201
+            ZIndex = 201,
+            ClipsDescendants = true,
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 4)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
@@ -750,14 +822,27 @@ do
             })
         })
         
+        -- Accent bar on the left
+        local AccentBar = util.new("Frame", {
+            Parent = Notification,
+            Size = UDim2.new(0, 3, 1, 0),
+            Position = UDim2.new(0, 0, 0, 0),
+            BackgroundColor3 = theme.Accent,
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            ZIndex = 202,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 4)})
+        })
+        
         local NotifText = util.new("TextLabel", {
             Parent = Notification,
             Text = text,
             TextColor3 = theme.TextColor,
-            TextSize = 13,
+            TextSize = 12,
             Font = Enum.Font.Gotham,
-            Size = UDim2.new(1, -20, 1, -16),
-            Position = UDim2.new(0, 10, 0, 8),
+            Size = UDim2.new(1, -20, 1, -12),
+            Position = UDim2.new(0, 12, 0, 6),
             TextXAlignment = Enum.TextXAlignment.Left,
             TextYAlignment = Enum.TextYAlignment.Top,
             TextWrapped = true,
@@ -769,27 +854,41 @@ do
         -- Calculate height based on text
         local textHeight = game:GetService("TextService"):GetTextSize(
             text,
-            13,
+            12,
             Enum.Font.Gotham,
-            Vector2.new(280, math.huge)
+            Vector2.new(248, math.huge)
         ).Y
         
-        local notifHeight = math.max(textHeight + 16, 40)
+        local notifHeight = math.max(textHeight + 12, 36)
         
-        -- Animate in
+        -- Set initial size
         Notification.Size = UDim2.new(1, 0, 0, notifHeight)
         
-        util.tween(Notification, { BackgroundTransparency = 0 }, 0.3)
-        util.tween(Notification.UIStroke, { Transparency = 0 }, 0.3)
-        util.tween(NotifText, { TextTransparency = 0 }, 0.3)
+        -- Slide in from right with fade
+        Notification.Position = UDim2.new(0, 20, 0, 0)
+        
+        -- Animate in
+        task.spawn(function()
+            util.tween(Notification, { 
+                BackgroundTransparency = 0.05,
+                Position = UDim2.new(0, 0, 0, 0)
+            }, 0.25)
+            util.tween(Notification.UIStroke, { Transparency = 0.7 }, 0.25)
+            util.tween(AccentBar, { BackgroundTransparency = 0 }, 0.25)
+            util.tween(NotifText, { TextTransparency = 0 }, 0.25)
+        end)
         
         -- Wait and animate out
         task.spawn(function()
             wait(duration)
-            util.tween(Notification, { BackgroundTransparency = 1 }, 0.3)
-            util.tween(Notification.UIStroke, { Transparency = 1 }, 0.3)
-            util.tween(NotifText, { TextTransparency = 1 }, 0.3)
-            wait(0.3)
+            util.tween(Notification, { 
+                BackgroundTransparency = 1,
+                Position = UDim2.new(0, 20, 0, 0)
+            }, 0.25)
+            util.tween(Notification.UIStroke, { Transparency = 1 }, 0.25)
+            util.tween(AccentBar, { BackgroundTransparency = 1 }, 0.25)
+            util.tween(NotifText, { TextTransparency = 1 }, 0.25)
+            wait(0.25)
             Notification:Destroy()
         end)
     end
@@ -1580,7 +1679,7 @@ do
             if isInteracting then
                 renderFromMouse()
             end
-        end)
+        end)https://github.com/kojoaibruh-dev/Kiro/edit/main/source.lua
 
         --Value box hover
         local isFocused = false
