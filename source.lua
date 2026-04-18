@@ -184,16 +184,24 @@ do
                 Name = "TopBarTitle"
             }),
         })
-        -- TopBarTitle.Size = UDim2.new(0,TopBarTitle.TextBounds.X, 0, 0)
+        
+        -- Calculate title width to position version next to it
+        local titleWidth = game:GetService("TextService"):GetTextSize(
+            title,
+            14,
+            Enum.Font.GothamBold,
+            Vector2.new(math.huge, math.huge)
+        ).X
+        
         --//TopBar 
         local TopBarVersion = util.new("TextLabel", { -->version
             Parent = TopBarContainer,
             Text = version,
             TextColor3 = theme.SubTextColor,
-            TextXAlignment = Enum.TextXAlignment.Right,
+            TextXAlignment = Enum.TextXAlignment.Left,
             TextSize = 10,
             Font = Enum.Font.Gotham,
-            Position = UDim2.new(1,-7,0,3),
+            Position = UDim2.new(0, 8 + titleWidth + 8, 0, 9),
             Name = "Version"
         })
 
@@ -561,7 +569,7 @@ do
         if discordLink and discordLink ~= "" then
             local DiscordSection = util.new("Frame", {
                 Parent = HomeContainer,
-                Size = UDim2.new(1, -20, 0, 78),
+                Size = UDim2.new(1, -20, 0, 60),
                 Position = UDim2.new(0, 10, 0, discordYPos),
                 BackgroundColor3 = theme.UpperContainer,
                 Name = "DiscordSection"
@@ -587,25 +595,14 @@ do
             
             util.new("TextLabel", {
                 Parent = DiscordSection,
-                Text = "Join Our Community",
-                TextColor3 = theme.TextColor,
-                TextSize = 14,
-                Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -20, 0, 20),
-                Position = UDim2.new(0, 12, 0, 10),
-                TextXAlignment = Enum.TextXAlignment.Left,
-                BackgroundTransparency = 1,
-            })
-            
-            util.new("TextLabel", {
-                Parent = DiscordSection,
                 Text = "Get updates, report bugs, and chat with the community!",
                 TextColor3 = theme.SubTextColor,
                 TextSize = 11,
                 Font = Enum.Font.Gotham,
-                Size = UDim2.new(1, -150, 0, 30),
-                Position = UDim2.new(0, 12, 0, 34),
+                Size = UDim2.new(1, -145, 1, -20),
+                Position = UDim2.new(0, 12, 0, 10),
                 TextXAlignment = Enum.TextXAlignment.Left,
+                TextYAlignment = Enum.TextYAlignment.Center,
                 TextWrapped = true,
                 BackgroundTransparency = 1,
             })
@@ -613,8 +610,8 @@ do
             -- Join Discord Button
             local JoinButton = util.new("TextButton", {
                 Parent = DiscordSection,
-                Size = UDim2.new(0, 125, 0, 34),
-                Position = UDim2.new(1, -137, 0, 32),
+                Size = UDim2.new(0, 120, 0, 36),
+                Position = UDim2.new(1, -132, 0.5, -18),
                 BackgroundColor3 = Color3.fromRGB(88, 101, 242),
                 Text = "Copy Link",
                 TextColor3 = Color3.fromRGB(255, 255, 255),
@@ -644,7 +641,7 @@ do
                 util.tween(JoinButton.UIStroke, { Transparency = 1, Thickness = 0 }, 0.2)
             end)
             
-            discordYPos = discordYPos + 86
+            discordYPos = discordYPos + 68
         end
         
         -- Executor Info
@@ -683,7 +680,7 @@ do
                 BackgroundTransparency = 1,
             }),
             util.new("TextLabel", {
-                Text = "Fully supported and optimized",
+                Text = "Fully supported",
                 TextColor3 = Color3.fromRGB(100, 255, 150),
                 TextSize = 11,
                 Font = Enum.Font.Gotham,
@@ -808,7 +805,7 @@ do
             Vector2.new(250, math.huge)
         ).Y
         
-        local notifHeight = math.max(textHeight + 18, 42)
+        local notifHeight = math.max(textHeight + 12, 34)
         
         -- Set initial size
         NotificationWrapper.Size = UDim2.new(1, 0, 0, notifHeight)
@@ -1035,30 +1032,43 @@ do
         --//Tab Selector
         local TabSelector, TabSelectorColour = util.new("TextButton", { --> TabSelector
             Parent = library.TabSelectContainer,
-            Size = UDim2.new(1, -10, 0, 45), --> note: horizontal padding overriden by UIListLayour HorizontalAlignment property
-            Position = UDim2.new(0, 5, 0, 5),
+            Size = UDim2.new(1, -14, 0, 50), --> note: horizontal padding overriden by UIListLayour HorizontalAlignment property
+            Position = UDim2.new(0, 7, 0, 5),
             BackgroundColor3 = theme.InnerContainer,
             LayoutOrder = id,
             Name = "TabSelector"
         }, {
+            util.new("UICorner", {
+                CornerRadius = UDim.new(0, 6)
+            }),
+            util.new("UIStroke", {
+                Color = theme.InteractableOutline,
+                Thickness = 1,
+                Transparency = 0.7,
+            }),
             util.new("Frame", {
-                Size = UDim2.new(0, 4, 1, 0),
+                Size = UDim2.new(0, 3, 1, -8),
+                Position = UDim2.new(0, 4, 0, 4),
                 BackgroundColor3 = theme.NotSelectedTab,
+            }, {
+                util.new("UICorner", {
+                    CornerRadius = UDim.new(0, 4)
+                })
             }),
             util.new("TextLabel", { --Title
                 Text = title,
                 TextColor3 = theme.TextColor,
-                TextSize = 14,
-                Font = Enum.Font.GothamMedium,
-                Position = UDim2.new(0, 12, 0, 8),
+                TextSize = 13,
+                Font = Enum.Font.GothamBold,
+                Position = UDim2.new(0, 14, 0, 10),
                 Name = "TopBarTitleText"
             }),
             util.new("TextLabel",  {
                 Text = desc,
                 TextColor3 = theme.SubTextColor,
-                TextSize = 11,
+                TextSize = 10,
                 Font = Enum.Font.Gotham,
-                Position = UDim2.new(0, 12, 0, 26),
+                Position = UDim2.new(0, 14, 0, 28),
                 Name = "TopBarTitleDesc"
             })
             
