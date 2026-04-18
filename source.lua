@@ -345,6 +345,274 @@ do
         }, library):_registerKeybind()
     end
 
+    function library:AddHomePage(discordLink)
+        -- Create home page tab
+        local homeTab = tab.new(self, "Home", "Welcome", 0)
+        table.insert(self.tabs, 1, homeTab)
+        
+        -- Create home page content
+        local HomeContainer = util.new("Frame", {
+            Parent = self.TabContentContainer,
+            Size = UDim2.new(1, -14, 1, -14),
+            Position = UDim2.new(0, 7, 0, 7),
+            BackgroundColor3 = theme.InnerContainer,
+            Visible = false,
+            Name = "HomeContainer"
+        })
+        
+        homeTab.panels = {{PanelContainer = HomeContainer}}
+        
+        -- Session Information Section
+        local SessionInfo = util.new("Frame", {
+            Parent = HomeContainer,
+            Size = UDim2.new(1, -20, 0, 80),
+            Position = UDim2.new(0, 10, 0, 10),
+            BackgroundColor3 = theme.BackColor,
+            Name = "SessionInfo"
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
+            util.new("TextLabel", {
+                Text = "Session Information",
+                TextColor3 = theme.TextColor,
+                TextSize = 16,
+                Font = Enum.Font.GothamBold,
+                Size = UDim2.new(1, -20, 0, 25),
+                Position = UDim2.new(0, 10, 0, 10),
+                TextXAlignment = Enum.TextXAlignment.Left,
+            })
+        })
+        
+        -- Players info
+        local PlayersFrame = util.new("Frame", {
+            Parent = SessionInfo,
+            Size = UDim2.new(0.48, 0, 0, 35),
+            Position = UDim2.new(0, 10, 0, 40),
+            BackgroundColor3 = theme.UpperContainer,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 4)}),
+            util.new("TextLabel", {
+                Text = "Players",
+                TextColor3 = theme.TextColor,
+                TextSize = 13,
+                Font = Enum.Font.GothamBold,
+                Size = UDim2.new(1, -10, 0, 15),
+                Position = UDim2.new(0, 5, 0, 3),
+                TextXAlignment = Enum.TextXAlignment.Left,
+            })
+        })
+        
+        local PlayersCount = util.new("TextLabel", {
+            Parent = PlayersFrame,
+            Text = #game:GetService("Players"):GetPlayers() .. " players currently online",
+            TextColor3 = theme.SubTextColor,
+            TextSize = 11,
+            Font = Enum.Font.Gotham,
+            Size = UDim2.new(1, -10, 0, 15),
+            Position = UDim2.new(0, 5, 0, 18),
+            TextXAlignment = Enum.TextXAlignment.Left,
+        })
+        
+        -- Max players info
+        local MaxPlayersFrame = util.new("Frame", {
+            Parent = SessionInfo,
+            Size = UDim2.new(0.48, 0, 0, 35),
+            Position = UDim2.new(0.52, 0, 0, 40),
+            BackgroundColor3 = theme.UpperContainer,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 4)}),
+            util.new("TextLabel", {
+                Text = "Max Players",
+                TextColor3 = theme.TextColor,
+                TextSize = 13,
+                Font = Enum.Font.GothamBold,
+                Size = UDim2.new(1, -10, 0, 15),
+                Position = UDim2.new(0, 5, 0, 3),
+                TextXAlignment = Enum.TextXAlignment.Left,
+            }),
+            util.new("TextLabel", {
+                Text = "Maximum of " .. game:GetService("Players").MaxPlayers .. " people can join this experience.",
+                TextColor3 = theme.SubTextColor,
+                TextSize = 11,
+                Font = Enum.Font.Gotham,
+                Size = UDim2.new(1, -10, 0, 15),
+                Position = UDim2.new(0, 5, 0, 18),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                TextWrapped = true,
+            })
+        })
+        
+        -- User Info Section
+        local player = game:GetService("Players").LocalPlayer
+        local UserInfo = util.new("Frame", {
+            Parent = HomeContainer,
+            Size = UDim2.new(1, -20, 0, 70),
+            Position = UDim2.new(0, 10, 0, 100),
+            BackgroundColor3 = theme.BackColor,
+            Name = "UserInfo"
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 6)})
+        })
+        
+        -- User avatar
+        local Avatar = util.new("ImageLabel", {
+            Parent = UserInfo,
+            Size = UDim2.new(0, 50, 0, 50),
+            Position = UDim2.new(0, 10, 0, 10),
+            BackgroundColor3 = theme.UpperContainer,
+            Image = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. player.UserId .. "&width=150&height=150&format=png",
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 8)})
+        })
+        
+        -- User name
+        util.new("TextLabel", {
+            Parent = UserInfo,
+            Text = player.Name,
+            TextColor3 = theme.TextColor,
+            TextSize = 16,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(1, -70, 0, 20),
+            Position = UDim2.new(0, 70, 0, 10),
+            TextXAlignment = Enum.TextXAlignment.Left,
+        })
+        
+        -- User display name
+        util.new("TextLabel", {
+            Parent = UserInfo,
+            Text = "@" .. player.Name,
+            TextColor3 = theme.SubTextColor,
+            TextSize = 12,
+            Font = Enum.Font.Gotham,
+            Size = UDim2.new(1, -70, 0, 15),
+            Position = UDim2.new(0, 70, 0, 30),
+            TextXAlignment = Enum.TextXAlignment.Left,
+        })
+        
+        -- Account age
+        local accountAge = player.AccountAge
+        util.new("TextLabel", {
+            Parent = UserInfo,
+            Text = "Age: " .. accountAge .. " days | Joined: " .. os.date("%b %d, %Y", os.time() - (accountAge * 86400)),
+            TextColor3 = theme.SubTextColor,
+            TextSize = 11,
+            Font = Enum.Font.Gotham,
+            Size = UDim2.new(1, -70, 0, 15),
+            Position = UDim2.new(0, 70, 0, 45),
+            TextXAlignment = Enum.TextXAlignment.Left,
+        })
+        
+        -- Discord Section (if link provided)
+        if discordLink and discordLink ~= "" then
+            local DiscordSection = util.new("Frame", {
+                Parent = HomeContainer,
+                Size = UDim2.new(1, -20, 0, 80),
+                Position = UDim2.new(0, 10, 0, 180),
+                BackgroundColor3 = theme.BackColor,
+                Name = "DiscordSection"
+            }, {
+                util.new("UICorner", {CornerRadius = UDim.new(0, 6)})
+            })
+            
+            util.new("TextLabel", {
+                Parent = DiscordSection,
+                Text = "Not in our discord server yet?",
+                TextColor3 = theme.TextColor,
+                TextSize = 15,
+                Font = Enum.Font.GothamBold,
+                Size = UDim2.new(1, -20, 0, 20),
+                Position = UDim2.new(0, 10, 0, 10),
+                TextXAlignment = Enum.TextXAlignment.Left,
+            })
+            
+            -- Join Discord Button
+            local JoinButton = util.new("TextButton", {
+                Parent = DiscordSection,
+                Size = UDim2.new(0, 150, 0, 35),
+                Position = UDim2.new(0, 10, 0, 35),
+                BackgroundColor3 = Color3.fromRGB(88, 101, 242),
+                Text = "Join Discord",
+                TextColor3 = Color3.fromRGB(255, 255, 255),
+                TextSize = 13,
+                Font = Enum.Font.GothamBold,
+            }, {
+                util.new("UICorner", {CornerRadius = UDim.new(0, 6)})
+            })
+            
+            util.new("TextLabel", {
+                Parent = DiscordSection,
+                Text = "Join to suggest features, report bugs, and connect with the community!",
+                TextColor3 = theme.SubTextColor,
+                TextSize = 11,
+                Font = Enum.Font.Gotham,
+                Size = UDim2.new(1, -170, 0, 35),
+                Position = UDim2.new(0, 170, 0, 35),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                TextWrapped = true,
+            })
+            
+            JoinButton.MouseButton1Click:Connect(function()
+                setclipboard(discordLink)
+                game:GetService("StarterGui"):SetCore("SendNotification", {
+                    Title = "Discord Link";
+                    Text = "Link copied to clipboard!";
+                    Duration = 3;
+                })
+            end)
+            
+            JoinButton.MouseEnter:Connect(function()
+                util.tween(JoinButton, { BackgroundColor3 = Color3.fromRGB(71, 82, 196) }, 0.2)
+            end)
+            
+            JoinButton.MouseLeave:Connect(function()
+                util.tween(JoinButton, { BackgroundColor3 = Color3.fromRGB(88, 101, 242) }, 0.2)
+            end)
+        end
+        
+        -- Executor Info
+        local ExecutorInfo = util.new("Frame", {
+            Parent = HomeContainer,
+            Size = UDim2.new(1, -20, 0, 50),
+            Position = UDim2.new(0, 10, 1, -60),
+            BackgroundColor3 = theme.BackColor,
+            Name = "ExecutorInfo"
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
+            util.new("TextLabel", {
+                Text = "Executor: " .. (identifyexecutor and identifyexecutor() or "Unknown"),
+                TextColor3 = theme.TextColor,
+                TextSize = 14,
+                Font = Enum.Font.GothamBold,
+                Size = UDim2.new(1, -20, 0, 20),
+                Position = UDim2.new(0, 10, 0, 8),
+                TextXAlignment = Enum.TextXAlignment.Left,
+            }),
+            util.new("TextLabel", {
+                Text = "Fully supported executor.",
+                TextColor3 = theme.SubTextColor,
+                TextSize = 11,
+                Font = Enum.Font.Gotham,
+                Size = UDim2.new(1, -20, 0, 15),
+                Position = UDim2.new(0, 10, 0, 28),
+                TextXAlignment = Enum.TextXAlignment.Left,
+            })
+        })
+        
+        -- Update player count every 5 seconds
+        task.spawn(function()
+            while true do
+                wait(5)
+                if PlayersCount then
+                    PlayersCount.Text = #game:GetService("Players"):GetPlayers() .. " players currently online"
+                end
+            end
+        end)
+        
+        -- Select home tab by default
+        homeTab:select()
+        
+        return homeTab
+    end
+
     function library:AddTab(title, desc)
         local newTab = tab.new(self, title, desc, #self.tabs+1)
 
