@@ -1042,6 +1042,7 @@ do
                 Size = UDim2.new(0, 3, 1, -8),
                 Position = UDim2.new(0, 4, 0, 4),
                 BackgroundColor3 = theme.NotSelectedTab,
+                BorderSizePixel = 0,
             }, {
                 util.new("UICorner", {
                     CornerRadius = UDim.new(0, 4)
