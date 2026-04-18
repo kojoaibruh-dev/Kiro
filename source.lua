@@ -355,7 +355,7 @@ do
             Parent = self.TabContentContainer,
             Size = UDim2.new(1, -14, 1, -14),
             Position = UDim2.new(0, 7, 0, 7),
-            BackgroundColor3 = theme.InnerContainer,
+            BackgroundColor3 = theme.BackColor,
             Visible = false,
             Name = "HomeContainer"
         })
@@ -365,19 +365,35 @@ do
         -- Session Information Section
         local SessionInfo = util.new("Frame", {
             Parent = HomeContainer,
-            Size = UDim2.new(1, -20, 0, 85),
+            Size = UDim2.new(1, -20, 0, 95),
             Position = UDim2.new(0, 10, 0, 10),
-            BackgroundColor3 = Color3.fromRGB(35, 35, 40),
+            BackgroundColor3 = theme.UpperContainer,
             Name = "SessionInfo"
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.85,
+            }),
+            util.new("UIGradient", {
+                Color = ColorSequence.new({
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))
+                }),
+                Transparency = NumberSequence.new({
+                    NumberSequenceKeypoint.new(0, 0.95),
+                    NumberSequenceKeypoint.new(1, 1)
+                }),
+                Rotation = 90
+            }),
             util.new("TextLabel", {
-                Text = "Session Information",
-                TextColor3 = Color3.fromRGB(255, 255, 255),
+                Text = "📊 Session Information",
+                TextColor3 = theme.TextColor,
                 TextSize = 16,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -20, 0, 25),
-                Position = UDim2.new(0, 10, 0, 8),
+                Size = UDim2.new(1, -20, 0, 26),
+                Position = UDim2.new(0, 14, 0, 12),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             })
@@ -386,18 +402,23 @@ do
         -- Players info
         local PlayersFrame = util.new("Frame", {
             Parent = SessionInfo,
-            Size = UDim2.new(0.48, -5, 0, 42),
-            Position = UDim2.new(0, 10, 0, 38),
-            BackgroundColor3 = Color3.fromRGB(45, 45, 52),
+            Size = UDim2.new(0.48, -5, 0, 48),
+            Position = UDim2.new(0, 12, 0, 42),
+            BackgroundColor3 = theme.InnerContainer,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
+            util.new("UIStroke", {
+                Color = Color3.fromRGB(100, 200, 255),
+                Thickness = 1,
+                Transparency = 0.8,
+            }),
             util.new("TextLabel", {
-                Text = "Players",
-                TextColor3 = Color3.fromRGB(255, 255, 255),
+                Text = "👥 Players",
+                TextColor3 = theme.TextColor,
                 TextSize = 13,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -16, 0, 18),
-                Position = UDim2.new(0, 8, 0, 4),
+                Size = UDim2.new(1, -14, 0, 18),
+                Position = UDim2.new(0, 10, 0, 6),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             })
@@ -405,12 +426,12 @@ do
         
         local PlayersCount = util.new("TextLabel", {
             Parent = PlayersFrame,
-            Text = #game:GetService("Players"):GetPlayers() .. " players currently online",
-            TextColor3 = Color3.fromRGB(180, 180, 190),
+            Text = #game:GetService("Players"):GetPlayers() .. " online",
+            TextColor3 = theme.SubTextColor,
             TextSize = 11,
             Font = Enum.Font.Gotham,
-            Size = UDim2.new(1, -16, 0, 16),
-            Position = UDim2.new(0, 8, 0, 22),
+            Size = UDim2.new(1, -14, 0, 16),
+            Position = UDim2.new(0, 10, 0, 26),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -418,28 +439,33 @@ do
         -- Max players info
         local MaxPlayersFrame = util.new("Frame", {
             Parent = SessionInfo,
-            Size = UDim2.new(0.48, -5, 0, 42),
-            Position = UDim2.new(0.52, 0, 0, 38),
-            BackgroundColor3 = Color3.fromRGB(45, 45, 52),
+            Size = UDim2.new(0.48, -5, 0, 48),
+            Position = UDim2.new(0.52, 0, 0, 42),
+            BackgroundColor3 = theme.InnerContainer,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
+            util.new("UIStroke", {
+                Color = Color3.fromRGB(255, 150, 100),
+                Thickness = 1,
+                Transparency = 0.8,
+            }),
             util.new("TextLabel", {
-                Text = "Max Players",
-                TextColor3 = Color3.fromRGB(255, 255, 255),
+                Text = "🎯 Max Players",
+                TextColor3 = theme.TextColor,
                 TextSize = 13,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -16, 0, 18),
-                Position = UDim2.new(0, 8, 0, 4),
+                Size = UDim2.new(1, -14, 0, 18),
+                Position = UDim2.new(0, 10, 0, 6),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             }),
             util.new("TextLabel", {
-                Text = "Maximum of " .. game:GetService("Players").MaxPlayers .. " people can join this experience.",
-                TextColor3 = Color3.fromRGB(180, 180, 190),
+                Text = game:GetService("Players").MaxPlayers .. " max",
+                TextColor3 = theme.SubTextColor,
                 TextSize = 11,
                 Font = Enum.Font.Gotham,
-                Size = UDim2.new(1, -16, 0, 16),
-                Position = UDim2.new(0, 8, 0, 22),
+                Size = UDim2.new(1, -14, 0, 16),
+                Position = UDim2.new(0, 10, 0, 26),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 TextWrapped = true,
                 BackgroundTransparency = 1,
@@ -450,34 +476,55 @@ do
         local player = game:GetService("Players").LocalPlayer
         local UserInfo = util.new("Frame", {
             Parent = HomeContainer,
-            Size = UDim2.new(1, -20, 0, 70),
-            Position = UDim2.new(0, 10, 0, 105),
-            BackgroundColor3 = Color3.fromRGB(35, 35, 40),
+            Size = UDim2.new(1, -20, 0, 80),
+            Position = UDim2.new(0, 10, 0, 115),
+            BackgroundColor3 = theme.UpperContainer,
             Name = "UserInfo"
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)})
+            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.85,
+            }),
+            util.new("UIGradient", {
+                Color = ColorSequence.new({
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))
+                }),
+                Transparency = NumberSequence.new({
+                    NumberSequenceKeypoint.new(0, 0.95),
+                    NumberSequenceKeypoint.new(1, 1)
+                }),
+                Rotation = 90
+            })
         })
         
         -- User avatar
         local Avatar = util.new("ImageLabel", {
             Parent = UserInfo,
-            Size = UDim2.new(0, 54, 0, 54),
-            Position = UDim2.new(0, 8, 0, 8),
-            BackgroundColor3 = Color3.fromRGB(45, 45, 52),
+            Size = UDim2.new(0, 62, 0, 62),
+            Position = UDim2.new(0, 12, 0, 9),
+            BackgroundColor3 = theme.InnerContainer,
             Image = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. player.UserId .. "&width=150&height=150&format=png",
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)})
+            util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 2,
+                Transparency = 0.5,
+            })
         })
         
         -- User name
         util.new("TextLabel", {
             Parent = UserInfo,
             Text = player.DisplayName or player.Name,
-            TextColor3 = Color3.fromRGB(255, 255, 255),
+            TextColor3 = theme.TextColor,
             TextSize = 16,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(1, -75, 0, 20),
-            Position = UDim2.new(0, 70, 0, 8),
+            Size = UDim2.new(1, -92, 0, 20),
+            Position = UDim2.new(0, 82, 0, 12),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -486,11 +533,11 @@ do
         util.new("TextLabel", {
             Parent = UserInfo,
             Text = "@" .. player.Name,
-            TextColor3 = Color3.fromRGB(150, 150, 160),
+            TextColor3 = theme.SubTextColor,
             TextSize = 12,
             Font = Enum.Font.Gotham,
-            Size = UDim2.new(1, -75, 0, 16),
-            Position = UDim2.new(0, 70, 0, 28),
+            Size = UDim2.new(1, -92, 0, 16),
+            Position = UDim2.new(0, 82, 0, 34),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -499,38 +546,67 @@ do
         local accountAge = player.AccountAge
         util.new("TextLabel", {
             Parent = UserInfo,
-            Text = "Age: " .. accountAge .. " days | Joined: " .. os.date("%b %d, %Y", os.time() - (accountAge * 86400)),
-            TextColor3 = Color3.fromRGB(150, 150, 160),
+            Text = "🎂 " .. accountAge .. " days old • Joined " .. os.date("%b %Y", os.time() - (accountAge * 86400)),
+            TextColor3 = theme.SubTextColor,
             TextSize = 11,
             Font = Enum.Font.Gotham,
-            Size = UDim2.new(1, -75, 0, 16),
-            Position = UDim2.new(0, 70, 0, 46),
+            Size = UDim2.new(1, -92, 0, 16),
+            Position = UDim2.new(0, 82, 0, 54),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
         
         -- Discord Section (if link provided)
-        local discordYPos = 185
+        local discordYPos = 205
         if discordLink and discordLink ~= "" then
             local DiscordSection = util.new("Frame", {
                 Parent = HomeContainer,
                 Size = UDim2.new(1, -20, 0, 85),
                 Position = UDim2.new(0, 10, 0, discordYPos),
-                BackgroundColor3 = Color3.fromRGB(35, 35, 40),
+                BackgroundColor3 = theme.UpperContainer,
                 Name = "DiscordSection"
             }, {
-                util.new("UICorner", {CornerRadius = UDim.new(0, 8)})
+                util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
+                util.new("UIStroke", {
+                    Color = Color3.fromRGB(88, 101, 242),
+                    Thickness = 1.5,
+                    Transparency = 0.6,
+                }),
+                util.new("UIGradient", {
+                    Color = ColorSequence.new({
+                        ColorSequenceKeypoint.new(0, Color3.fromRGB(88, 101, 242)),
+                        ColorSequenceKeypoint.new(1, Color3.fromRGB(88, 101, 242))
+                    }),
+                    Transparency = NumberSequence.new({
+                        NumberSequenceKeypoint.new(0, 0.92),
+                        NumberSequenceKeypoint.new(1, 0.98)
+                    }),
+                    Rotation = 45
+                })
             })
             
             util.new("TextLabel", {
                 Parent = DiscordSection,
-                Text = "Not in our discord server yet?",
-                TextColor3 = Color3.fromRGB(255, 255, 255),
+                Text = "💬 Join Our Community",
+                TextColor3 = theme.TextColor,
                 TextSize = 15,
                 Font = Enum.Font.GothamBold,
                 Size = UDim2.new(1, -20, 0, 22),
-                Position = UDim2.new(0, 10, 0, 8),
+                Position = UDim2.new(0, 14, 0, 12),
                 TextXAlignment = Enum.TextXAlignment.Left,
+                BackgroundTransparency = 1,
+            })
+            
+            util.new("TextLabel", {
+                Parent = DiscordSection,
+                Text = "Get updates, report bugs, and chat with the community!",
+                TextColor3 = theme.SubTextColor,
+                TextSize = 11,
+                Font = Enum.Font.Gotham,
+                Size = UDim2.new(1, -160, 0, 32),
+                Position = UDim2.new(0, 14, 0, 38),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                TextWrapped = true,
                 BackgroundTransparency = 1,
             })
             
@@ -538,44 +614,34 @@ do
             local JoinButton = util.new("TextButton", {
                 Parent = DiscordSection,
                 Size = UDim2.new(0, 130, 0, 36),
-                Position = UDim2.new(0, 10, 0, 38),
+                Position = UDim2.new(1, -144, 0, 36),
                 BackgroundColor3 = Color3.fromRGB(88, 101, 242),
-                Text = "Join Discord",
+                Text = "Copy Link",
                 TextColor3 = Color3.fromRGB(255, 255, 255),
                 TextSize = 13,
                 Font = Enum.Font.GothamBold,
             }, {
-                util.new("UICorner", {CornerRadius = UDim.new(0, 8)})
-            })
-            
-            util.new("TextLabel", {
-                Parent = DiscordSection,
-                Text = "Join to suggest features, report bugs, and connect with the community!",
-                TextColor3 = Color3.fromRGB(180, 180, 190),
-                TextSize = 11,
-                Font = Enum.Font.Gotham,
-                Size = UDim2.new(1, -155, 0, 36),
-                Position = UDim2.new(0, 150, 0, 38),
-                TextXAlignment = Enum.TextXAlignment.Left,
-                TextWrapped = true,
-                BackgroundTransparency = 1,
+                util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
+                util.new("UIStroke", {
+                    Color = Color3.fromRGB(255, 255, 255),
+                    Thickness = 0,
+                    Transparency = 1,
+                })
             })
             
             JoinButton.MouseButton1Click:Connect(function()
                 setclipboard(discordLink)
-                game:GetService("StarterGui"):SetCore("SendNotification", {
-                    Title = "Discord Link";
-                    Text = "Link copied to clipboard!";
-                    Duration = 3;
-                })
+                self:Notify("✅ Discord link copied to clipboard!")
             end)
             
             JoinButton.MouseEnter:Connect(function()
                 util.tween(JoinButton, { BackgroundColor3 = Color3.fromRGB(71, 82, 196) }, 0.2)
+                util.tween(JoinButton.UIStroke, { Transparency = 0.7, Thickness = 1 }, 0.2)
             end)
             
             JoinButton.MouseLeave:Connect(function()
                 util.tween(JoinButton, { BackgroundColor3 = Color3.fromRGB(88, 101, 242) }, 0.2)
+                util.tween(JoinButton.UIStroke, { Transparency = 1, Thickness = 0 }, 0.2)
             end)
             
             discordYPos = discordYPos + 95
@@ -584,29 +650,45 @@ do
         -- Executor Info
         local ExecutorInfo = util.new("Frame", {
             Parent = HomeContainer,
-            Size = UDim2.new(1, -20, 0, 55),
+            Size = UDim2.new(1, -20, 0, 65),
             Position = UDim2.new(0, 10, 0, discordYPos),
-            BackgroundColor3 = Color3.fromRGB(35, 35, 40),
+            BackgroundColor3 = theme.UpperContainer,
             Name = "ExecutorInfo"
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.85,
+            }),
+            util.new("UIGradient", {
+                Color = ColorSequence.new({
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))
+                }),
+                Transparency = NumberSequence.new({
+                    NumberSequenceKeypoint.new(0, 0.95),
+                    NumberSequenceKeypoint.new(1, 1)
+                }),
+                Rotation = 90
+            }),
             util.new("TextLabel", {
-                Text = "Executor: " .. (identifyexecutor and identifyexecutor() or "Unknown"),
-                TextColor3 = Color3.fromRGB(255, 255, 255),
+                Text = "⚡ " .. (identifyexecutor and identifyexecutor() or "Unknown Executor"),
+                TextColor3 = theme.TextColor,
                 TextSize = 14,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -20, 0, 22),
-                Position = UDim2.new(0, 10, 0, 8),
+                Size = UDim2.new(1, -24, 0, 22),
+                Position = UDim2.new(0, 14, 0, 12),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             }),
             util.new("TextLabel", {
-                Text = "Fully supported executor.",
-                TextColor3 = Color3.fromRGB(180, 180, 190),
+                Text = "✓ Fully supported and optimized",
+                TextColor3 = Color3.fromRGB(100, 255, 150),
                 TextSize = 11,
                 Font = Enum.Font.Gotham,
-                Size = UDim2.new(1, -20, 0, 16),
-                Position = UDim2.new(0, 10, 0, 32),
+                Size = UDim2.new(1, -24, 0, 16),
+                Position = UDim2.new(0, 14, 0, 38),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             })
@@ -617,7 +699,7 @@ do
             while true do
                 wait(5)
                 if PlayersCount then
-                    PlayersCount.Text = #game:GetService("Players"):GetPlayers() .. " players currently online"
+                    PlayersCount.Text = #game:GetService("Players"):GetPlayers() .. " online"
                 end
             end
         end)
@@ -626,6 +708,90 @@ do
         homeTab:select()
         
         return homeTab
+    end
+
+    function library:Notify(text, duration)
+        duration = duration or 3
+        
+        local ScreenGui = self.MasterContainer.Parent
+        
+        -- Create notification container if it doesn't exist
+        local NotificationContainer = ScreenGui:FindFirstChild("NotificationContainer")
+        if not NotificationContainer then
+            NotificationContainer = util.new("Frame", {
+                Parent = ScreenGui,
+                Size = UDim2.new(0, 300, 1, 0),
+                Position = UDim2.new(1, -310, 0, 10),
+                BackgroundTransparency = 1,
+                Name = "NotificationContainer",
+                ZIndex = 200
+            }, {
+                util.new("UIListLayout", {
+                    SortOrder = Enum.SortOrder.LayoutOrder,
+                    Padding = UDim.new(0, 8),
+                    VerticalAlignment = Enum.VerticalAlignment.Top,
+                })
+            })
+        end
+        
+        -- Create notification
+        local Notification = util.new("Frame", {
+            Parent = NotificationContainer,
+            Size = UDim2.new(1, 0, 0, 0),
+            BackgroundColor3 = theme.UpperContainer,
+            BackgroundTransparency = 1,
+            ZIndex = 201
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 1,
+            })
+        })
+        
+        local NotifText = util.new("TextLabel", {
+            Parent = Notification,
+            Text = text,
+            TextColor3 = theme.TextColor,
+            TextSize = 13,
+            Font = Enum.Font.Gotham,
+            Size = UDim2.new(1, -20, 1, -16),
+            Position = UDim2.new(0, 10, 0, 8),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            TextYAlignment = Enum.TextYAlignment.Top,
+            TextWrapped = true,
+            BackgroundTransparency = 1,
+            ZIndex = 202,
+            TextTransparency = 1,
+        })
+        
+        -- Calculate height based on text
+        local textHeight = game:GetService("TextService"):GetTextSize(
+            text,
+            13,
+            Enum.Font.Gotham,
+            Vector2.new(280, math.huge)
+        ).Y
+        
+        local notifHeight = math.max(textHeight + 16, 40)
+        
+        -- Animate in
+        Notification.Size = UDim2.new(1, 0, 0, notifHeight)
+        
+        util.tween(Notification, { BackgroundTransparency = 0 }, 0.3)
+        util.tween(Notification.UIStroke, { Transparency = 0 }, 0.3)
+        util.tween(NotifText, { TextTransparency = 0 }, 0.3)
+        
+        -- Wait and animate out
+        task.spawn(function()
+            wait(duration)
+            util.tween(Notification, { BackgroundTransparency = 1 }, 0.3)
+            util.tween(Notification.UIStroke, { Transparency = 1 }, 0.3)
+            util.tween(NotifText, { TextTransparency = 1 }, 0.3)
+            wait(0.3)
+            Notification:Destroy()
+        end)
     end
 
     function library:AddTab(title, desc)
