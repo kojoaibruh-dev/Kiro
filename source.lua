@@ -561,12 +561,257 @@ do
             BackgroundTransparency = 1,
         })
         
-        -- Update player count every 5 seconds
+        -- Game Information Section
+        local GameInfo = util.new("Frame", {
+            Parent = HomeContainer,
+            Size = UDim2.new(1, -20, 0, 85),
+            Position = UDim2.new(0, 10, 0, 186),
+            BackgroundColor3 = theme.UpperContainer,
+            Name = "GameInfo"
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.85,
+            }),
+            util.new("UIGradient", {
+                Color = ColorSequence.new({
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))
+                }),
+                Transparency = NumberSequence.new({
+                    NumberSequenceKeypoint.new(0, 0.95),
+                    NumberSequenceKeypoint.new(1, 1)
+                }),
+                Rotation = 90
+            }),
+            util.new("TextLabel", {
+                Text = "Game Information",
+                TextColor3 = theme.TextColor,
+                TextSize = 15,
+                Font = Enum.Font.GothamBold,
+                Size = UDim2.new(1, -20, 0, 24),
+                Position = UDim2.new(0, 12, 0, 8),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                BackgroundTransparency = 1,
+            })
+        })
+        
+        -- Game Name
+        local GameNameFrame = util.new("Frame", {
+            Parent = GameInfo,
+            Size = UDim2.new(0.48, -5, 0, 45),
+            Position = UDim2.new(0, 10, 0, 36),
+            BackgroundColor3 = theme.InnerContainer,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.85,
+            }),
+            util.new("TextLabel", {
+                Text = "Game",
+                TextColor3 = theme.TextColor,
+                TextSize = 13,
+                Font = Enum.Font.GothamBold,
+                Size = UDim2.new(1, -14, 0, 18),
+                Position = UDim2.new(0, 8, 0, 5),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                BackgroundTransparency = 1,
+            })
+        })
+        
+        local gameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+        util.new("TextLabel", {
+            Parent = GameNameFrame,
+            Text = gameName,
+            TextColor3 = theme.SubTextColor,
+            TextSize = 11,
+            Font = Enum.Font.Gotham,
+            Size = UDim2.new(1, -14, 0, 16),
+            Position = UDim2.new(0, 8, 0, 24),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            TextTruncate = Enum.TextTruncate.AtEnd,
+            BackgroundTransparency = 1,
+        })
+        
+        -- Place ID
+        local PlaceIDFrame = util.new("Frame", {
+            Parent = GameInfo,
+            Size = UDim2.new(0.48, -5, 0, 45),
+            Position = UDim2.new(0.52, 0, 0, 36),
+            BackgroundColor3 = theme.InnerContainer,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.85,
+            }),
+            util.new("TextLabel", {
+                Text = "Place ID",
+                TextColor3 = theme.TextColor,
+                TextSize = 13,
+                Font = Enum.Font.GothamBold,
+                Size = UDim2.new(1, -14, 0, 18),
+                Position = UDim2.new(0, 8, 0, 5),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                BackgroundTransparency = 1,
+            }),
+            util.new("TextLabel", {
+                Text = tostring(game.PlaceId),
+                TextColor3 = theme.SubTextColor,
+                TextSize = 11,
+                Font = Enum.Font.Gotham,
+                Size = UDim2.new(1, -14, 0, 16),
+                Position = UDim2.new(0, 8, 0, 24),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                BackgroundTransparency = 1,
+            })
+        })
+        
+        -- System Information Section
+        local SystemInfo = util.new("Frame", {
+            Parent = HomeContainer,
+            Size = UDim2.new(1, -20, 0, 85),
+            Position = UDim2.new(0, 10, 0, 279),
+            BackgroundColor3 = theme.UpperContainer,
+            Name = "SystemInfo"
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.85,
+            }),
+            util.new("UIGradient", {
+                Color = ColorSequence.new({
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))
+                }),
+                Transparency = NumberSequence.new({
+                    NumberSequenceKeypoint.new(0, 0.95),
+                    NumberSequenceKeypoint.new(1, 1)
+                }),
+                Rotation = 90
+            }),
+            util.new("TextLabel", {
+                Text = "System Information",
+                TextColor3 = theme.TextColor,
+                TextSize = 15,
+                Font = Enum.Font.GothamBold,
+                Size = UDim2.new(1, -20, 0, 24),
+                Position = UDim2.new(0, 12, 0, 8),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                BackgroundTransparency = 1,
+            })
+        })
+        
+        -- FPS Counter
+        local FPSFrame = util.new("Frame", {
+            Parent = SystemInfo,
+            Size = UDim2.new(0.48, -5, 0, 45),
+            Position = UDim2.new(0, 10, 0, 36),
+            BackgroundColor3 = theme.InnerContainer,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.85,
+            }),
+            util.new("TextLabel", {
+                Text = "FPS",
+                TextColor3 = theme.TextColor,
+                TextSize = 13,
+                Font = Enum.Font.GothamBold,
+                Size = UDim2.new(1, -14, 0, 18),
+                Position = UDim2.new(0, 8, 0, 5),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                BackgroundTransparency = 1,
+            })
+        })
+        
+        local FPSLabel = util.new("TextLabel", {
+            Parent = FPSFrame,
+            Text = "60 FPS",
+            TextColor3 = theme.SubTextColor,
+            TextSize = 11,
+            Font = Enum.Font.Gotham,
+            Size = UDim2.new(1, -14, 0, 16),
+            Position = UDim2.new(0, 8, 0, 24),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            BackgroundTransparency = 1,
+        })
+        
+        -- Ping Counter
+        local PingFrame = util.new("Frame", {
+            Parent = SystemInfo,
+            Size = UDim2.new(0.48, -5, 0, 45),
+            Position = UDim2.new(0.52, 0, 0, 36),
+            BackgroundColor3 = theme.InnerContainer,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.85,
+            }),
+            util.new("TextLabel", {
+                Text = "Ping",
+                TextColor3 = theme.TextColor,
+                TextSize = 13,
+                Font = Enum.Font.GothamBold,
+                Size = UDim2.new(1, -14, 0, 18),
+                Position = UDim2.new(0, 8, 0, 5),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                BackgroundTransparency = 1,
+            })
+        })
+        
+        local PingLabel = util.new("TextLabel", {
+            Parent = PingFrame,
+            Text = "0 ms",
+            TextColor3 = theme.SubTextColor,
+            TextSize = 11,
+            Font = Enum.Font.Gotham,
+            Size = UDim2.new(1, -14, 0, 16),
+            Position = UDim2.new(0, 8, 0, 24),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            BackgroundTransparency = 1,
+        })
+        
+        -- Update player count, FPS, and Ping
+        local lastUpdate = tick()
+        local frameCount = 0
         task.spawn(function()
             while true do
-                wait(5)
-                if PlayersCount then
-                    PlayersCount.Text = #game:GetService("Players"):GetPlayers() .. " online"
+                RunService.RenderStepped:Wait()
+                frameCount = frameCount + 1
+                
+                local now = tick()
+                if now - lastUpdate >= 1 then
+                    -- Update FPS
+                    local fps = math.floor(frameCount / (now - lastUpdate))
+                    if FPSLabel then
+                        FPSLabel.Text = fps .. " FPS"
+                    end
+                    
+                    -- Update Ping
+                    local ping = math.floor(game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValue())
+                    if PingLabel then
+                        PingLabel.Text = ping .. " ms"
+                    end
+                    
+                    -- Update Player Count
+                    if PlayersCount then
+                        PlayersCount.Text = #game:GetService("Players"):GetPlayers() .. " online"
+                    end
+                    
+                    frameCount = 0
+                    lastUpdate = now
                 end
             end
         end)
