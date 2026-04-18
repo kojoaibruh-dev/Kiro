@@ -561,7 +561,7 @@ do
         if discordLink and discordLink ~= "" then
             local DiscordSection = util.new("Frame", {
                 Parent = HomeContainer,
-                Size = UDim2.new(1, -20, 0, 60),
+                Size = UDim2.new(1, -20, 0, 78),
                 Position = UDim2.new(0, 10, 0, discordYPos),
                 BackgroundColor3 = theme.UpperContainer,
                 Name = "DiscordSection"
@@ -587,14 +587,25 @@ do
             
             util.new("TextLabel", {
                 Parent = DiscordSection,
+                Text = "Join Our Community",
+                TextColor3 = theme.TextColor,
+                TextSize = 14,
+                Font = Enum.Font.GothamBold,
+                Size = UDim2.new(1, -20, 0, 20),
+                Position = UDim2.new(0, 12, 0, 10),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                BackgroundTransparency = 1,
+            })
+            
+            util.new("TextLabel", {
+                Parent = DiscordSection,
                 Text = "Get updates, report bugs, and chat with the community!",
                 TextColor3 = theme.SubTextColor,
                 TextSize = 11,
                 Font = Enum.Font.Gotham,
-                Size = UDim2.new(1, -145, 1, -20),
-                Position = UDim2.new(0, 12, 0, 10),
+                Size = UDim2.new(1, -150, 0, 30),
+                Position = UDim2.new(0, 12, 0, 34),
                 TextXAlignment = Enum.TextXAlignment.Left,
-                TextYAlignment = Enum.TextYAlignment.Center,
                 TextWrapped = true,
                 BackgroundTransparency = 1,
             })
@@ -602,8 +613,8 @@ do
             -- Join Discord Button
             local JoinButton = util.new("TextButton", {
                 Parent = DiscordSection,
-                Size = UDim2.new(0, 120, 0, 36),
-                Position = UDim2.new(1, -132, 0.5, -18),
+                Size = UDim2.new(0, 125, 0, 34),
+                Position = UDim2.new(1, -137, 0, 32),
                 BackgroundColor3 = Color3.fromRGB(88, 101, 242),
                 Text = "Copy Link",
                 TextColor3 = Color3.fromRGB(255, 255, 255),
@@ -633,7 +644,7 @@ do
                 util.tween(JoinButton.UIStroke, { Transparency = 1, Thickness = 0 }, 0.2)
             end)
             
-            discordYPos = discordYPos + 68
+            discordYPos = discordYPos + 86
         end
         
         -- Executor Info
@@ -672,7 +683,7 @@ do
                 BackgroundTransparency = 1,
             }),
             util.new("TextLabel", {
-                Text = "Fully supported",
+                Text = "Fully supported and optimized",
                 TextColor3 = Color3.fromRGB(100, 255, 150),
                 TextSize = 11,
                 Font = Enum.Font.Gotham,
@@ -1024,43 +1035,30 @@ do
         --//Tab Selector
         local TabSelector, TabSelectorColour = util.new("TextButton", { --> TabSelector
             Parent = library.TabSelectContainer,
-            Size = UDim2.new(1, -14, 0, 50), --> note: horizontal padding overriden by UIListLayour HorizontalAlignment property
-            Position = UDim2.new(0, 7, 0, 5),
+            Size = UDim2.new(1, -10, 0, 45), --> note: horizontal padding overriden by UIListLayour HorizontalAlignment property
+            Position = UDim2.new(0, 5, 0, 5),
             BackgroundColor3 = theme.InnerContainer,
             LayoutOrder = id,
             Name = "TabSelector"
         }, {
-            util.new("UICorner", {
-                CornerRadius = UDim.new(0, 6)
-            }),
-            util.new("UIStroke", {
-                Color = theme.InteractableOutline,
-                Thickness = 1,
-                Transparency = 0.7,
-            }),
             util.new("Frame", {
-                Size = UDim2.new(0, 3, 1, -8),
-                Position = UDim2.new(0, 4, 0, 4),
+                Size = UDim2.new(0, 4, 1, 0),
                 BackgroundColor3 = theme.NotSelectedTab,
-            }, {
-                util.new("UICorner", {
-                    CornerRadius = UDim.new(0, 4)
-                })
             }),
             util.new("TextLabel", { --Title
                 Text = title,
                 TextColor3 = theme.TextColor,
-                TextSize = 13,
-                Font = Enum.Font.GothamBold,
-                Position = UDim2.new(0, 14, 0, 10),
+                TextSize = 14,
+                Font = Enum.Font.GothamMedium,
+                Position = UDim2.new(0, 12, 0, 8),
                 Name = "TopBarTitleText"
             }),
             util.new("TextLabel",  {
                 Text = desc,
                 TextColor3 = theme.SubTextColor,
-                TextSize = 10,
+                TextSize = 11,
                 Font = Enum.Font.Gotham,
-                Position = UDim2.new(0, 14, 0, 28),
+                Position = UDim2.new(0, 12, 0, 26),
                 Name = "TopBarTitleDesc"
             })
             
