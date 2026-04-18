@@ -797,7 +797,7 @@ do
             Vector2.new(250, math.huge)
         ).Y
         
-        local notifHeight = math.max(textHeight + 12, 34)
+        local notifHeight = math.max(textHeight + 18, 42)
         
         -- Set initial size
         NotificationWrapper.Size = UDim2.new(1, 0, 0, notifHeight)
