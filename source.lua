@@ -185,14 +185,6 @@ do
             }),
         })
         
-        -- Calculate title width to position version next to it
-        local titleWidth = game:GetService("TextService"):GetTextSize(
-            title,
-            14,
-            Enum.Font.GothamBold,
-            Vector2.new(math.huge, math.huge)
-        ).X
-        
         --//TopBar 
         local TopBarVersion = util.new("TextLabel", { -->version
             Parent = TopBarContainer,
@@ -201,7 +193,7 @@ do
             TextXAlignment = Enum.TextXAlignment.Left,
             TextSize = 10,
             Font = Enum.Font.Gotham,
-            Position = UDim2.new(0, 8 + titleWidth + 8, 0, 9),
+            Position = UDim2.new(0, 8 + TopBarTitle.TextBounds.X + 8, 0, 9),
             Name = "Version"
         })
 
