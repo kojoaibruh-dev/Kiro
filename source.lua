@@ -67,26 +67,26 @@ interactable.__index = interactable
 
 --//Theme
 local theme = getgenv().theme or {
-    BackColor = Color3.fromRGB(15, 15, 20),
-    TopBar = Color3.fromRGB(20, 15, 30),
+    BackColor = Color3.fromRGB(10, 10, 10),
+    TopBar = Color3.fromRGB(15, 15, 15),
 
-    UpperContainer = Color3.fromRGB(25, 20, 35),
-    InnerContainer = Color3.fromRGB(20, 15, 30),
+    UpperContainer = Color3.fromRGB(20, 20, 20),
+    InnerContainer = Color3.fromRGB(15, 15, 15),
 
-    InteractableBackground = Color3.fromRGB(30, 25, 40),
-    InteractableOutline = Color3.fromRGB(100, 80, 140),
+    InteractableBackground = Color3.fromRGB(25, 25, 25),
+    InteractableOutline = Color3.fromRGB(80, 80, 80),
 
-    Accent = Color3.fromRGB(150, 100, 255), --> Purple accent
-    AccentHover = Color3.fromRGB(170, 120, 255), --> Lighter purple for hover
+    Accent = Color3.fromRGB(255, 255, 255), --> White accent
+    AccentHover = Color3.fromRGB(200, 200, 200), --> Light gray for hover
 
-    NotSelectedTab = Color3.fromRGB(80, 60, 100),
+    NotSelectedTab = Color3.fromRGB(60, 60, 60),
 
-    TextColor = Color3.fromRGB(240, 240, 250),
-    SubTextColor = Color3.fromRGB(180, 170, 200),
+    TextColor = Color3.fromRGB(255, 255, 255),
+    SubTextColor = Color3.fromRGB(160, 160, 160),
 
 
-    ButtonTop = Color3.fromRGB(40, 30, 55),
-    ButtonBottom = Color3.fromRGB(50, 40, 65),
+    ButtonTop = Color3.fromRGB(30, 30, 30),
+    ButtonBottom = Color3.fromRGB(40, 40, 40),
 }
 
 --//Library
@@ -190,8 +190,8 @@ do
                 util.new("UICorner", {CornerRadius = UDim.new(0, 16)}),
                 util.new("UIGradient", {
                     Color = ColorSequence.new({
-                        ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 20, 40)),
-                        ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 15, 30))
+                        ColorSequenceKeypoint.new(0, Color3.fromRGB(20, 20, 20)),
+                        ColorSequenceKeypoint.new(1, Color3.fromRGB(15, 15, 15))
                     }),
                     Rotation = 90
                 })
@@ -250,8 +250,8 @@ do
                 }),
                 util.new("UIGradient", {
                     Color = ColorSequence.new({
-                        ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 25, 45)),
-                        ColorSequenceKeypoint.new(1, Color3.fromRGB(25, 20, 35))
+                        ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 25, 25)),
+                        ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 20))
                     }),
                     Rotation = 90
                 }),
@@ -282,8 +282,8 @@ do
                 }),
                 util.new("UIGradient", {
                     Color = ColorSequence.new({
-                        ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 25, 45)),
-                        ColorSequenceKeypoint.new(1, Color3.fromRGB(25, 20, 35))
+                        ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 25, 25)),
+                        ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 20))
                     }),
                     Rotation = 90
                 })
@@ -374,8 +374,8 @@ do
             util.new("UICorner", {CornerRadius = UDim.new(0, 14)}),
             util.new("UIGradient", {
                 Color = ColorSequence.new({
-                    ColorSequenceKeypoint.new(0, Color3.fromRGB(20, 15, 30)),
-                    ColorSequenceKeypoint.new(1, Color3.fromRGB(15, 15, 25))
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(15, 15, 15)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(10, 10, 10))
                 }),
                 Rotation = 135
             })
@@ -400,8 +400,8 @@ do
             }),
             util.new("UIGradient", {
                 Color = ColorSequence.new({
-                    ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 25, 45)),
-                    ColorSequenceKeypoint.new(1, Color3.fromRGB(25, 20, 40))
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 25, 25)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 20))
                 }),
                 Rotation = 90
             }),
@@ -433,8 +433,8 @@ do
             }),
             util.new("UIGradient", {
                 Color = ColorSequence.new({
-                    ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 20, 40)),
-                    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 15, 35))
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(20, 20, 20)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(15, 15, 15))
                 }),
                 Rotation = 45
             })
@@ -896,8 +896,8 @@ do
             util.new("UICorner", {CornerRadius = UDim.new(0, 14)}),
             util.new("UIGradient", {
                 Color = ColorSequence.new({
-                    ColorSequenceKeypoint.new(0, Color3.fromRGB(20, 15, 30)),
-                    ColorSequenceKeypoint.new(1, Color3.fromRGB(15, 15, 25))
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(15, 15, 15)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(10, 10, 10))
                 }),
                 Rotation = 135
             })
@@ -932,8 +932,8 @@ do
             }),
             util.new("UIGradient", {
                 Color = ColorSequence.new({
-                    ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 25, 45)),
-                    ColorSequenceKeypoint.new(1, Color3.fromRGB(25, 20, 40))
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 25, 25)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 20))
                 }),
                 Rotation = 90
             }),
@@ -1062,8 +1062,8 @@ do
             }),
             util.new("UIGradient", {
                 Color = ColorSequence.new({
-                    ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 25, 45)),
-                    ColorSequenceKeypoint.new(1, Color3.fromRGB(25, 20, 40))
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 25, 25)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 20))
                 }),
                 Rotation = 90
             }),
@@ -1154,8 +1154,8 @@ do
             }),
             util.new("UIGradient", {
                 Color = ColorSequence.new({
-                    ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 25, 45)),
-                    ColorSequenceKeypoint.new(1, Color3.fromRGB(25, 20, 40))
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 25, 25)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 20))
                 }),
                 Rotation = 90
             }),
@@ -1750,8 +1750,8 @@ do
             }),
             util.new("UIGradient", {
                 Color = ColorSequence.new({
-                    ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 20, 40)),
-                    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 15, 35))
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(20, 20, 20)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(15, 15, 15))
                 }),
                 Rotation = 90
             })
