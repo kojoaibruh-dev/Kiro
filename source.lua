@@ -857,30 +857,15 @@ do
     end
 
     function library:AddSettingsButton()
-        -- Create settings button in top right with glow effect
-        local SettingsButtonContainer = util.new("Frame", {
-            Parent = self.TopBarContainer,
-            Size = UDim2.new(0, 28, 0, 28),
-            Position = UDim2.new(1, -36, 0, 4),
-            BackgroundTransparency = 1,
-            Name = "SettingsButtonContainer"
-        })
-        
+        -- Create settings button in top right (icon only, no background)
         local SettingsButton = util.new("ImageButton", {
-            Parent = SettingsButtonContainer,
-            Size = UDim2.new(1, 0, 1, 0),
-            BackgroundColor3 = theme.UpperContainer,
-            BackgroundTransparency = 0.3,
+            Parent = self.TopBarContainer,
+            Size = UDim2.new(0, 24, 0, 24),
+            Position = UDim2.new(1, -34, 0, 6),
+            BackgroundTransparency = 1,
             Image = "rbxassetid://122074247455706",
             ImageColor3 = theme.Accent,
             Name = "SettingsButton"
-        }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
-            util.new("UIStroke", {
-                Color = theme.Accent,
-                Thickness = 1,
-                Transparency = 0.7,
-            })
         })
         
         -- Create settings panel
@@ -1398,13 +1383,11 @@ do
         
         -- Hover effect with smooth animation
         SettingsButton.MouseEnter:Connect(function()
-            util.tween(SettingsButton, { BackgroundTransparency = 0.1, ImageColor3 = theme.AccentHover }, 0.2)
-            util.tween(SettingsButton.UIStroke, { Transparency = 0.4 }, 0.2)
+            util.tween(SettingsButton, { ImageColor3 = theme.AccentHover }, 0.2)
         end)
         
         SettingsButton.MouseLeave:Connect(function()
-            util.tween(SettingsButton, { BackgroundTransparency = 0.3, ImageColor3 = theme.Accent }, 0.2)
-            util.tween(SettingsButton.UIStroke, { Transparency = 0.7 }, 0.2)
+            util.tween(SettingsButton, { ImageColor3 = theme.Accent }, 0.2)
         end)
         
         return SettingsContainer
