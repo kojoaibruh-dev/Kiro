@@ -370,35 +370,24 @@ do
         -- Session Information Section
         local SessionInfo = util.new("Frame", {
             Parent = HomeContainer,
-            Size = UDim2.new(1, -20, 0, 85),
+            Size = UDim2.new(1, -20, 0, 95),
             Position = UDim2.new(0, 10, 0, 10),
             BackgroundColor3 = theme.UpperContainer,
             Name = "SessionInfo"
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.85,
-            }),
-            util.new("UIGradient", {
-                Color = ColorSequence.new({
-                    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
-                    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))
-                }),
-                Transparency = NumberSequence.new({
-                    NumberSequenceKeypoint.new(0, 0.95),
-                    NumberSequenceKeypoint.new(1, 1)
-                }),
-                Rotation = 90
+                Transparency = 0.9,
             }),
             util.new("TextLabel", {
-                Text = "Session Information",
-                TextColor3 = theme.TextColor,
-                TextSize = 15,
+                Text = "SESSION INFORMATION",
+                TextColor3 = theme.SubTextColor,
+                TextSize = 11,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -20, 0, 24),
-                Position = UDim2.new(0, 12, 0, 8),
+                Size = UDim2.new(1, -20, 0, 20),
+                Position = UDim2.new(0, 14, 0, 12),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             })
@@ -407,36 +396,38 @@ do
         -- Players info
         local PlayersFrame = util.new("Frame", {
             Parent = SessionInfo,
-            Size = UDim2.new(0.48, -5, 0, 45),
-            Position = UDim2.new(0, 10, 0, 36),
-            BackgroundColor3 = theme.InnerContainer,
+            Size = UDim2.new(0.48, -5, 0, 50),
+            Position = UDim2.new(0, 12, 0, 38),
+            BackgroundColor3 = theme.BackColor,
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.85,
+                Transparency = 0.92,
             }),
-            util.new("TextLabel", {
-                Text = "Players",
-                TextColor3 = theme.TextColor,
-                TextSize = 13,
-                Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -14, 0, 18),
-                Position = UDim2.new(0, 8, 0, 5),
-                TextXAlignment = Enum.TextXAlignment.Left,
-                BackgroundTransparency = 1,
-            })
+        })
+        
+        util.new("TextLabel", {
+            Parent = PlayersFrame,
+            Text = "Players",
+            TextColor3 = theme.TextColor,
+            TextSize = 12,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(1, -16, 0, 16),
+            Position = UDim2.new(0, 10, 0, 8),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            BackgroundTransparency = 1,
         })
         
         local PlayersCount = util.new("TextLabel", {
             Parent = PlayersFrame,
             Text = #game:GetService("Players"):GetPlayers() .. " online",
-            TextColor3 = theme.SubTextColor,
-            TextSize = 11,
-            Font = Enum.Font.Gotham,
-            Size = UDim2.new(1, -14, 0, 16),
-            Position = UDim2.new(0, 8, 0, 24),
+            TextColor3 = Color3.fromRGB(150, 200, 255),
+            TextSize = 14,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(1, -16, 0, 18),
+            Position = UDim2.new(0, 10, 0, 26),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -444,92 +435,90 @@ do
         -- Max players info
         local MaxPlayersFrame = util.new("Frame", {
             Parent = SessionInfo,
-            Size = UDim2.new(0.48, -5, 0, 45),
-            Position = UDim2.new(0.52, 0, 0, 36),
-            BackgroundColor3 = theme.InnerContainer,
+            Size = UDim2.new(0.48, -5, 0, 50),
+            Position = UDim2.new(0.52, 0, 0, 38),
+            BackgroundColor3 = theme.BackColor,
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.85,
+                Transparency = 0.92,
             }),
-            util.new("TextLabel", {
-                Text = "Max Players",
-                TextColor3 = theme.TextColor,
-                TextSize = 13,
-                Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -14, 0, 18),
-                Position = UDim2.new(0, 8, 0, 5),
-                TextXAlignment = Enum.TextXAlignment.Left,
-                BackgroundTransparency = 1,
-            }),
-            util.new("TextLabel", {
-                Text = game:GetService("Players").MaxPlayers .. " max",
-                TextColor3 = theme.SubTextColor,
-                TextSize = 11,
-                Font = Enum.Font.Gotham,
-                Size = UDim2.new(1, -14, 0, 16),
-                Position = UDim2.new(0, 8, 0, 24),
-                TextXAlignment = Enum.TextXAlignment.Left,
-                TextWrapped = true,
-                BackgroundTransparency = 1,
-            })
+        })
+        
+        util.new("TextLabel", {
+            Parent = MaxPlayersFrame,
+            Text = "Max Players",
+            TextColor3 = theme.TextColor,
+            TextSize = 12,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(1, -16, 0, 16),
+            Position = UDim2.new(0, 10, 0, 8),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            BackgroundTransparency = 1,
+        })
+        
+        util.new("TextLabel", {
+            Parent = MaxPlayersFrame,
+            Text = game:GetService("Players").MaxPlayers .. " max",
+            TextColor3 = Color3.fromRGB(255, 180, 120),
+            TextSize = 14,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(1, -16, 0, 18),
+            Position = UDim2.new(0, 10, 0, 26),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            BackgroundTransparency = 1,
         })
         
         -- User Info Section
         local player = game:GetService("Players").LocalPlayer
         local UserInfo = util.new("Frame", {
             Parent = HomeContainer,
-            Size = UDim2.new(1, -20, 0, 75),
-            Position = UDim2.new(0, 10, 0, 103),
+            Size = UDim2.new(1, -20, 0, 80),
+            Position = UDim2.new(0, 10, 0, 113),
             BackgroundColor3 = theme.UpperContainer,
             Name = "UserInfo"
-        }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
-            util.new("UIStroke", {
-                Color = theme.Accent,
-                Thickness = 1,
-                Transparency = 0.85,
-            }),
-            util.new("UIGradient", {
-                Color = ColorSequence.new({
-                    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
-                    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))
-                }),
-                Transparency = NumberSequence.new({
-                    NumberSequenceKeypoint.new(0, 0.95),
-                    NumberSequenceKeypoint.new(1, 1)
-                }),
-                Rotation = 90
-            })
-        })
-        
-        -- User avatar
-        local Avatar = util.new("ImageLabel", {
-            Parent = UserInfo,
-            Size = UDim2.new(0, 58, 0, 58),
-            Position = UDim2.new(0, 10, 0, 8),
-            BackgroundColor3 = theme.InnerContainer,
-            Image = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. player.UserId .. "&width=150&height=150&format=png",
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
-                Thickness = 2,
-                Transparency = 0.5,
+                Thickness = 1,
+                Transparency = 0.9,
             })
         })
         
-        -- User name
+        -- User avatar with glow effect
+        local AvatarContainer = util.new("Frame", {
+            Parent = UserInfo,
+            Size = UDim2.new(0, 64, 0, 64),
+            Position = UDim2.new(0, 12, 0, 8),
+            BackgroundTransparency = 1,
+        })
+        
+        local Avatar = util.new("ImageLabel", {
+            Parent = AvatarContainer,
+            Size = UDim2.new(1, 0, 1, 0),
+            BackgroundColor3 = theme.BackColor,
+            Image = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. player.UserId .. "&width=150&height=150&format=png",
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
+            util.new("UIStroke", {
+                Color = Color3.fromRGB(150, 200, 255),
+                Thickness = 2,
+                Transparency = 0.3,
+            })
+        })
+        
+        -- User name with better styling
         util.new("TextLabel", {
             Parent = UserInfo,
             Text = player.DisplayName or player.Name,
             TextColor3 = theme.TextColor,
-            TextSize = 15,
+            TextSize = 16,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(1, -80, 0, 20),
-            Position = UDim2.new(0, 76, 0, 10),
+            Size = UDim2.new(1, -90, 0, 22),
+            Position = UDim2.new(0, 84, 0, 12),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -538,25 +527,25 @@ do
         util.new("TextLabel", {
             Parent = UserInfo,
             Text = "@" .. player.Name,
-            TextColor3 = theme.SubTextColor,
+            TextColor3 = Color3.fromRGB(150, 200, 255),
             TextSize = 12,
             Font = Enum.Font.Gotham,
-            Size = UDim2.new(1, -80, 0, 16),
-            Position = UDim2.new(0, 76, 0, 32),
+            Size = UDim2.new(1, -90, 0, 16),
+            Position = UDim2.new(0, 84, 0, 36),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
         
-        -- Account age
+        -- Account age with icon-like styling
         local accountAge = player.AccountAge
         util.new("TextLabel", {
             Parent = UserInfo,
-            Text = accountAge .. " days old • Joined " .. os.date("%b %Y", os.time() - (accountAge * 86400)),
+            Text = accountAge .. " days • Joined " .. os.date("%b %Y", os.time() - (accountAge * 86400)),
             TextColor3 = theme.SubTextColor,
-            TextSize = 11,
+            TextSize = 10,
             Font = Enum.Font.Gotham,
-            Size = UDim2.new(1, -80, 0, 16),
-            Position = UDim2.new(0, 76, 0, 50),
+            Size = UDim2.new(1, -90, 0, 14),
+            Position = UDim2.new(0, 84, 0, 54),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -564,35 +553,24 @@ do
         -- Game Information Section
         local GameInfo = util.new("Frame", {
             Parent = HomeContainer,
-            Size = UDim2.new(1, -20, 0, 85),
-            Position = UDim2.new(0, 10, 0, 186),
+            Size = UDim2.new(1, -20, 0, 95),
+            Position = UDim2.new(0, 10, 0, 201),
             BackgroundColor3 = theme.UpperContainer,
             Name = "GameInfo"
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.85,
-            }),
-            util.new("UIGradient", {
-                Color = ColorSequence.new({
-                    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
-                    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))
-                }),
-                Transparency = NumberSequence.new({
-                    NumberSequenceKeypoint.new(0, 0.95),
-                    NumberSequenceKeypoint.new(1, 1)
-                }),
-                Rotation = 90
+                Transparency = 0.9,
             }),
             util.new("TextLabel", {
-                Text = "Game Information",
-                TextColor3 = theme.TextColor,
-                TextSize = 15,
+                Text = "GAME INFORMATION",
+                TextColor3 = theme.SubTextColor,
+                TextSize = 11,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -20, 0, 24),
-                Position = UDim2.new(0, 12, 0, 8),
+                Size = UDim2.new(1, -20, 0, 20),
+                Position = UDim2.new(0, 14, 0, 12),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             })
@@ -601,37 +579,39 @@ do
         -- Game Name
         local GameNameFrame = util.new("Frame", {
             Parent = GameInfo,
-            Size = UDim2.new(0.48, -5, 0, 45),
-            Position = UDim2.new(0, 10, 0, 36),
-            BackgroundColor3 = theme.InnerContainer,
+            Size = UDim2.new(0.48, -5, 0, 50),
+            Position = UDim2.new(0, 12, 0, 38),
+            BackgroundColor3 = theme.BackColor,
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.85,
+                Transparency = 0.92,
             }),
-            util.new("TextLabel", {
-                Text = "Game",
-                TextColor3 = theme.TextColor,
-                TextSize = 13,
-                Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -14, 0, 18),
-                Position = UDim2.new(0, 8, 0, 5),
-                TextXAlignment = Enum.TextXAlignment.Left,
-                BackgroundTransparency = 1,
-            })
+        })
+        
+        util.new("TextLabel", {
+            Parent = GameNameFrame,
+            Text = "Game",
+            TextColor3 = theme.TextColor,
+            TextSize = 12,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(1, -16, 0, 16),
+            Position = UDim2.new(0, 10, 0, 8),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            BackgroundTransparency = 1,
         })
         
         local gameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
         util.new("TextLabel", {
             Parent = GameNameFrame,
             Text = gameName,
-            TextColor3 = theme.SubTextColor,
-            TextSize = 11,
-            Font = Enum.Font.Gotham,
-            Size = UDim2.new(1, -14, 0, 16),
-            Position = UDim2.new(0, 8, 0, 24),
+            TextColor3 = Color3.fromRGB(200, 150, 255),
+            TextSize = 13,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(1, -16, 0, 18),
+            Position = UDim2.new(0, 10, 0, 26),
             TextXAlignment = Enum.TextXAlignment.Left,
             TextTruncate = Enum.TextTruncate.AtEnd,
             BackgroundTransparency = 1,
@@ -640,70 +620,63 @@ do
         -- Place ID
         local PlaceIDFrame = util.new("Frame", {
             Parent = GameInfo,
-            Size = UDim2.new(0.48, -5, 0, 45),
-            Position = UDim2.new(0.52, 0, 0, 36),
-            BackgroundColor3 = theme.InnerContainer,
-        }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
-            util.new("UIStroke", {
-                Color = theme.Accent,
-                Thickness = 1,
-                Transparency = 0.85,
-            }),
-            util.new("TextLabel", {
-                Text = "Place ID",
-                TextColor3 = theme.TextColor,
-                TextSize = 13,
-                Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -14, 0, 18),
-                Position = UDim2.new(0, 8, 0, 5),
-                TextXAlignment = Enum.TextXAlignment.Left,
-                BackgroundTransparency = 1,
-            }),
-            util.new("TextLabel", {
-                Text = tostring(game.PlaceId),
-                TextColor3 = theme.SubTextColor,
-                TextSize = 11,
-                Font = Enum.Font.Gotham,
-                Size = UDim2.new(1, -14, 0, 16),
-                Position = UDim2.new(0, 8, 0, 24),
-                TextXAlignment = Enum.TextXAlignment.Left,
-                BackgroundTransparency = 1,
-            })
-        })
-        
-        -- System Information Section
-        local SystemInfo = util.new("Frame", {
-            Parent = HomeContainer,
-            Size = UDim2.new(1, -20, 0, 85),
-            Position = UDim2.new(0, 10, 0, 279),
-            BackgroundColor3 = theme.UpperContainer,
-            Name = "SystemInfo"
+            Size = UDim2.new(0.48, -5, 0, 50),
+            Position = UDim2.new(0.52, 0, 0, 38),
+            BackgroundColor3 = theme.BackColor,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.85,
+                Transparency = 0.92,
             }),
-            util.new("UIGradient", {
-                Color = ColorSequence.new({
-                    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
-                    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))
-                }),
-                Transparency = NumberSequence.new({
-                    NumberSequenceKeypoint.new(0, 0.95),
-                    NumberSequenceKeypoint.new(1, 1)
-                }),
-                Rotation = 90
+        })
+        
+        util.new("TextLabel", {
+            Parent = PlaceIDFrame,
+            Text = "Place ID",
+            TextColor3 = theme.TextColor,
+            TextSize = 12,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(1, -16, 0, 16),
+            Position = UDim2.new(0, 10, 0, 8),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            BackgroundTransparency = 1,
+        })
+        
+        util.new("TextLabel", {
+            Parent = PlaceIDFrame,
+            Text = tostring(game.PlaceId),
+            TextColor3 = Color3.fromRGB(255, 200, 150),
+            TextSize = 13,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(1, -16, 0, 18),
+            Position = UDim2.new(0, 10, 0, 26),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            BackgroundTransparency = 1,
+        })
+        
+        -- System Information Section
+        local SystemInfo = util.new("Frame", {
+            Parent = HomeContainer,
+            Size = UDim2.new(1, -20, 0, 95),
+            Position = UDim2.new(0, 10, 0, 304),
+            BackgroundColor3 = theme.UpperContainer,
+            Name = "SystemInfo"
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.9,
             }),
             util.new("TextLabel", {
-                Text = "System Information",
-                TextColor3 = theme.TextColor,
-                TextSize = 15,
+                Text = "SYSTEM INFORMATION",
+                TextColor3 = theme.SubTextColor,
+                TextSize = 11,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -20, 0, 24),
-                Position = UDim2.new(0, 12, 0, 8),
+                Size = UDim2.new(1, -20, 0, 20),
+                Position = UDim2.new(0, 14, 0, 12),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             })
@@ -712,36 +685,38 @@ do
         -- FPS Counter
         local FPSFrame = util.new("Frame", {
             Parent = SystemInfo,
-            Size = UDim2.new(0.48, -5, 0, 45),
-            Position = UDim2.new(0, 10, 0, 36),
-            BackgroundColor3 = theme.InnerContainer,
+            Size = UDim2.new(0.48, -5, 0, 50),
+            Position = UDim2.new(0, 12, 0, 38),
+            BackgroundColor3 = theme.BackColor,
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.85,
+                Transparency = 0.92,
             }),
-            util.new("TextLabel", {
-                Text = "FPS",
-                TextColor3 = theme.TextColor,
-                TextSize = 13,
-                Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -14, 0, 18),
-                Position = UDim2.new(0, 8, 0, 5),
-                TextXAlignment = Enum.TextXAlignment.Left,
-                BackgroundTransparency = 1,
-            })
+        })
+        
+        util.new("TextLabel", {
+            Parent = FPSFrame,
+            Text = "FPS",
+            TextColor3 = theme.TextColor,
+            TextSize = 12,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(1, -16, 0, 16),
+            Position = UDim2.new(0, 10, 0, 8),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            BackgroundTransparency = 1,
         })
         
         local FPSLabel = util.new("TextLabel", {
             Parent = FPSFrame,
-            Text = "60 FPS",
-            TextColor3 = theme.SubTextColor,
-            TextSize = 11,
-            Font = Enum.Font.Gotham,
-            Size = UDim2.new(1, -14, 0, 16),
-            Position = UDim2.new(0, 8, 0, 24),
+            Text = "60",
+            TextColor3 = Color3.fromRGB(150, 255, 150),
+            TextSize = 18,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(1, -16, 0, 20),
+            Position = UDim2.new(0, 10, 0, 24),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -749,36 +724,38 @@ do
         -- Ping Counter
         local PingFrame = util.new("Frame", {
             Parent = SystemInfo,
-            Size = UDim2.new(0.48, -5, 0, 45),
-            Position = UDim2.new(0.52, 0, 0, 36),
-            BackgroundColor3 = theme.InnerContainer,
+            Size = UDim2.new(0.48, -5, 0, 50),
+            Position = UDim2.new(0.52, 0, 0, 38),
+            BackgroundColor3 = theme.BackColor,
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.85,
+                Transparency = 0.92,
             }),
-            util.new("TextLabel", {
-                Text = "Ping",
-                TextColor3 = theme.TextColor,
-                TextSize = 13,
-                Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -14, 0, 18),
-                Position = UDim2.new(0, 8, 0, 5),
-                TextXAlignment = Enum.TextXAlignment.Left,
-                BackgroundTransparency = 1,
-            })
+        })
+        
+        util.new("TextLabel", {
+            Parent = PingFrame,
+            Text = "Ping",
+            TextColor3 = theme.TextColor,
+            TextSize = 12,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(1, -16, 0, 16),
+            Position = UDim2.new(0, 10, 0, 8),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            BackgroundTransparency = 1,
         })
         
         local PingLabel = util.new("TextLabel", {
             Parent = PingFrame,
             Text = "0 ms",
-            TextColor3 = theme.SubTextColor,
-            TextSize = 11,
-            Font = Enum.Font.Gotham,
-            Size = UDim2.new(1, -14, 0, 16),
-            Position = UDim2.new(0, 8, 0, 24),
+            TextColor3 = Color3.fromRGB(150, 255, 200),
+            TextSize = 18,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(1, -16, 0, 20),
+            Position = UDim2.new(0, 10, 0, 24),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -793,16 +770,32 @@ do
                 
                 local now = tick()
                 if now - lastUpdate >= 1 then
-                    -- Update FPS
+                    -- Update FPS with color coding
                     local fps = math.floor(frameCount / (now - lastUpdate))
                     if FPSLabel then
-                        FPSLabel.Text = fps .. " FPS"
+                        FPSLabel.Text = tostring(fps)
+                        -- Color code based on FPS
+                        if fps >= 55 then
+                            FPSLabel.TextColor3 = Color3.fromRGB(150, 255, 150) -- Green
+                        elseif fps >= 30 then
+                            FPSLabel.TextColor3 = Color3.fromRGB(255, 220, 100) -- Yellow
+                        else
+                            FPSLabel.TextColor3 = Color3.fromRGB(255, 120, 120) -- Red
+                        end
                     end
                     
-                    -- Update Ping
+                    -- Update Ping with color coding
                     local ping = math.floor(game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValue())
                     if PingLabel then
                         PingLabel.Text = ping .. " ms"
+                        -- Color code based on ping
+                        if ping <= 80 then
+                            PingLabel.TextColor3 = Color3.fromRGB(150, 255, 200) -- Green
+                        elseif ping <= 150 then
+                            PingLabel.TextColor3 = Color3.fromRGB(255, 220, 100) -- Yellow
+                        else
+                            PingLabel.TextColor3 = Color3.fromRGB(255, 120, 120) -- Red
+                        end
                     end
                     
                     -- Update Player Count
