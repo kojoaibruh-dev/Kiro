@@ -67,25 +67,25 @@ interactable.__index = interactable
 
 --//Theme
 local theme = getgenv().theme or {
-    BackColor = Color3.fromRGB(45, 45, 50),
-    TopBar = Color3.fromRGB(50, 50, 58),
+    BackColor = Color3.fromRGB(15, 15, 20),
+    TopBar = Color3.fromRGB(20, 15, 30),
 
-    UpperContainer = Color3.fromRGB(50, 50, 58),
-    InnerContainer = Color3.fromRGB(55, 55, 62),
+    UpperContainer = Color3.fromRGB(25, 20, 35),
+    InnerContainer = Color3.fromRGB(20, 15, 30),
 
-    InteractableBackground = Color3.fromRGB(45, 45, 58),
-    InteractableOutline = Color3.fromRGB(100, 100, 100),
+    InteractableBackground = Color3.fromRGB(30, 25, 40),
+    InteractableOutline = Color3.fromRGB(100, 80, 140),
 
-    Accent = Color3.fromRGB(255, 255, 255), --> Used for hover outlines, selected tab
+    Accent = Color3.fromRGB(150, 100, 255), --> Purple accent
 
-    NotSelectedTab = Color3.fromRGB(70, 70, 70), --> shows on all OTHER tabs
+    NotSelectedTab = Color3.fromRGB(80, 60, 100),
 
-    TextColor = Color3.fromRGB(255,255,255),
-    SubTextColor = Color3.fromRGB(200,200,200),
+    TextColor = Color3.fromRGB(240, 240, 250),
+    SubTextColor = Color3.fromRGB(180, 170, 200),
 
 
-    ButtonTop = Color3.fromRGB(50, 50, 50), --Top color layer of the button.
-    ButtonBottom = Color3.fromRGB(58, 58, 58), --Under layer of the button -> reveals as tranparency lowers
+    ButtonTop = Color3.fromRGB(40, 30, 55),
+    ButtonBottom = Color3.fromRGB(50, 40, 65),
 }
 
 --//Library
@@ -99,8 +99,16 @@ do
                 Size = size,
                 Position = position,
                 BackgroundColor3 = theme.BackColor,
+                BackgroundTransparency = 0.15,
                 ClipsDescendants = true,
                 Name = "MasterContainer"
+            }, {
+                util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
+                util.new("UIStroke", {
+                    Color = theme.Accent,
+                    Thickness = 1.5,
+                    Transparency = 0.5,
+                })
             })
         })
 
@@ -163,7 +171,10 @@ do
             util.new("Frame", { --> TopBarContainer
                 Size = UDim2.new(1, 0, 0, 30),
                 BackgroundColor3 = theme.TopBar,
+                BackgroundTransparency = 0.2,
                 Name = "TopBarContainer"
+            }, {
+                util.new("UICorner", {CornerRadius = UDim.new(0, 12)})
             }),
             util.new("Frame", { --> ContentContainer
                 Size = UDim2.new(1, 0, 1, -30),
@@ -205,11 +216,13 @@ do
         --//Content Containers
         local TabSelectContainer, TabContentContainer = util.children(ContentContainer, {
             util.new("Frame", { --> TabSelectContainer
-                Size = UDim2.new(0, 150, 1, -14), --> X: 157
+                Size = UDim2.new(0, 150, 1, -14),
                 Position = UDim2.new(0, 7, 0, 7),
                 BackgroundColor3 = theme.UpperContainer,
+                BackgroundTransparency = 0.2,
                 Name = "TabSelectContainer"
             }, {
+                util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
                 util.new("UIListLayout", { --> Layout for left-side tab selectors
                     SortOrder = Enum.SortOrder.LayoutOrder,
                     Padding = UDim.new(0,7),
@@ -218,7 +231,7 @@ do
                 util.new("Frame", { --So UIListLayout leaves gap at top
                     BackgroundTransparency = 1,
                     LayoutOrder = 0,
-                    Size = UDim2.new(1,0,0,-2), --> padding 7, -2 = 5 which is uniform :+1:
+                    Size = UDim2.new(1,0,0,-2),
                     Name = "gap"
                 })
             }),
@@ -226,7 +239,10 @@ do
                 Size = UDim2.new(1, -171, 1, -14),
                 Position = UDim2.new(0, 164, 0, 7),
                 BackgroundColor3 = theme.UpperContainer,
+                BackgroundTransparency = 0.2,
                 Name = "TabContentContainer"
+            }, {
+                util.new("UICorner", {CornerRadius = UDim.new(0, 10)})
             })
         })
 
@@ -361,8 +377,11 @@ do
             Size = UDim2.new(1, -14, 1, -14),
             Position = UDim2.new(0, 7, 0, 7),
             BackgroundColor3 = theme.BackColor,
+            BackgroundTransparency = 0.3,
             Visible = false,
             Name = "HomeContainer"
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 10)})
         })
         
         homeTab.panels = {{PanelContainer = HomeContainer}}
@@ -373,13 +392,14 @@ do
             Size = UDim2.new(1, -20, 0, 80),
             Position = UDim2.new(0, 10, 0, 8),
             BackgroundColor3 = theme.UpperContainer,
+            BackgroundTransparency = 0.3,
             Name = "SessionInfo"
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.9,
+                Transparency = 0.7,
             }),
             util.new("TextLabel", {
                 Text = "SESSION INFORMATION",
@@ -399,12 +419,13 @@ do
             Size = UDim2.new(0.48, -5, 0, 42),
             Position = UDim2.new(0, 12, 0, 32),
             BackgroundColor3 = theme.BackColor,
+            BackgroundTransparency = 0.4,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.92,
+                Transparency = 0.8,
             }),
         })
         
@@ -423,7 +444,7 @@ do
         local PlayersCount = util.new("TextLabel", {
             Parent = PlayersFrame,
             Text = #game:GetService("Players"):GetPlayers() .. " online",
-            TextColor3 = Color3.fromRGB(150, 200, 255),
+            TextColor3 = Color3.fromRGB(180, 140, 255),
             TextSize = 13,
             Font = Enum.Font.GothamBold,
             Size = UDim2.new(1, -16, 0, 16),
@@ -438,12 +459,13 @@ do
             Size = UDim2.new(0.48, -5, 0, 42),
             Position = UDim2.new(0.52, 0, 0, 32),
             BackgroundColor3 = theme.BackColor,
+            BackgroundTransparency = 0.4,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.92,
+                Transparency = 0.8,
             }),
         })
         
@@ -462,7 +484,7 @@ do
         util.new("TextLabel", {
             Parent = MaxPlayersFrame,
             Text = game:GetService("Players").MaxPlayers .. " max",
-            TextColor3 = Color3.fromRGB(255, 180, 120),
+            TextColor3 = Color3.fromRGB(200, 150, 255),
             TextSize = 13,
             Font = Enum.Font.GothamBold,
             Size = UDim2.new(1, -16, 0, 16),
@@ -478,13 +500,14 @@ do
             Size = UDim2.new(1, -20, 0, 70),
             Position = UDim2.new(0, 10, 0, 94),
             BackgroundColor3 = theme.UpperContainer,
+            BackgroundTransparency = 0.3,
             Name = "UserInfo"
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.9,
+                Transparency = 0.7,
             })
         })
         
@@ -500,13 +523,14 @@ do
             Parent = AvatarContainer,
             Size = UDim2.new(1, 0, 1, 0),
             BackgroundColor3 = theme.BackColor,
+            BackgroundTransparency = 0.4,
             Image = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. player.UserId .. "&width=150&height=150&format=png",
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
             util.new("UIStroke", {
-                Color = Color3.fromRGB(150, 200, 255),
+                Color = theme.Accent,
                 Thickness = 2,
-                Transparency = 0.3,
+                Transparency = 0.4,
             })
         })
         
@@ -527,7 +551,7 @@ do
         util.new("TextLabel", {
             Parent = UserInfo,
             Text = "@" .. player.Name,
-            TextColor3 = Color3.fromRGB(150, 200, 255),
+            TextColor3 = theme.Accent,
             TextSize = 11,
             Font = Enum.Font.Gotham,
             Size = UDim2.new(1, -76, 0, 14),
@@ -556,13 +580,14 @@ do
             Size = UDim2.new(1, -20, 0, 80),
             Position = UDim2.new(0, 10, 0, 170),
             BackgroundColor3 = theme.UpperContainer,
+            BackgroundTransparency = 0.3,
             Name = "GameInfo"
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.9,
+                Transparency = 0.7,
             }),
             util.new("TextLabel", {
                 Text = "GAME INFORMATION",
@@ -582,12 +607,13 @@ do
             Size = UDim2.new(0.48, -5, 0, 42),
             Position = UDim2.new(0, 12, 0, 32),
             BackgroundColor3 = theme.BackColor,
+            BackgroundTransparency = 0.4,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.92,
+                Transparency = 0.8,
             }),
         })
         
@@ -607,7 +633,7 @@ do
         util.new("TextLabel", {
             Parent = GameNameFrame,
             Text = gameName,
-            TextColor3 = Color3.fromRGB(200, 150, 255),
+            TextColor3 = theme.Accent,
             TextSize = 12,
             Font = Enum.Font.GothamBold,
             Size = UDim2.new(1, -16, 0, 16),
@@ -623,12 +649,13 @@ do
             Size = UDim2.new(0.48, -5, 0, 42),
             Position = UDim2.new(0.52, 0, 0, 32),
             BackgroundColor3 = theme.BackColor,
+            BackgroundTransparency = 0.4,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.92,
+                Transparency = 0.8,
             }),
         })
         
@@ -647,7 +674,7 @@ do
         util.new("TextLabel", {
             Parent = PlaceIDFrame,
             Text = tostring(game.PlaceId),
-            TextColor3 = Color3.fromRGB(255, 200, 150),
+            TextColor3 = Color3.fromRGB(180, 140, 255),
             TextSize = 12,
             Font = Enum.Font.GothamBold,
             Size = UDim2.new(1, -16, 0, 16),
@@ -662,13 +689,14 @@ do
             Size = UDim2.new(1, -20, 0, 80),
             Position = UDim2.new(0, 10, 0, 256),
             BackgroundColor3 = theme.UpperContainer,
+            BackgroundTransparency = 0.3,
             Name = "SystemInfo"
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.9,
+                Transparency = 0.7,
             }),
             util.new("TextLabel", {
                 Text = "SYSTEM INFORMATION",
@@ -688,12 +716,13 @@ do
             Size = UDim2.new(0.48, -5, 0, 42),
             Position = UDim2.new(0, 12, 0, 32),
             BackgroundColor3 = theme.BackColor,
+            BackgroundTransparency = 0.4,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.92,
+                Transparency = 0.8,
             }),
         })
         
@@ -712,7 +741,7 @@ do
         local FPSLabel = util.new("TextLabel", {
             Parent = FPSFrame,
             Text = "60",
-            TextColor3 = Color3.fromRGB(150, 255, 150),
+            TextColor3 = Color3.fromRGB(180, 255, 180),
             TextSize = 16,
             Font = Enum.Font.GothamBold,
             Size = UDim2.new(1, -16, 0, 18),
@@ -727,12 +756,13 @@ do
             Size = UDim2.new(0.48, -5, 0, 42),
             Position = UDim2.new(0.52, 0, 0, 32),
             BackgroundColor3 = theme.BackColor,
+            BackgroundTransparency = 0.4,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.92,
+                Transparency = 0.8,
             }),
         })
         
@@ -751,7 +781,7 @@ do
         local PingLabel = util.new("TextLabel", {
             Parent = PingFrame,
             Text = "0 ms",
-            TextColor3 = Color3.fromRGB(150, 255, 200),
+            TextColor3 = Color3.fromRGB(180, 255, 200),
             TextSize = 16,
             Font = Enum.Font.GothamBold,
             Size = UDim2.new(1, -16, 0, 18),
