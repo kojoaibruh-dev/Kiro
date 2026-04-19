@@ -1018,14 +1018,251 @@ do
             })
         })
         
-        -- FPS Unlocker Button
-        local UnlockerButton = util.new("TextButton", {
+        -- FPS Unlocker Toggle
+        local fpsUnlocked = false
+        local FPSToggleFrame = util.new("Frame", {
             Parent = PerfSection,
             Size = UDim2.new(1, -28, 0, 35),
             Position = UDim2.new(0, 14, 0, 40),
+            BackgroundTransparency = 1,
+        })
+        
+        util.new("TextLabel", {
+            Parent = FPSToggleFrame,
+            Text = "Unlock FPS (240)",
+            TextColor3 = theme.TextColor,
+            TextSize = 12,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(0.7, 0, 1, 0),
+            Position = UDim2.new(0, 0, 0, 0),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            TextYAlignment = Enum.TextYAlignment.Center,
+            BackgroundTransparency = 1,
+        })
+        
+        local FPSToggle = util.new("TextButton", {
+            Parent = FPSToggleFrame,
+            Size = UDim2.new(0, 50, 0, 24),
+            Position = UDim2.new(1, -50, 0.5, -12),
             BackgroundColor3 = theme.BackColor,
             BackgroundTransparency = 0.4,
-            Text = "Unlock FPS (240)",
+            Text = "",
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.8,
+            })
+        })
+        
+        local FPSToggleIndicator = util.new("Frame", {
+            Parent = FPSToggle,
+            Size = UDim2.new(0, 18, 0, 18),
+            Position = UDim2.new(0, 3, 0.5, -9),
+            BackgroundColor3 = theme.SubTextColor,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 9)})
+        })
+        
+        FPSToggle.MouseButton1Click:Connect(function()
+            fpsUnlocked = not fpsUnlocked
+            if fpsUnlocked then
+                setfpscap(240)
+                util.tween(FPSToggleIndicator, { Position = UDim2.new(1, -21, 0.5, -9), BackgroundColor3 = theme.Accent }, 0.2)
+                self:Notify("FPS unlocked to 240!")
+            else
+                setfpscap(60)
+                util.tween(FPSToggleIndicator, { Position = UDim2.new(0, 3, 0.5, -9), BackgroundColor3 = theme.SubTextColor }, 0.2)
+                self:Notify("FPS locked to 60")
+            end
+        end)
+        
+        -- Gameplay Section
+        local GameplaySection = util.new("Frame", {
+            Parent = SettingsContainer,
+            Size = UDim2.new(1, -40, 0, 140),
+            Position = UDim2.new(0, 20, 0, 315),
+            BackgroundColor3 = theme.UpperContainer,
+            BackgroundTransparency = 0.3,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 14)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.7,
+            }),
+            util.new("TextLabel", {
+                Text = "Gameplay",
+                TextColor3 = theme.SubTextColor,
+                TextSize = 11,
+                Font = Enum.Font.GothamBold,
+                Size = UDim2.new(1, -20, 0, 16),
+                Position = UDim2.new(0, 14, 0, 10),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                BackgroundTransparency = 1,
+            })
+        })
+        
+        -- Anti-AFK Toggle
+        local antiAFKEnabled = false
+        local antiAFKConnection = nil
+        local AntiAFKFrame = util.new("Frame", {
+            Parent = GameplaySection,
+            Size = UDim2.new(1, -28, 0, 35),
+            Position = UDim2.new(0, 14, 0, 35),
+            BackgroundTransparency = 1,
+        })
+        
+        util.new("TextLabel", {
+            Parent = AntiAFKFrame,
+            Text = "Anti-AFK",
+            TextColor3 = theme.TextColor,
+            TextSize = 12,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(0.7, 0, 1, 0),
+            Position = UDim2.new(0, 0, 0, 0),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            TextYAlignment = Enum.TextYAlignment.Center,
+            BackgroundTransparency = 1,
+        })
+        
+        local AntiAFKToggle = util.new("TextButton", {
+            Parent = AntiAFKFrame,
+            Size = UDim2.new(0, 50, 0, 24),
+            Position = UDim2.new(1, -50, 0.5, -12),
+            BackgroundColor3 = theme.BackColor,
+            BackgroundTransparency = 0.4,
+            Text = "",
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.8,
+            })
+        })
+        
+        local AntiAFKIndicator = util.new("Frame", {
+            Parent = AntiAFKToggle,
+            Size = UDim2.new(0, 18, 0, 18),
+            Position = UDim2.new(0, 3, 0.5, -9),
+            BackgroundColor3 = theme.SubTextColor,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 9)})
+        })
+        
+        AntiAFKToggle.MouseButton1Click:Connect(function()
+            antiAFKEnabled = not antiAFKEnabled
+            if antiAFKEnabled then
+                util.tween(AntiAFKIndicator, { Position = UDim2.new(1, -21, 0.5, -9), BackgroundColor3 = theme.Accent }, 0.2)
+                self:Notify("Anti-AFK enabled!")
+                
+                -- Anti-AFK logic
+                antiAFKConnection = game:GetService("Players").LocalPlayer.Idled:Connect(function()
+                    game:GetService("VirtualUser"):CaptureController()
+                    game:GetService("VirtualUser"):ClickButton2(Vector2.new())
+                end)
+            else
+                util.tween(AntiAFKIndicator, { Position = UDim2.new(0, 3, 0.5, -9), BackgroundColor3 = theme.SubTextColor }, 0.2)
+                self:Notify("Anti-AFK disabled")
+                if antiAFKConnection then
+                    antiAFKConnection:Disconnect()
+                    antiAFKConnection = nil
+                end
+            end
+        end)
+        
+        -- Hide UI Toggle
+        local HideUIFrame = util.new("Frame", {
+            Parent = GameplaySection,
+            Size = UDim2.new(1, -28, 0, 35),
+            Position = UDim2.new(0, 14, 0, 78),
+            BackgroundTransparency = 1,
+        })
+        
+        util.new("TextLabel", {
+            Parent = HideUIFrame,
+            Text = "Hide UI",
+            TextColor3 = theme.TextColor,
+            TextSize = 12,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(0.7, 0, 1, 0),
+            Position = UDim2.new(0, 0, 0, 0),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            TextYAlignment = Enum.TextYAlignment.Center,
+            BackgroundTransparency = 1,
+        })
+        
+        local HideUIToggle = util.new("TextButton", {
+            Parent = HideUIFrame,
+            Size = UDim2.new(0, 50, 0, 24),
+            Position = UDim2.new(1, -50, 0.5, -12),
+            BackgroundColor3 = theme.BackColor,
+            BackgroundTransparency = 0.4,
+            Text = "",
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.8,
+            })
+        })
+        
+        local HideUIIndicator = util.new("Frame", {
+            Parent = HideUIToggle,
+            Size = UDim2.new(0, 18, 0, 18),
+            Position = UDim2.new(0, 3, 0.5, -9),
+            BackgroundColor3 = theme.SubTextColor,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 9)})
+        })
+        
+        HideUIToggle.MouseButton1Click:Connect(function()
+            self.visible = not self.visible
+            self.MasterContainer.Visible = self.visible
+            if not self.visible then
+                util.tween(HideUIIndicator, { Position = UDim2.new(1, -21, 0.5, -9), BackgroundColor3 = theme.Accent }, 0.2)
+            else
+                util.tween(HideUIIndicator, { Position = UDim2.new(0, 3, 0.5, -9), BackgroundColor3 = theme.SubTextColor }, 0.2)
+            end
+        end)
+        
+        -- Actions Section
+        local ActionsSection = util.new("Frame", {
+            Parent = SettingsContainer,
+            Size = UDim2.new(1, -40, 0, 223),
+            Position = UDim2.new(0, 20, 0, 465),
+            BackgroundColor3 = theme.UpperContainer,
+            BackgroundTransparency = 0.3,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 14)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.7,
+            }),
+            util.new("TextLabel", {
+                Text = "Actions",
+                TextColor3 = theme.SubTextColor,
+                TextSize = 11,
+                Font = Enum.Font.GothamBold,
+                Size = UDim2.new(1, -20, 0, 16),
+                Position = UDim2.new(0, 14, 0, 10),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                BackgroundTransparency = 1,
+            })
+        })
+        
+        -- Reset UI Position Button
+        local ResetPosButton = util.new("TextButton", {
+            Parent = ActionsSection,
+            Size = UDim2.new(1, -28, 0, 35),
+            Position = UDim2.new(0, 14, 0, 35),
+            BackgroundColor3 = theme.BackColor,
+            BackgroundTransparency = 0.4,
+            Text = "Reset UI Position",
             TextColor3 = theme.TextColor,
             TextSize = 12,
             Font = Enum.Font.GothamBold,
@@ -1038,17 +1275,168 @@ do
             })
         })
         
-        UnlockerButton.MouseButton1Click:Connect(function()
-            setfpscap(240)
-            self:Notify("FPS unlocked to 240!")
+        ResetPosButton.MouseButton1Click:Connect(function()
+            self.MasterContainer.Position = UDim2.new(0.2, 0, 0.2, 0)
+            self:Notify("UI position reset!")
         end)
         
-        UnlockerButton.MouseEnter:Connect(function()
-            util.tween(UnlockerButton, { BackgroundTransparency = 0.2 }, 0.2)
+        ResetPosButton.MouseEnter:Connect(function()
+            util.tween(ResetPosButton, { BackgroundTransparency = 0.2 }, 0.2)
         end)
         
-        UnlockerButton.MouseLeave:Connect(function()
-            util.tween(UnlockerButton, { BackgroundTransparency = 0.4 }, 0.2)
+        ResetPosButton.MouseLeave:Connect(function()
+            util.tween(ResetPosButton, { BackgroundTransparency = 0.4 }, 0.2)
+        end)
+        
+        -- Copy Game Link Button
+        local CopyLinkButton = util.new("TextButton", {
+            Parent = ActionsSection,
+            Size = UDim2.new(1, -28, 0, 35),
+            Position = UDim2.new(0, 14, 0, 78),
+            BackgroundColor3 = theme.BackColor,
+            BackgroundTransparency = 0.4,
+            Text = "Copy Game Link",
+            TextColor3 = theme.TextColor,
+            TextSize = 12,
+            Font = Enum.Font.GothamBold,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.8,
+            })
+        })
+        
+        CopyLinkButton.MouseButton1Click:Connect(function()
+            setclipboard("https://www.roblox.com/games/" .. game.PlaceId)
+            self:Notify("Game link copied to clipboard!")
+        end)
+        
+        CopyLinkButton.MouseEnter:Connect(function()
+            util.tween(CopyLinkButton, { BackgroundTransparency = 0.2 }, 0.2)
+        end)
+        
+        CopyLinkButton.MouseLeave:Connect(function()
+            util.tween(CopyLinkButton, { BackgroundTransparency = 0.4 }, 0.2)
+        end)
+        
+        -- Rejoin Button
+        local RejoinButton = util.new("TextButton", {
+            Parent = ActionsSection,
+            Size = UDim2.new(1, -28, 0, 35),
+            Position = UDim2.new(0, 14, 0, 121),
+            BackgroundColor3 = theme.BackColor,
+            BackgroundTransparency = 0.4,
+            Text = "Rejoin Server",
+            TextColor3 = theme.TextColor,
+            TextSize = 12,
+            Font = Enum.Font.GothamBold,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.8,
+            })
+        })
+        
+        RejoinButton.MouseButton1Click:Connect(function()
+            game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer)
+        end)
+        
+        RejoinButton.MouseEnter:Connect(function()
+            util.tween(RejoinButton, { BackgroundTransparency = 0.2 }, 0.2)
+        end)
+        
+        RejoinButton.MouseLeave:Connect(function()
+            util.tween(RejoinButton, { BackgroundTransparency = 0.4 }, 0.2)
+        end)
+        
+        -- Server Hop Button
+        local ServerHopButton = util.new("TextButton", {
+            Parent = ActionsSection,
+            Size = UDim2.new(1, -28, 0, 35),
+            Position = UDim2.new(0, 14, 0, 164),
+            BackgroundColor3 = theme.BackColor,
+            BackgroundTransparency = 0.4,
+            Text = "Server Hop",
+            TextColor3 = theme.TextColor,
+            TextSize = 12,
+            Font = Enum.Font.GothamBold,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.8,
+            })
+        })
+        
+        ServerHopButton.MouseButton1Click:Connect(function()
+            local TeleportService = game:GetService("TeleportService")
+            local HttpService = game:GetService("HttpService")
+            local success, servers = pcall(function()
+                return HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"))
+            end)
+            if success and servers and servers.data then
+                for _, server in pairs(servers.data) do
+                    if server.id ~= game.JobId and server.playing < server.maxPlayers then
+                        TeleportService:TeleportToPlaceInstance(game.PlaceId, server.id, game.Players.LocalPlayer)
+                        return
+                    end
+                end
+            end
+            self:Notify("No available servers found!")
+        end)
+        
+        ServerHopButton.MouseEnter:Connect(function()
+            util.tween(ServerHopButton, { BackgroundTransparency = 0.2 }, 0.2)
+        end)
+        
+        ServerHopButton.MouseLeave:Connect(function()
+            util.tween(ServerHopButton, { BackgroundTransparency = 0.4 }, 0.2)
+        end)
+        
+        -- Unload Button
+        local UnloadButton = util.new("TextButton", {
+            Parent = ActionsSection,
+            Size = UDim2.new(1, -28, 0, 35),
+            Position = UDim2.new(0, 14, 0, 207),
+            BackgroundColor3 = Color3.fromRGB(180, 60, 80),
+            BackgroundTransparency = 0.4,
+            Text = "Unload UI",
+            TextColor3 = theme.TextColor,
+            TextSize = 12,
+            Font = Enum.Font.GothamBold,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
+            util.new("UIStroke", {
+                Color = Color3.fromRGB(255, 100, 120),
+                Thickness = 1,
+                Transparency = 0.6,
+            })
+        })
+        
+        UnloadButton.MouseButton1Click:Connect(function()
+            -- Disconnect anti-AFK if enabled
+            if antiAFKConnection then
+                antiAFKConnection:Disconnect()
+            end
+            
+            for _, connection in pairs(self._connections) do
+                connection:Disconnect()
+            end
+            self.MasterContainer.Parent:Destroy()
+            getgenv()[self.MasterContainer.Parent.Name] = nil
+        end)
+        
+        UnloadButton.MouseEnter:Connect(function()
+            util.tween(UnloadButton, { BackgroundTransparency = 0.2 }, 0.2)
+        end)
+        
+        UnloadButton.MouseLeave:Connect(function()
+            util.tween(UnloadButton, { BackgroundTransparency = 0.4 }, 0.2)
         end)
         
         -- Settings button click handler
