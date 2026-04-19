@@ -876,19 +876,15 @@ do
             Name = "SettingsButton"
         })
         
-        -- Create settings panel with scrolling
-        local SettingsContainer = util.new("ScrollingFrame", {
+        -- Create settings panel
+        local SettingsContainer = util.new("Frame", {
             Parent = self.TabContentContainer,
             Size = UDim2.new(1, -14, 1, -14),
             Position = UDim2.new(0, 7, 0, 7),
             BackgroundColor3 = theme.BackColor,
             BackgroundTransparency = 0.3,
             Visible = false,
-            Name = "SettingsContainer",
-            ScrollBarThickness = 4,
-            ScrollBarImageColor3 = theme.Accent,
-            BorderSizePixel = 0,
-            CanvasSize = UDim2.new(0, 0, 0, 490),
+            Name = "SettingsContainer"
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 16)})
         })
@@ -946,7 +942,7 @@ do
             TextColor3 = theme.TextColor,
             TextSize = 11,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(0.6, 0, 1, 0),
+            Size = UDim2.new(0.5, 0, 1, 0),
             TextXAlignment = Enum.TextXAlignment.Left,
             TextYAlignment = Enum.TextYAlignment.Center,
             BackgroundTransparency = 1,
@@ -958,13 +954,13 @@ do
             TextColor3 = theme.Accent,
             TextSize = 11,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(0.4, 0, 1, 0),
+            Size = UDim2.new(0.5, 0, 1, 0),
             TextXAlignment = Enum.TextXAlignment.Right,
             TextYAlignment = Enum.TextYAlignment.Center,
             BackgroundTransparency = 1,
         })
         
-        -- Keybind Display (now editable)
+        -- Keybind Display
         local KeybindFrame = util.new("Frame", {
             Parent = UISection,
             Size = UDim2.new(1, -24, 0, 28),
@@ -990,17 +986,10 @@ do
             TextColor3 = theme.Accent,
             TextSize = 11,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(0.5, 0, 0, 22),
-            Position = UDim2.new(0.5, 0, 0.5, -11),
-            BackgroundColor3 = theme.BackColor,
-            BackgroundTransparency = 0.4,
-        }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 6)}),
-            util.new("UIStroke", {
-                Color = theme.Accent,
-                Thickness = 1,
-                Transparency = 0.8,
-            })
+            Size = UDim2.new(0.5, 0, 1, 0),
+            TextXAlignment = Enum.TextXAlignment.Right,
+            TextYAlignment = Enum.TextYAlignment.Center,
+            BackgroundTransparency = 1,
         })
         
         local isBinding = false
@@ -1008,32 +997,38 @@ do
             if isBinding then return end
             isBinding = true
             KeybindButton.Text = "..."
+            KeybindButton.TextColor3 = Color3.fromRGB(255, 200, 100)
             
             local connection
             connection = input.InputBegan:Connect(function(inp, gpe)
                 if gpe then return end
                 if inp.UserInputType == Enum.UserInputType.Keyboard then
+                    connection:Disconnect()
                     self.keybind = inp.KeyCode
                     KeybindButton.Text = inp.KeyCode.Name
+                    KeybindButton.TextColor3 = theme.Accent
                     isBinding = false
-                    connection:Disconnect()
-                    self:Notify("Keybind set to " .. inp.KeyCode.Name)
+                    self:Notify("Keybind changed to " .. inp.KeyCode.Name)
                 end
             end)
         end)
         
         KeybindButton.MouseEnter:Connect(function()
-            util.tween(KeybindButton, { BackgroundTransparency = 0.2 }, 0.2)
+            if not isBinding then
+                util.tween(KeybindButton, { TextColor3 = Color3.fromRGB(200, 150, 255) }, 0.2)
+            end
         end)
         
         KeybindButton.MouseLeave:Connect(function()
-            util.tween(KeybindButton, { BackgroundTransparency = 0.4 }, 0.2)
+            if not isBinding then
+                util.tween(KeybindButton, { TextColor3 = theme.Accent }, 0.2)
+            end
         end)
         
         -- Performance Section
         local PerfSection = util.new("Frame", {
             Parent = SettingsContainer,
-            Size = UDim2.new(1, -30, 0, 90),
+            Size = UDim2.new(1, -30, 0, 60),
             Position = UDim2.new(0, 15, 0, 138),
             BackgroundColor3 = theme.UpperContainer,
             BackgroundTransparency = 0.3,
@@ -1056,11 +1051,9 @@ do
             })
         })
         
-        -- FPS Boost Toggle
-        local fpsBoostEnabled = false
-        local fpsBoostKeybind = nil
-        local originalSettings = {}
-        local FPSBoostFrame = util.new("Frame", {
+        -- FPS Unlocker Toggle
+        local fpsUnlocked = false
+        local FPSToggleFrame = util.new("Frame", {
             Parent = PerfSection,
             Size = UDim2.new(1, -24, 0, 28),
             Position = UDim2.new(0, 12, 0, 28),
@@ -1068,66 +1061,19 @@ do
         })
         
         util.new("TextLabel", {
-            Parent = FPSBoostFrame,
-            Text = "FPS Boost",
+            Parent = FPSToggleFrame,
+            Text = "Unlock FPS (240)",
             TextColor3 = theme.TextColor,
             TextSize = 11,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(0.45, 0, 1, 0),
+            Size = UDim2.new(0.7, 0, 1, 0),
             TextXAlignment = Enum.TextXAlignment.Left,
             TextYAlignment = Enum.TextYAlignment.Center,
             BackgroundTransparency = 1,
         })
         
-        -- Keybind button for FPS Boost
-        local FPSBoostKeybindBtn = util.new("TextButton", {
-            Parent = FPSBoostFrame,
-            Text = "None",
-            TextColor3 = theme.SubTextColor,
-            TextSize = 9,
-            Font = Enum.Font.Gotham,
-            Size = UDim2.new(0, 50, 0, 18),
-            Position = UDim2.new(0.45, 0, 0.5, -9),
-            BackgroundColor3 = theme.BackColor,
-            BackgroundTransparency = 0.6,
-        }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 5)}),
-            util.new("UIStroke", {
-                Color = theme.Accent,
-                Thickness = 1,
-                Transparency = 0.9,
-            })
-        })
-        
-        local isFPSBoostBinding = false
-        FPSBoostKeybindBtn.MouseButton1Click:Connect(function()
-            if isFPSBoostBinding then return end
-            isFPSBoostBinding = true
-            FPSBoostKeybindBtn.Text = "..."
-            
-            local connection
-            connection = input.InputBegan:Connect(function(inp, gpe)
-                if gpe then return end
-                if inp.UserInputType == Enum.UserInputType.Keyboard then
-                    fpsBoostKeybind = inp.KeyCode
-                    FPSBoostKeybindBtn.Text = inp.KeyCode.Name
-                    FPSBoostKeybindBtn.TextColor3 = theme.Accent
-                    isFPSBoostBinding = false
-                    connection:Disconnect()
-                end
-            end)
-        end)
-        
-        FPSBoostKeybindBtn.MouseEnter:Connect(function()
-            util.tween(FPSBoostKeybindBtn, { BackgroundTransparency = 0.4 }, 0.2)
-        end)
-        
-        FPSBoostKeybindBtn.MouseLeave:Connect(function()
-            util.tween(FPSBoostKeybindBtn, { BackgroundTransparency = 0.6 }, 0.2)
-        end)
-        
-        local FPSBoostToggle = util.new("TextButton", {
-            Parent = FPSBoostFrame,
+        local FPSToggle = util.new("TextButton", {
+            Parent = FPSToggleFrame,
             Size = UDim2.new(0, 46, 0, 22),
             Position = UDim2.new(1, -46, 0.5, -11),
             BackgroundColor3 = theme.BackColor,
@@ -1142,8 +1088,8 @@ do
             })
         })
         
-        local FPSBoostIndicator = util.new("Frame", {
-            Parent = FPSBoostToggle,
+        local FPSToggleIndicator = util.new("Frame", {
+            Parent = FPSToggle,
             Size = UDim2.new(0, 16, 0, 16),
             Position = UDim2.new(0, 3, 0.5, -8),
             BackgroundColor3 = theme.SubTextColor,
@@ -1151,195 +1097,24 @@ do
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)})
         })
         
-        local function toggleFPSBoost()
-            fpsBoostEnabled = not fpsBoostEnabled
-            
-            if fpsBoostEnabled then
-                -- Save original settings
-                pcall(function()
-                    local settings = game:GetService("UserSettings"):GetService("UserGameSettings")
-                    originalSettings.SavedQualityLevel = settings.SavedQualityLevel
-                    
-                    -- Apply performance boost
-                    settings.SavedQualityLevel = Enum.SavedQualitySetting.QualityLevel1
-                end)
-                
-                pcall(function()
-                    game:GetService("Lighting").GlobalShadows = false
-                end)
-                
-                -- Disable unnecessary effects (spawn in separate thread to not block)
-                task.spawn(function()
-                    pcall(function()
-                        for _, v in pairs(workspace:GetDescendants()) do
-                            if v:IsA("ParticleEmitter") or v:IsA("Trail") or v:IsA("Smoke") or v:IsA("Fire") or v:IsA("Sparkles") then
-                                v.Enabled = false
-                            end
-                        end
-                        
-                        for _, v in pairs(game:GetService("Lighting"):GetChildren()) do
-                            if v:IsA("PostEffect") or v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") then
-                                v.Enabled = false
-                            end
-                        end
-                    end)
-                end)
-                
-                util.tween(FPSBoostIndicator, { Position = UDim2.new(1, -19, 0.5, -8), BackgroundColor3 = theme.Accent }, 0.2)
-                self:Notify("FPS Boost enabled!")
+        FPSToggle.MouseButton1Click:Connect(function()
+            fpsUnlocked = not fpsUnlocked
+            if fpsUnlocked then
+                setfpscap(240)
+                util.tween(FPSToggleIndicator, { Position = UDim2.new(1, -19, 0.5, -8), BackgroundColor3 = theme.Accent }, 0.2)
+                self:Notify("FPS unlocked to 240!")
             else
-                -- Restore original settings
-                pcall(function()
-                    if originalSettings.SavedQualityLevel then
-                        local settings = game:GetService("UserSettings"):GetService("UserGameSettings")
-                        settings.SavedQualityLevel = originalSettings.SavedQualityLevel
-                    end
-                end)
-                
-                pcall(function()
-                    game:GetService("Lighting").GlobalShadows = true
-                end)
-                
-                util.tween(FPSBoostIndicator, { Position = UDim2.new(0, 3, 0.5, -8), BackgroundColor3 = theme.SubTextColor }, 0.2)
-                self:Notify("FPS Boost disabled")
+                setfpscap(60)
+                util.tween(FPSToggleIndicator, { Position = UDim2.new(0, 3, 0.5, -8), BackgroundColor3 = theme.SubTextColor }, 0.2)
+                self:Notify("FPS locked to 60")
             end
-        end
-        
-        FPSBoostToggle.MouseButton1Click:Connect(toggleFPSBoost)
-        
-        -- Keybind listener for FPS Boost
-        table.insert(connections, input.InputBegan:Connect(function(inp, gpe)
-            if gpe then return end
-            if fpsBoostKeybind and inp.KeyCode == fpsBoostKeybind then
-                toggleFPSBoost()
-            end
-        end))
-        
-        -- Ping Boost Toggle
-        local pingBoostEnabled = false
-        local pingBoostKeybind = nil
-        local PingBoostFrame = util.new("Frame", {
-            Parent = PerfSection,
-            Size = UDim2.new(1, -24, 0, 28),
-            Position = UDim2.new(0, 12, 0, 58),
-            BackgroundTransparency = 1,
-        })
-        
-        util.new("TextLabel", {
-            Parent = PingBoostFrame,
-            Text = "Ping Boost",
-            TextColor3 = theme.TextColor,
-            TextSize = 11,
-            Font = Enum.Font.GothamBold,
-            Size = UDim2.new(0.45, 0, 1, 0),
-            TextXAlignment = Enum.TextXAlignment.Left,
-            TextYAlignment = Enum.TextYAlignment.Center,
-            BackgroundTransparency = 1,
-        })
-        
-        -- Keybind button for Ping Boost
-        local PingBoostKeybindBtn = util.new("TextButton", {
-            Parent = PingBoostFrame,
-            Text = "None",
-            TextColor3 = theme.SubTextColor,
-            TextSize = 9,
-            Font = Enum.Font.Gotham,
-            Size = UDim2.new(0, 50, 0, 18),
-            Position = UDim2.new(0.45, 0, 0.5, -9),
-            BackgroundColor3 = theme.BackColor,
-            BackgroundTransparency = 0.6,
-        }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 5)}),
-            util.new("UIStroke", {
-                Color = theme.Accent,
-                Thickness = 1,
-                Transparency = 0.9,
-            })
-        })
-        
-        local isPingBoostBinding = false
-        PingBoostKeybindBtn.MouseButton1Click:Connect(function()
-            if isPingBoostBinding then return end
-            isPingBoostBinding = true
-            PingBoostKeybindBtn.Text = "..."
-            
-            local connection
-            connection = input.InputBegan:Connect(function(inp, gpe)
-                if gpe then return end
-                if inp.UserInputType == Enum.UserInputType.Keyboard then
-                    pingBoostKeybind = inp.KeyCode
-                    PingBoostKeybindBtn.Text = inp.KeyCode.Name
-                    PingBoostKeybindBtn.TextColor3 = theme.Accent
-                    isPingBoostBinding = false
-                    connection:Disconnect()
-                end
-            end)
         end)
-        
-        PingBoostKeybindBtn.MouseEnter:Connect(function()
-            util.tween(PingBoostKeybindBtn, { BackgroundTransparency = 0.4 }, 0.2)
-        end)
-        
-        PingBoostKeybindBtn.MouseLeave:Connect(function()
-            util.tween(PingBoostKeybindBtn, { BackgroundTransparency = 0.6 }, 0.2)
-        end)
-        
-        local PingBoostToggle = util.new("TextButton", {
-            Parent = PingBoostFrame,
-            Size = UDim2.new(0, 46, 0, 22),
-            Position = UDim2.new(1, -46, 0.5, -11),
-            BackgroundColor3 = theme.BackColor,
-            BackgroundTransparency = 0.4,
-            Text = "",
-        }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 11)}),
-            util.new("UIStroke", {
-                Color = theme.Accent,
-                Thickness = 1,
-                Transparency = 0.8,
-            })
-        })
-        
-        local PingBoostIndicator = util.new("Frame", {
-            Parent = PingBoostToggle,
-            Size = UDim2.new(0, 16, 0, 16),
-            Position = UDim2.new(0, 3, 0.5, -8),
-            BackgroundColor3 = theme.SubTextColor,
-        }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)})
-        })
-        
-        local function togglePingBoost()
-            pingBoostEnabled = not pingBoostEnabled
-            
-            if pingBoostEnabled then
-                -- Reduce network load
-                game:GetService("NetworkClient"):SetOutgoingKBPSLimit(math.huge)
-                settings().Network.IncomingReplicationLag = 0
-                
-                util.tween(PingBoostIndicator, { Position = UDim2.new(1, -19, 0.5, -8), BackgroundColor3 = theme.Accent }, 0.2)
-                self:Notify("Ping Boost enabled!")
-            else
-                util.tween(PingBoostIndicator, { Position = UDim2.new(0, 3, 0.5, -8), BackgroundColor3 = theme.SubTextColor }, 0.2)
-                self:Notify("Ping Boost disabled")
-            end
-        end
-        
-        PingBoostToggle.MouseButton1Click:Connect(togglePingBoost)
-        
-        -- Keybind listener for Ping Boost
-        table.insert(connections, input.InputBegan:Connect(function(inp, gpe)
-            if gpe then return end
-            if pingBoostKeybind and inp.KeyCode == pingBoostKeybind then
-                togglePingBoost()
-            end
-        end))
         
         -- Gameplay Section
         local GameplaySection = util.new("Frame", {
             Parent = SettingsContainer,
-            Size = UDim2.new(1, -30, 0, 60),
-            Position = UDim2.new(0, 15, 0, 236),
+            Size = UDim2.new(1, -30, 0, 90),
+            Position = UDim2.new(0, 15, 0, 206),
             BackgroundColor3 = theme.UpperContainer,
             BackgroundTransparency = 0.3,
         }, {
@@ -1364,7 +1139,6 @@ do
         -- Anti-AFK Toggle
         local antiAFKEnabled = false
         local antiAFKConnection = nil
-        local antiAFKKeybind = nil
         local AntiAFKFrame = util.new("Frame", {
             Parent = GameplaySection,
             Size = UDim2.new(1, -24, 0, 28),
@@ -1378,58 +1152,11 @@ do
             TextColor3 = theme.TextColor,
             TextSize = 11,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(0.45, 0, 1, 0),
+            Size = UDim2.new(0.7, 0, 1, 0),
             TextXAlignment = Enum.TextXAlignment.Left,
             TextYAlignment = Enum.TextYAlignment.Center,
             BackgroundTransparency = 1,
         })
-        
-        -- Keybind button for Anti-AFK
-        local AntiAFKKeybindBtn = util.new("TextButton", {
-            Parent = AntiAFKFrame,
-            Text = "None",
-            TextColor3 = theme.SubTextColor,
-            TextSize = 9,
-            Font = Enum.Font.Gotham,
-            Size = UDim2.new(0, 50, 0, 18),
-            Position = UDim2.new(0.45, 0, 0.5, -9),
-            BackgroundColor3 = theme.BackColor,
-            BackgroundTransparency = 0.6,
-        }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 5)}),
-            util.new("UIStroke", {
-                Color = theme.Accent,
-                Thickness = 1,
-                Transparency = 0.9,
-            })
-        })
-        
-        local isAntiAFKBinding = false
-        AntiAFKKeybindBtn.MouseButton1Click:Connect(function()
-            if isAntiAFKBinding then return end
-            isAntiAFKBinding = true
-            AntiAFKKeybindBtn.Text = "..."
-            
-            local connection
-            connection = input.InputBegan:Connect(function(inp, gpe)
-                if gpe then return end
-                if inp.UserInputType == Enum.UserInputType.Keyboard then
-                    antiAFKKeybind = inp.KeyCode
-                    AntiAFKKeybindBtn.Text = inp.KeyCode.Name
-                    AntiAFKKeybindBtn.TextColor3 = theme.Accent
-                    isAntiAFKBinding = false
-                    connection:Disconnect()
-                end
-            end)
-        end)
-        
-        AntiAFKKeybindBtn.MouseEnter:Connect(function()
-            util.tween(AntiAFKKeybindBtn, { BackgroundTransparency = 0.4 }, 0.2)
-        end)
-        
-        AntiAFKKeybindBtn.MouseLeave:Connect(function()
-            util.tween(AntiAFKKeybindBtn, { BackgroundTransparency = 0.6 }, 0.2)
-        end)
         
         local AntiAFKToggle = util.new("TextButton", {
             Parent = AntiAFKFrame,
@@ -1456,7 +1183,7 @@ do
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)})
         })
         
-        local function toggleAntiAFK()
+        AntiAFKToggle.MouseButton1Click:Connect(function()
             antiAFKEnabled = not antiAFKEnabled
             if antiAFKEnabled then
                 util.tween(AntiAFKIndicator, { Position = UDim2.new(1, -19, 0.5, -8), BackgroundColor3 = theme.Accent }, 0.2)
@@ -1475,18 +1202,62 @@ do
                     antiAFKConnection = nil
                 end
             end
-        end
+        end)
         
-        AntiAFKToggle.MouseButton1Click:Connect(toggleAntiAFK)
+        -- Hide UI Toggle
+        local HideUIFrame = util.new("Frame", {
+            Parent = GameplaySection,
+            Size = UDim2.new(1, -24, 0, 28),
+            Position = UDim2.new(0, 12, 0, 58),
+            BackgroundTransparency = 1,
+        })
         
-        -- Keybind listener for Anti-AFK
-        table.insert(connections, input.InputBegan:Connect(function(inp, gpe)
-            if gpe then return end
-            if antiAFKKeybind and inp.KeyCode == antiAFKKeybind then
-                toggleAntiAFK()
+        util.new("TextLabel", {
+            Parent = HideUIFrame,
+            Text = "Hide UI",
+            TextColor3 = theme.TextColor,
+            TextSize = 11,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(0.7, 0, 1, 0),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            TextYAlignment = Enum.TextYAlignment.Center,
+            BackgroundTransparency = 1,
+        })
+        
+        local HideUIToggle = util.new("TextButton", {
+            Parent = HideUIFrame,
+            Size = UDim2.new(0, 46, 0, 22),
+            Position = UDim2.new(1, -46, 0.5, -11),
+            BackgroundColor3 = theme.BackColor,
+            BackgroundTransparency = 0.4,
+            Text = "",
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 11)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.8,
+            })
+        })
+        
+        local HideUIIndicator = util.new("Frame", {
+            Parent = HideUIToggle,
+            Size = UDim2.new(0, 16, 0, 16),
+            Position = UDim2.new(0, 3, 0.5, -8),
+            BackgroundColor3 = theme.SubTextColor,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 8)})
+        })
+        
+        HideUIToggle.MouseButton1Click:Connect(function()
+            self.visible = not self.visible
+            self.MasterContainer.Visible = self.visible
+            if not self.visible then
+                util.tween(HideUIIndicator, { Position = UDim2.new(1, -19, 0.5, -8), BackgroundColor3 = theme.Accent }, 0.2)
+            else
+                util.tween(HideUIIndicator, { Position = UDim2.new(0, 3, 0.5, -8), BackgroundColor3 = theme.SubTextColor }, 0.2)
             end
-        end))
-        
+        end)
         
         -- Actions Section
         local ActionsSection = util.new("Frame", {
