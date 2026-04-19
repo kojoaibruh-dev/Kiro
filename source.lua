@@ -251,9 +251,11 @@ do
             Parent = MasterContainer,
             Size = UDim2.new(1, 0, 1, 0),
             BackgroundColor3 = theme.BackColor,
-            BackgroundTransparency = 0,
+            BackgroundTransparency = 0.15,
             ZIndex = 100,
             Name = "LoadingScreen"
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 20)})
         })
         
         local LoadingCircle = util.new("ImageLabel", {
@@ -262,7 +264,7 @@ do
             Position = UDim2.new(0.5, -30, 0.5, -50),
             BackgroundTransparency = 1,
             Image = "rbxassetid://4965945816",
-            ImageColor3 = Color3.new(1, 1, 1),
+            ImageColor3 = theme.Accent,
             ImageTransparency = 0,
             ZIndex = 101,
             Name = "LoadingCircle"
@@ -368,7 +370,7 @@ do
 
     function library:AddHomePage()
         -- Create home page tab
-        local homeTab = tab.new(self, "Home", "Welcome", 0)
+        local homeTab = tab.new(self, "Home", "Welcome", 0, "rbxassetid://119374854034326")
         table.insert(self.tabs, 1, homeTab)
         
         -- Create home page content (no scrolling, everything fits)
@@ -845,6 +847,29 @@ do
         return homeTab
     end
 
+    function library:AddSettingsTab()
+        -- Create settings tab with icon only
+        local settingsTab = tab.new(self, "", "", 999, "rbxassetid://76300966836958")
+        table.insert(self.tabs, settingsTab)
+        
+        -- Create settings content
+        local SettingsContainer = util.new("Frame", {
+            Parent = self.TabContentContainer,
+            Size = UDim2.new(1, -14, 1, -14),
+            Position = UDim2.new(0, 7, 0, 7),
+            BackgroundColor3 = theme.BackColor,
+            BackgroundTransparency = 0.3,
+            Visible = false,
+            Name = "SettingsContainer"
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 16)})
+        })
+        
+        settingsTab.panels = {{PanelContainer = SettingsContainer}}
+        
+        return settingsTab
+    end
+
     function library:Notify(text, duration)
         duration = duration or 4
         
@@ -971,8 +996,8 @@ do
         end)
     end
 
-    function library:AddTab(title, desc)
-        local newTab = tab.new(self, title, desc, #self.tabs+1)
+    function library:AddTab(title, desc, icon)
+        local newTab = tab.new(self, title, desc, #self.tabs+1, icon)
 
 
         table.insert(self.tabs, newTab)
@@ -1166,7 +1191,7 @@ end
 
 --//Tab
 do
-    function tab.new(library, title, desc, id)
+    function tab.new(library, title, desc, id, icon)
         --//Tab Selector
         local TabSelector = util.new("TextButton", { --> TabSelector
             Parent = library.TabSelectContainer,
@@ -1189,27 +1214,50 @@ do
             util.new("UICorner", {CornerRadius = UDim.new(0, 6)})
         })
         
-        util.new("TextLabel", { --Title
-            Parent = TabSelector,
-            Text = title,
-            TextColor3 = theme.TextColor,
-            TextSize = 13,
-            Font = Enum.Font.GothamBold,
-            Position = UDim2.new(0, 14, 0, 10),
-            BackgroundTransparency = 1,
-            Name = "TopBarTitleText"
-        })
-        
-        util.new("TextLabel",  {
-            Parent = TabSelector,
-            Text = desc,
-            TextColor3 = theme.SubTextColor,
-            TextSize = 10,
-            Font = Enum.Font.Gotham,
-            Position = UDim2.new(0, 14, 0, 28),
-            BackgroundTransparency = 1,
-            Name = "TopBarTitleDesc"
-        })
+        -- Icon (if provided)
+        if icon and icon ~= "" then
+            local iconImage = util.new("ImageLabel", {
+                Parent = TabSelector,
+                Size = UDim2.new(0, 24, 0, 24),
+                Position = title == "" and UDim2.new(0.5, -12, 0.5, -12) or UDim2.new(0, 14, 0, 13),
+                BackgroundTransparency = 1,
+                Image = icon,
+                ImageColor3 = theme.TextColor,
+                Name = "TabIcon"
+            })
+            
+            -- Title with icon (only if title is not empty)
+            if title ~= "" then
+                util.new("TextLabel", { --Title
+                    Parent = TabSelector,
+                    Text = title,
+                    TextColor3 = theme.TextColor,
+                    TextSize = 13,
+                    Font = Enum.Font.GothamBold,
+                    Position = UDim2.new(0, 46, 0, 0),
+                    Size = UDim2.new(1, -50, 1, 0),
+                    TextXAlignment = Enum.TextXAlignment.Left,
+                    TextYAlignment = Enum.TextYAlignment.Center,
+                    BackgroundTransparency = 1,
+                    Name = "TopBarTitleText"
+                })
+            end
+        else
+            -- Title without icon (centered)
+            util.new("TextLabel", { --Title
+                Parent = TabSelector,
+                Text = title,
+                TextColor3 = theme.TextColor,
+                TextSize = 13,
+                Font = Enum.Font.GothamBold,
+                Position = UDim2.new(0, 14, 0, 0),
+                Size = UDim2.new(1, -18, 1, 0),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                TextYAlignment = Enum.TextYAlignment.Center,
+                BackgroundTransparency = 1,
+                Name = "TopBarTitleText"
+            })
+        end
 
         
         local panels = {}
