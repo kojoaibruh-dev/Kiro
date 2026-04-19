@@ -889,6 +889,168 @@ do
             util.new("UICorner", {CornerRadius = UDim.new(0, 16)})
         })
         
+        -- Settings Title
+        util.new("TextLabel", {
+            Parent = SettingsContainer,
+            Text = "SETTINGS",
+            TextColor3 = theme.TextColor,
+            TextSize = 18,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(1, -40, 0, 30),
+            Position = UDim2.new(0, 20, 0, 15),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            BackgroundTransparency = 1,
+        })
+        
+        -- UI Settings Section
+        local UISection = util.new("Frame", {
+            Parent = SettingsContainer,
+            Size = UDim2.new(1, -40, 0, 140),
+            Position = UDim2.new(0, 20, 0, 55),
+            BackgroundColor3 = theme.UpperContainer,
+            BackgroundTransparency = 0.3,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 14)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.7,
+            }),
+            util.new("TextLabel", {
+                Text = "UI Settings",
+                TextColor3 = theme.SubTextColor,
+                TextSize = 11,
+                Font = Enum.Font.GothamBold,
+                Size = UDim2.new(1, -20, 0, 16),
+                Position = UDim2.new(0, 14, 0, 10),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                BackgroundTransparency = 1,
+            })
+        })
+        
+        -- UI Scale Slider
+        local ScaleFrame = util.new("Frame", {
+            Parent = UISection,
+            Size = UDim2.new(1, -28, 0, 35),
+            Position = UDim2.new(0, 14, 0, 35),
+            BackgroundTransparency = 1,
+        })
+        
+        util.new("TextLabel", {
+            Parent = ScaleFrame,
+            Text = "UI Scale",
+            TextColor3 = theme.TextColor,
+            TextSize = 12,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(0.5, 0, 0, 14),
+            Position = UDim2.new(0, 0, 0, 0),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            BackgroundTransparency = 1,
+        })
+        
+        local ScaleValue = util.new("TextLabel", {
+            Parent = ScaleFrame,
+            Text = "100%",
+            TextColor3 = theme.Accent,
+            TextSize = 11,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(0.5, 0, 0, 14),
+            Position = UDim2.new(0.5, 0, 0, 0),
+            TextXAlignment = Enum.TextXAlignment.Right,
+            BackgroundTransparency = 1,
+        })
+        
+        -- Keybind Display
+        local KeybindFrame = util.new("Frame", {
+            Parent = UISection,
+            Size = UDim2.new(1, -28, 0, 35),
+            Position = UDim2.new(0, 14, 0, 75),
+            BackgroundTransparency = 1,
+        })
+        
+        util.new("TextLabel", {
+            Parent = KeybindFrame,
+            Text = "Toggle Keybind",
+            TextColor3 = theme.TextColor,
+            TextSize = 12,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(0.5, 0, 0, 14),
+            Position = UDim2.new(0, 0, 0, 0),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            BackgroundTransparency = 1,
+        })
+        
+        util.new("TextLabel", {
+            Parent = KeybindFrame,
+            Text = "RightControl",
+            TextColor3 = theme.Accent,
+            TextSize = 11,
+            Font = Enum.Font.GothamBold,
+            Size = UDim2.new(0.5, 0, 0, 14),
+            Position = UDim2.new(0.5, 0, 0, 0),
+            TextXAlignment = Enum.TextXAlignment.Right,
+            BackgroundTransparency = 1,
+        })
+        
+        -- Performance Section
+        local PerfSection = util.new("Frame", {
+            Parent = SettingsContainer,
+            Size = UDim2.new(1, -40, 0, 100),
+            Position = UDim2.new(0, 20, 0, 205),
+            BackgroundColor3 = theme.UpperContainer,
+            BackgroundTransparency = 0.3,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 14)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.7,
+            }),
+            util.new("TextLabel", {
+                Text = "Performance",
+                TextColor3 = theme.SubTextColor,
+                TextSize = 11,
+                Font = Enum.Font.GothamBold,
+                Size = UDim2.new(1, -20, 0, 16),
+                Position = UDim2.new(0, 14, 0, 10),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                BackgroundTransparency = 1,
+            })
+        })
+        
+        -- FPS Unlocker Button
+        local UnlockerButton = util.new("TextButton", {
+            Parent = PerfSection,
+            Size = UDim2.new(1, -28, 0, 35),
+            Position = UDim2.new(0, 14, 0, 40),
+            BackgroundColor3 = theme.BackColor,
+            BackgroundTransparency = 0.4,
+            Text = "Unlock FPS (240)",
+            TextColor3 = theme.TextColor,
+            TextSize = 12,
+            Font = Enum.Font.GothamBold,
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.8,
+            })
+        })
+        
+        UnlockerButton.MouseButton1Click:Connect(function()
+            setfpscap(240)
+            self:Notify("FPS unlocked to 240!")
+        end)
+        
+        UnlockerButton.MouseEnter:Connect(function()
+            util.tween(UnlockerButton, { BackgroundTransparency = 0.2 }, 0.2)
+        end)
+        
+        UnlockerButton.MouseLeave:Connect(function()
+            util.tween(UnlockerButton, { BackgroundTransparency = 0.4 }, 0.2)
+        end)
+        
         -- Settings button click handler
         SettingsButton.MouseButton1Click:Connect(function()
             if SettingsContainer.Visible then
