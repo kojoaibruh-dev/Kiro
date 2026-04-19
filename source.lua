@@ -370,7 +370,7 @@ do
 
     function library:AddHomePage()
         -- Create home page tab
-        local homeTab = tab.new(self, "Home", "Welcome", 0, "rbxassetid://119374854034326")
+        local homeTab = tab.new(self, "Home", "Welcome", 0, "rbxassetid://138931352336228")
         table.insert(self.tabs, 1, homeTab)
         
         -- Create home page content (no scrolling, everything fits)
@@ -854,8 +854,8 @@ do
             Size = UDim2.new(0, 24, 0, 24),
             Position = UDim2.new(1, -32, 0, 3),
             BackgroundTransparency = 1,
-            Image = "rbxassetid://76300966836958",
-            ImageColor3 = Color3.fromRGB(255, 255, 255),
+            Image = "rbxassetid://122074247455706",
+            ImageColor3 = theme.Accent,
             Name = "SettingsButton"
         })
         
@@ -874,24 +874,35 @@ do
         
         -- Settings button click handler
         SettingsButton.MouseButton1Click:Connect(function()
-            -- Hide all tab content
-            for _, tab in pairs(self.tabs) do
-                for _, panel in pairs(tab.panels) do
-                    panel.PanelContainer.Visible = false
+            if SettingsContainer.Visible then
+                -- Hide settings and restore the selected tab
+                SettingsContainer.Visible = false
+                for _, tab in pairs(self.tabs) do
+                    if tab.selected then
+                        for _, panel in pairs(tab.panels) do
+                            panel.PanelContainer.Visible = true
+                        end
+                        break
+                    end
                 end
+            else
+                -- Hide all tab content and show settings
+                for _, tab in pairs(self.tabs) do
+                    for _, panel in pairs(tab.panels) do
+                        panel.PanelContainer.Visible = false
+                    end
+                end
+                SettingsContainer.Visible = true
             end
-            
-            -- Show settings
-            SettingsContainer.Visible = not SettingsContainer.Visible
         end)
         
         -- Hover effect
         SettingsButton.MouseEnter:Connect(function()
-            util.tween(SettingsButton, { ImageColor3 = theme.Accent }, 0.2)
+            util.tween(SettingsButton, { ImageColor3 = Color3.fromRGB(200, 150, 255) }, 0.2)
         end)
         
         SettingsButton.MouseLeave:Connect(function()
-            util.tween(SettingsButton, { ImageColor3 = Color3.fromRGB(255, 255, 255) }, 0.2)
+            util.tween(SettingsButton, { ImageColor3 = theme.Accent }, 0.2)
         end)
         
         return SettingsContainer
@@ -1249,7 +1260,7 @@ do
                 Position = title == "" and UDim2.new(0.5, -12, 0.5, -12) or UDim2.new(0, 14, 0, 13),
                 BackgroundTransparency = 1,
                 Image = icon,
-                ImageColor3 = Color3.fromRGB(255, 255, 255),
+                ImageColor3 = theme.Accent,
                 Name = "TabIcon"
             })
             
