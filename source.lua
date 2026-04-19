@@ -103,7 +103,7 @@ do
                 ClipsDescendants = true,
                 Name = "MasterContainer"
             }, {
-                util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
+                util.new("UICorner", {CornerRadius = UDim.new(0, 20)}),
                 util.new("UIStroke", {
                     Color = theme.Accent,
                     Thickness = 1.5,
@@ -174,7 +174,7 @@ do
                 BackgroundTransparency = 0.2,
                 Name = "TopBarContainer"
             }, {
-                util.new("UICorner", {CornerRadius = UDim.new(0, 12)})
+                util.new("UICorner", {CornerRadius = UDim.new(0, 20)})
             }),
             util.new("Frame", { --> ContentContainer
                 Size = UDim2.new(1, 0, 1, -30),
@@ -222,7 +222,7 @@ do
                 BackgroundTransparency = 0.2,
                 Name = "TabSelectContainer"
             }, {
-                util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
+                util.new("UICorner", {CornerRadius = UDim.new(0, 16)}),
                 util.new("UIListLayout", { --> Layout for left-side tab selectors
                     SortOrder = Enum.SortOrder.LayoutOrder,
                     Padding = UDim.new(0,7),
@@ -242,7 +242,7 @@ do
                 BackgroundTransparency = 0.2,
                 Name = "TabContentContainer"
             }, {
-                util.new("UICorner", {CornerRadius = UDim.new(0, 10)})
+                util.new("UICorner", {CornerRadius = UDim.new(0, 16)})
             })
         })
 
@@ -381,7 +381,7 @@ do
             Visible = false,
             Name = "HomeContainer"
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 10)})
+            util.new("UICorner", {CornerRadius = UDim.new(0, 16)})
         })
         
         homeTab.panels = {{PanelContainer = HomeContainer}}
@@ -395,7 +395,7 @@ do
             BackgroundTransparency = 0.3,
             Name = "SessionInfo"
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 14)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
@@ -421,7 +421,7 @@ do
             BackgroundColor3 = theme.BackColor,
             BackgroundTransparency = 0.4,
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
@@ -461,7 +461,7 @@ do
             BackgroundColor3 = theme.BackColor,
             BackgroundTransparency = 0.4,
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
@@ -503,7 +503,7 @@ do
             BackgroundTransparency = 0.3,
             Name = "UserInfo"
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 14)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
@@ -526,7 +526,7 @@ do
             BackgroundTransparency = 0.4,
             Image = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. player.UserId .. "&width=150&height=150&format=png",
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 14)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 2,
@@ -583,7 +583,7 @@ do
             BackgroundTransparency = 0.3,
             Name = "GameInfo"
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 14)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
@@ -609,7 +609,7 @@ do
             BackgroundColor3 = theme.BackColor,
             BackgroundTransparency = 0.4,
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
@@ -651,7 +651,7 @@ do
             BackgroundColor3 = theme.BackColor,
             BackgroundTransparency = 0.4,
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
@@ -692,7 +692,7 @@ do
             BackgroundTransparency = 0.3,
             Name = "SystemInfo"
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 14)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
@@ -718,7 +718,7 @@ do
             BackgroundColor3 = theme.BackColor,
             BackgroundTransparency = 0.4,
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
@@ -758,7 +758,7 @@ do
             BackgroundColor3 = theme.BackColor,
             BackgroundTransparency = 0.4,
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
@@ -1176,7 +1176,7 @@ do
             LayoutOrder = id,
             Name = "TabSelector"
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 6)})
+            util.new("UICorner", {CornerRadius = UDim.new(0, 12)})
         })
         
         local TabSelectorColour = util.new("Frame", {
@@ -1186,7 +1186,7 @@ do
             BackgroundColor3 = theme.NotSelectedTab,
             BorderSizePixel = 0,
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 4)})
+            util.new("UICorner", {CornerRadius = UDim.new(0, 6)})
         })
         
         util.new("TextLabel", { --Title
