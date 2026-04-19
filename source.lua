@@ -847,12 +847,19 @@ do
         return homeTab
     end
 
-    function library:AddSettingsTab()
-        -- Create settings tab with icon only
-        local settingsTab = tab.new(self, "", "", 999, "rbxassetid://76300966836958")
-        table.insert(self.tabs, settingsTab)
+    function library:AddSettingsButton()
+        -- Create settings button in top right
+        local SettingsButton = util.new("ImageButton", {
+            Parent = self.TopBarContainer,
+            Size = UDim2.new(0, 24, 0, 24),
+            Position = UDim2.new(1, -32, 0, 3),
+            BackgroundTransparency = 1,
+            Image = "rbxassetid://76300966836958",
+            ImageColor3 = theme.Accent,
+            Name = "SettingsButton"
+        })
         
-        -- Create settings content
+        -- Create settings panel
         local SettingsContainer = util.new("Frame", {
             Parent = self.TabContentContainer,
             Size = UDim2.new(1, -14, 1, -14),
@@ -865,9 +872,29 @@ do
             util.new("UICorner", {CornerRadius = UDim.new(0, 16)})
         })
         
-        settingsTab.panels = {{PanelContainer = SettingsContainer}}
+        -- Settings button click handler
+        SettingsButton.MouseButton1Click:Connect(function()
+            -- Hide all tab content
+            for _, tab in pairs(self.tabs) do
+                for _, panel in pairs(tab.panels) do
+                    panel.PanelContainer.Visible = false
+                end
+            end
+            
+            -- Show settings
+            SettingsContainer.Visible = not SettingsContainer.Visible
+        end)
         
-        return settingsTab
+        -- Hover effect
+        SettingsButton.MouseEnter:Connect(function()
+            util.tween(SettingsButton, { ImageColor3 = Color3.fromRGB(200, 150, 255) }, 0.2)
+        end)
+        
+        SettingsButton.MouseLeave:Connect(function()
+            util.tween(SettingsButton, { ImageColor3 = theme.Accent }, 0.2)
+        end)
+        
+        return SettingsContainer
     end
 
     function library:Notify(text, duration)
@@ -1222,7 +1249,7 @@ do
                 Position = title == "" and UDim2.new(0.5, -12, 0.5, -12) or UDim2.new(0, 14, 0, 13),
                 BackgroundTransparency = 1,
                 Image = icon,
-                ImageColor3 = theme.TextColor,
+                ImageColor3 = theme.Accent,
                 Name = "TabIcon"
             })
             
