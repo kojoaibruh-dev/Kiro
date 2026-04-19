@@ -77,6 +77,7 @@ local theme = getgenv().theme or {
     InteractableOutline = Color3.fromRGB(100, 80, 140),
 
     Accent = Color3.fromRGB(150, 100, 255), --> Purple accent
+    AccentHover = Color3.fromRGB(170, 120, 255), --> Lighter purple for hover
 
     NotSelectedTab = Color3.fromRGB(80, 60, 100),
 
@@ -99,15 +100,27 @@ do
                 Size = size,
                 Position = position,
                 BackgroundColor3 = theme.BackColor,
-                BackgroundTransparency = 0.15,
+                BackgroundTransparency = 0.08,
                 ClipsDescendants = true,
                 Name = "MasterContainer"
             }, {
-                util.new("UICorner", {CornerRadius = UDim.new(0, 20)}),
+                util.new("UICorner", {CornerRadius = UDim.new(0, 16)}),
                 util.new("UIStroke", {
                     Color = theme.Accent,
-                    Thickness = 1.5,
-                    Transparency = 0.5,
+                    Thickness = 2,
+                    Transparency = 0.3,
+                }),
+                -- Add subtle shadow effect
+                util.new("ImageLabel", {
+                    Size = UDim2.new(1, 40, 1, 40),
+                    Position = UDim2.new(0, -20, 0, -20),
+                    BackgroundTransparency = 1,
+                    Image = "rbxassetid://5554236805",
+                    ImageColor3 = Color3.fromRGB(0, 0, 0),
+                    ImageTransparency = 0.5,
+                    ScaleType = Enum.ScaleType.Slice,
+                    SliceCenter = Rect.new(23, 23, 277, 277),
+                    ZIndex = -1,
                 })
             })
         })
@@ -169,16 +182,23 @@ do
         --//Main containers
         local TopBarContainer, ContentContainer = util.children(MasterContainer, {
             util.new("Frame", { --> TopBarContainer
-                Size = UDim2.new(1, 0, 0, 30),
+                Size = UDim2.new(1, 0, 0, 35),
                 BackgroundColor3 = theme.TopBar,
-                BackgroundTransparency = 0.2,
+                BackgroundTransparency = 0.1,
                 Name = "TopBarContainer"
             }, {
-                util.new("UICorner", {CornerRadius = UDim.new(0, 20)})
+                util.new("UICorner", {CornerRadius = UDim.new(0, 16)}),
+                util.new("UIGradient", {
+                    Color = ColorSequence.new({
+                        ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 20, 40)),
+                        ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 15, 30))
+                    }),
+                    Rotation = 90
+                })
             }),
             util.new("Frame", { --> ContentContainer
-                Size = UDim2.new(1, 0, 1, -30),
-                Position = UDim2.new(0,0,0,30),
+                Size = UDim2.new(1, 0, 1, -35),
+                Position = UDim2.new(0,0,0,35),
                 BackgroundTransparency = 1,
                 Name = "ContentContainer"
             })
@@ -189,26 +209,26 @@ do
             util.new("TextLabel", { -->TopBarTitle
                 Text = title,
                 TextColor3 = theme.TextColor,
-                TextSize = 14,
+                TextSize = 15,
                 Font = Enum.Font.GothamBold,
-                Position = UDim2.new(0, 8, 0, 8),
+                Position = UDim2.new(0, 12, 0, 10),
                 BackgroundTransparency = 1,
                 Name = "TopBarTitle"
             }),
         })
         
         -- Calculate title width
-        local titleWidth = game:GetService("TextService"):GetTextSize(title, 14, Enum.Font.GothamBold, Vector2.new(1000, 1000)).X
+        local titleWidth = game:GetService("TextService"):GetTextSize(title, 15, Enum.Font.GothamBold, Vector2.new(1000, 1000)).X
         
         --//TopBar Version (next to title)
         local TopBarVersion = util.new("TextLabel", { -->version
             Parent = TopBarContainer,
             Text = version,
-            TextColor3 = theme.SubTextColor,
+            TextColor3 = theme.Accent,
             TextXAlignment = Enum.TextXAlignment.Left,
-            TextSize = 10,
+            TextSize = 11,
             Font = Enum.Font.Gotham,
-            Position = UDim2.new(0, 8 + titleWidth + 6, 0, 10),
+            Position = UDim2.new(0, 12 + titleWidth + 8, 0, 11),
             BackgroundTransparency = 1,
             Name = "Version"
         })
@@ -216,111 +236,62 @@ do
         --//Content Containers
         local TabSelectContainer, TabContentContainer = util.children(ContentContainer, {
             util.new("Frame", { --> TabSelectContainer
-                Size = UDim2.new(0, 150, 1, -14),
-                Position = UDim2.new(0, 7, 0, 7),
+                Size = UDim2.new(0, 155, 1, -18),
+                Position = UDim2.new(0, 9, 0, 9),
                 BackgroundColor3 = theme.UpperContainer,
-                BackgroundTransparency = 0.2,
+                BackgroundTransparency = 0.15,
                 Name = "TabSelectContainer"
             }, {
-                util.new("UICorner", {CornerRadius = UDim.new(0, 16)}),
+                util.new("UICorner", {CornerRadius = UDim.new(0, 14)}),
+                util.new("UIStroke", {
+                    Color = theme.Accent,
+                    Thickness = 1,
+                    Transparency = 0.8,
+                }),
+                util.new("UIGradient", {
+                    Color = ColorSequence.new({
+                        ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 25, 45)),
+                        ColorSequenceKeypoint.new(1, Color3.fromRGB(25, 20, 35))
+                    }),
+                    Rotation = 90
+                }),
                 util.new("UIListLayout", { --> Layout for left-side tab selectors
                     SortOrder = Enum.SortOrder.LayoutOrder,
-                    Padding = UDim.new(0,7),
+                    Padding = UDim.new(0,8),
                     HorizontalAlignment = Enum.HorizontalAlignment.Center,
                 }),
                 util.new("Frame", { --So UIListLayout leaves gap at top
                     BackgroundTransparency = 1,
                     LayoutOrder = 0,
-                    Size = UDim2.new(1,0,0,-2),
+                    Size = UDim2.new(1,0,0,2),
                     Name = "gap"
                 })
             }),
             util.new("Frame", { --> TabContentContainer
-                Size = UDim2.new(1, -171, 1, -14),
-                Position = UDim2.new(0, 164, 0, 7),
+                Size = UDim2.new(1, -179, 1, -18),
+                Position = UDim2.new(0, 170, 0, 9),
                 BackgroundColor3 = theme.UpperContainer,
-                BackgroundTransparency = 0.2,
+                BackgroundTransparency = 0.15,
                 Name = "TabContentContainer"
             }, {
-                util.new("UICorner", {CornerRadius = UDim.new(0, 16)})
+                util.new("UICorner", {CornerRadius = UDim.new(0, 14)}),
+                util.new("UIStroke", {
+                    Color = theme.Accent,
+                    Thickness = 1,
+                    Transparency = 0.8,
+                }),
+                util.new("UIGradient", {
+                    Color = ColorSequence.new({
+                        ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 25, 45)),
+                        ColorSequenceKeypoint.new(1, Color3.fromRGB(25, 20, 35))
+                    }),
+                    Rotation = 90
+                })
             })
         })
 
-        --//Loading Animation
-        local LoadingScreen = util.new("Frame", {
-            Parent = MasterContainer,
-            Size = UDim2.new(1, 0, 1, 0),
-            BackgroundColor3 = theme.BackColor,
-            BackgroundTransparency = 0,
-            ZIndex = 100,
-            Name = "LoadingScreen",
-            Active = true,
-        }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 20)})
-        })
-        
-        local LoadingCircle = util.new("ImageLabel", {
-            Parent = LoadingScreen,
-            Size = UDim2.new(0, 60, 0, 60),
-            Position = UDim2.new(0.5, -30, 0.5, -50),
-            BackgroundTransparency = 1,
-            Image = "rbxassetid://4965945816",
-            ImageColor3 = theme.Accent,
-            ImageTransparency = 0,
-            ZIndex = 101,
-            Name = "LoadingCircle"
-        })
-        
-        -- Add a purple glow effect
-        local LoadingGlow = util.new("ImageLabel", {
-            Parent = LoadingScreen,
-            Size = UDim2.new(0, 80, 0, 80),
-            Position = UDim2.new(0.5, -40, 0.5, -60),
-            BackgroundTransparency = 1,
-            Image = "rbxassetid://4965945816",
-            ImageColor3 = theme.Accent,
-            ImageTransparency = 0.7,
-            ZIndex = 100,
-            Name = "LoadingGlow"
-        })
-        
-        local LoadingText = util.new("TextLabel", {
-            Parent = LoadingScreen,
-            Text = "Loading...",
-            TextColor3 = theme.TextColor,
-            TextSize = 16,
-            Font = Enum.Font.GothamBold,
-            Size = UDim2.new(1, 0, 0, 30),
-            Position = UDim2.new(0, 0, 0.5, 20),
-            BackgroundTransparency = 1,
-            TextTransparency = 0,
-            TextXAlignment = Enum.TextXAlignment.Center,
-            ZIndex = 101,
-            Name = "LoadingText"
-        })
-        
-        --Spin animation
-        local spinConnection
-        spinConnection = RunService.RenderStepped:Connect(function()
-            if LoadingScreen.Visible then
-                LoadingCircle.Rotation = LoadingCircle.Rotation + 5
-                LoadingGlow.Rotation = LoadingGlow.Rotation + 3
-            end
-        end)
-        table.insert(connections, spinConnection)
-        
-        --Hide loading screen after delay
-        task.spawn(function()
-            wait(1.5)
-            util.tween(LoadingScreen, { BackgroundTransparency = 1 }, 0.3)
-            util.tween(LoadingCircle, { ImageTransparency = 1 }, 0.3)
-            util.tween(LoadingGlow, { ImageTransparency = 1 }, 0.3)
-            util.tween(LoadingText, { TextTransparency = 1 }, 0.3)
-            wait(0.3)
-            LoadingScreen.Visible = false
-            LoadingScreen.Active = false
-            LoadingScreen:Destroy()
-        end)
+        --//Loading Animation (REMOVED)
+        -- Loading screen removed per user request
 
         --// Dragability
         local isDragging = false
@@ -393,14 +364,21 @@ do
         -- Create home page content (no scrolling, everything fits)
         local HomeContainer = util.new("Frame", {
             Parent = self.TabContentContainer,
-            Size = UDim2.new(1, -14, 1, -14),
-            Position = UDim2.new(0, 7, 0, 7),
+            Size = UDim2.new(1, -20, 1, -20),
+            Position = UDim2.new(0, 10, 0, 10),
             BackgroundColor3 = theme.BackColor,
-            BackgroundTransparency = 0.3,
+            BackgroundTransparency = 0.2,
             Visible = false,
             Name = "HomeContainer"
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 16)})
+            util.new("UICorner", {CornerRadius = UDim.new(0, 14)}),
+            util.new("UIGradient", {
+                Color = ColorSequence.new({
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(20, 15, 30)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(15, 15, 25))
+                }),
+                Rotation = 135
+            })
         })
         
         homeTab.panels = {{PanelContainer = HomeContainer}}
@@ -408,24 +386,31 @@ do
         -- Session Information Section
         local SessionInfo = util.new("Frame", {
             Parent = HomeContainer,
-            Size = UDim2.new(1, -20, 0, 80),
-            Position = UDim2.new(0, 10, 0, 8),
+            Size = UDim2.new(1, -24, 0, 85),
+            Position = UDim2.new(0, 12, 0, 10),
             BackgroundColor3 = theme.UpperContainer,
-            BackgroundTransparency = 0.3,
+            BackgroundTransparency = 0.2,
             Name = "SessionInfo"
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 14)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
                 Transparency = 0.7,
             }),
+            util.new("UIGradient", {
+                Color = ColorSequence.new({
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 25, 45)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(25, 20, 40))
+                }),
+                Rotation = 90
+            }),
             util.new("TextLabel", {
                 Text = "SESSION INFORMATION",
-                TextColor3 = theme.SubTextColor,
+                TextColor3 = theme.Accent,
                 TextSize = 10,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -20, 0, 16),
+                Size = UDim2.new(1, -24, 0, 16),
                 Position = UDim2.new(0, 14, 0, 10),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
@@ -435,17 +420,24 @@ do
         -- Players info
         local PlayersFrame = util.new("Frame", {
             Parent = SessionInfo,
-            Size = UDim2.new(0.48, -5, 0, 42),
+            Size = UDim2.new(0.48, -6, 0, 44),
             Position = UDim2.new(0, 12, 0, 32),
             BackgroundColor3 = theme.BackColor,
-            BackgroundTransparency = 0.4,
+            BackgroundTransparency = 0.3,
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
             util.new("UIStroke", {
                 Color = theme.Accent,
                 Thickness = 1,
-                Transparency = 0.8,
+                Transparency = 0.85,
             }),
+            util.new("UIGradient", {
+                Color = ColorSequence.new({
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 20, 40)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 15, 35))
+                }),
+                Rotation = 45
+            })
         })
         
         util.new("TextLabel", {
@@ -865,39 +857,61 @@ do
     end
 
     function library:AddSettingsButton()
-        -- Create settings button in top right
-        local SettingsButton = util.new("ImageButton", {
+        -- Create settings button in top right with glow effect
+        local SettingsButtonContainer = util.new("Frame", {
             Parent = self.TopBarContainer,
-            Size = UDim2.new(0, 24, 0, 24),
-            Position = UDim2.new(1, -32, 0, 3),
+            Size = UDim2.new(0, 28, 0, 28),
+            Position = UDim2.new(1, -36, 0, 4),
             BackgroundTransparency = 1,
+            Name = "SettingsButtonContainer"
+        })
+        
+        local SettingsButton = util.new("ImageButton", {
+            Parent = SettingsButtonContainer,
+            Size = UDim2.new(1, 0, 1, 0),
+            BackgroundColor3 = theme.UpperContainer,
+            BackgroundTransparency = 0.3,
             Image = "rbxassetid://122074247455706",
             ImageColor3 = theme.Accent,
             Name = "SettingsButton"
+        }, {
+            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.7,
+            })
         })
         
         -- Create settings panel
         local SettingsContainer = util.new("Frame", {
             Parent = self.TabContentContainer,
-            Size = UDim2.new(1, -14, 1, -14),
-            Position = UDim2.new(0, 7, 0, 7),
+            Size = UDim2.new(1, -20, 1, -20),
+            Position = UDim2.new(0, 10, 0, 10),
             BackgroundColor3 = theme.BackColor,
-            BackgroundTransparency = 0.3,
+            BackgroundTransparency = 0.2,
             Visible = false,
             Name = "SettingsContainer"
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 16)})
+            util.new("UICorner", {CornerRadius = UDim.new(0, 14)}),
+            util.new("UIGradient", {
+                Color = ColorSequence.new({
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(20, 15, 30)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(15, 15, 25))
+                }),
+                Rotation = 135
+            })
         })
         
-        -- Settings Title
+        -- Settings Title with glow
         util.new("TextLabel", {
             Parent = SettingsContainer,
             Text = "SETTINGS",
-            TextColor3 = theme.TextColor,
-            TextSize = 16,
+            TextColor3 = theme.Accent,
+            TextSize = 18,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(1, -30, 0, 25),
-            Position = UDim2.new(0, 15, 0, 10),
+            Size = UDim2.new(1, -30, 0, 28),
+            Position = UDim2.new(0, 15, 0, 12),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -905,10 +919,10 @@ do
         -- UI Settings Section
         local UISection = util.new("Frame", {
             Parent = SettingsContainer,
-            Size = UDim2.new(1, -30, 0, 90),
-            Position = UDim2.new(0, 15, 0, 40),
+            Size = UDim2.new(1, -30, 0, 95),
+            Position = UDim2.new(0, 15, 0, 48),
             BackgroundColor3 = theme.UpperContainer,
-            BackgroundTransparency = 0.3,
+            BackgroundTransparency = 0.2,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
             util.new("UIStroke", {
@@ -916,13 +930,20 @@ do
                 Thickness = 1,
                 Transparency = 0.7,
             }),
+            util.new("UIGradient", {
+                Color = ColorSequence.new({
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 25, 45)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(25, 20, 40))
+                }),
+                Rotation = 90
+            }),
             util.new("TextLabel", {
                 Text = "UI Settings",
-                TextColor3 = theme.SubTextColor,
-                TextSize = 10,
+                TextColor3 = theme.Accent,
+                TextSize = 11,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -24, 0, 14),
-                Position = UDim2.new(0, 12, 0, 8),
+                Size = UDim2.new(1, -24, 0, 16),
+                Position = UDim2.new(0, 12, 0, 10),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             })
@@ -1028,10 +1049,10 @@ do
         -- Performance Section
         local PerfSection = util.new("Frame", {
             Parent = SettingsContainer,
-            Size = UDim2.new(1, -30, 0, 60),
-            Position = UDim2.new(0, 15, 0, 138),
+            Size = UDim2.new(1, -30, 0, 65),
+            Position = UDim2.new(0, 15, 0, 151),
             BackgroundColor3 = theme.UpperContainer,
-            BackgroundTransparency = 0.3,
+            BackgroundTransparency = 0.2,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
             util.new("UIStroke", {
@@ -1039,13 +1060,20 @@ do
                 Thickness = 1,
                 Transparency = 0.7,
             }),
+            util.new("UIGradient", {
+                Color = ColorSequence.new({
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 25, 45)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(25, 20, 40))
+                }),
+                Rotation = 90
+            }),
             util.new("TextLabel", {
                 Text = "Performance",
-                TextColor3 = theme.SubTextColor,
-                TextSize = 10,
+                TextColor3 = theme.Accent,
+                TextSize = 11,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -16, 0, 14),
-                Position = UDim2.new(0, 12, 0, 8),
+                Size = UDim2.new(1, -24, 0, 16),
+                Position = UDim2.new(0, 12, 0, 10),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             })
@@ -1113,10 +1141,10 @@ do
         -- Gameplay Section
         local GameplaySection = util.new("Frame", {
             Parent = SettingsContainer,
-            Size = UDim2.new(1, -30, 0, 120),
-            Position = UDim2.new(0, 15, 0, 206),
+            Size = UDim2.new(1, -30, 0, 130),
+            Position = UDim2.new(0, 15, 0, 224),
             BackgroundColor3 = theme.UpperContainer,
-            BackgroundTransparency = 0.3,
+            BackgroundTransparency = 0.2,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
             util.new("UIStroke", {
@@ -1124,13 +1152,20 @@ do
                 Thickness = 1,
                 Transparency = 0.7,
             }),
+            util.new("UIGradient", {
+                Color = ColorSequence.new({
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 25, 45)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(25, 20, 40))
+                }),
+                Rotation = 90
+            }),
             util.new("TextLabel", {
                 Text = "Gameplay",
-                TextColor3 = theme.SubTextColor,
-                TextSize = 10,
+                TextColor3 = theme.Accent,
+                TextSize = 11,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -24, 0, 14),
-                Position = UDim2.new(0, 12, 0, 8),
+                Size = UDim2.new(1, -24, 0, 16),
+                Position = UDim2.new(0, 12, 0, 10),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             })
@@ -1228,7 +1263,7 @@ do
         local UnloadKeybindButton = util.new("TextButton", {
             Parent = UnloadKeybindFrame,
             Text = unloadKeybind.Name,
-            TextColor3 = Color3.fromRGB(255, 100, 120),
+            TextColor3 = theme.Accent,
             TextSize = 11,
             Font = Enum.Font.GothamBold,
             Size = UDim2.new(1, 0, 1, 0),
@@ -1251,7 +1286,7 @@ do
                     connection:Disconnect()
                     unloadKeybind = inp.KeyCode
                     UnloadKeybindButton.Text = inp.KeyCode.Name
-                    UnloadKeybindButton.TextColor3 = Color3.fromRGB(255, 100, 120)
+                    UnloadKeybindButton.TextColor3 = theme.Accent
                     isBindingUnload = false
                     self:Notify("Unload keybind changed to " .. inp.KeyCode.Name)
                 end
@@ -1260,13 +1295,13 @@ do
         
         UnloadKeybindButton.MouseEnter:Connect(function()
             if not isBindingUnload then
-                util.tween(UnloadKeybindButton, { TextColor3 = Color3.fromRGB(255, 150, 170) }, 0.2)
+                util.tween(UnloadKeybindButton, { TextColor3 = Color3.fromRGB(200, 150, 255) }, 0.2)
             end
         end)
         
         UnloadKeybindButton.MouseLeave:Connect(function()
             if not isBindingUnload then
-                util.tween(UnloadKeybindButton, { TextColor3 = Color3.fromRGB(255, 100, 120) }, 0.2)
+                util.tween(UnloadKeybindButton, { TextColor3 = theme.Accent }, 0.2)
             end
         end)
         
@@ -1292,7 +1327,7 @@ do
             Parent = GameplaySection,
             Size = UDim2.new(1, -24, 0, 28),
             Position = UDim2.new(0, 12, 0, 88),
-            BackgroundColor3 = Color3.fromRGB(180, 60, 80),
+            BackgroundColor3 = theme.BackColor,
             BackgroundTransparency = 0.4,
             Text = "Unload UI",
             TextColor3 = theme.TextColor,
@@ -1301,7 +1336,7 @@ do
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
             util.new("UIStroke", {
-                Color = Color3.fromRGB(255, 100, 120),
+                Color = theme.Accent,
                 Thickness = 1,
                 Transparency = 0.6,
             })
@@ -1361,13 +1396,15 @@ do
             end
         end)
         
-        -- Hover effect
+        -- Hover effect with smooth animation
         SettingsButton.MouseEnter:Connect(function()
-            util.tween(SettingsButton, { ImageColor3 = Color3.fromRGB(200, 150, 255) }, 0.2)
+            util.tween(SettingsButton, { BackgroundTransparency = 0.1, ImageColor3 = theme.AccentHover }, 0.2)
+            util.tween(SettingsButton.UIStroke, { Transparency = 0.4 }, 0.2)
         end)
         
         SettingsButton.MouseLeave:Connect(function()
-            util.tween(SettingsButton, { ImageColor3 = theme.Accent }, 0.2)
+            util.tween(SettingsButton, { BackgroundTransparency = 0.3, ImageColor3 = theme.Accent }, 0.2)
+            util.tween(SettingsButton.UIStroke, { Transparency = 0.7 }, 0.2)
         end)
         
         return SettingsContainer
@@ -1698,19 +1735,32 @@ do
         --//Tab Selector
         local TabSelector = util.new("TextButton", { --> TabSelector
             Parent = library.TabSelectContainer,
-            Size = UDim2.new(1, -10, 0, 50),
-            Position = UDim2.new(0, 5, 0, 5),
+            Size = UDim2.new(1, -14, 0, 52),
+            Position = UDim2.new(0, 7, 0, 7),
             BackgroundColor3 = theme.InnerContainer,
+            BackgroundTransparency = 0.3,
             LayoutOrder = id,
             Name = "TabSelector"
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 12)})
+            util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
+            util.new("UIStroke", {
+                Color = theme.Accent,
+                Thickness = 1,
+                Transparency = 0.9,
+            }),
+            util.new("UIGradient", {
+                Color = ColorSequence.new({
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 20, 40)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 15, 35))
+                }),
+                Rotation = 90
+            })
         })
         
         local TabSelectorColour = util.new("Frame", {
             Parent = TabSelector,
-            Size = UDim2.new(0, 3, 1, -8),
-            Position = UDim2.new(0, 0, 0, 4),
+            Size = UDim2.new(0, 3, 1, -12),
+            Position = UDim2.new(0, 2, 0, 6),
             BackgroundColor3 = theme.NotSelectedTab,
             BorderSizePixel = 0,
         }, {
@@ -1721,8 +1771,8 @@ do
         if icon and icon ~= "" then
             local iconImage = util.new("ImageLabel", {
                 Parent = TabSelector,
-                Size = UDim2.new(0, 24, 0, 24),
-                Position = title == "" and UDim2.new(0.5, -12, 0.5, -12) or UDim2.new(0, 14, 0, 13),
+                Size = UDim2.new(0, 20, 0, 20),
+                Position = title == "" and UDim2.new(0.5, -10, 0.5, -10) or UDim2.new(0, 14, 0, 15),
                 BackgroundTransparency = 1,
                 Image = icon,
                 ImageColor3 = theme.Accent,
@@ -1737,8 +1787,8 @@ do
                     TextColor3 = theme.TextColor,
                     TextSize = 13,
                     Font = Enum.Font.GothamBold,
-                    Position = UDim2.new(0, 46, 0, 0),
-                    Size = UDim2.new(1, -50, 1, 0),
+                    Position = UDim2.new(0, 42, 0, 0),
+                    Size = UDim2.new(1, -46, 1, 0),
                     TextXAlignment = Enum.TextXAlignment.Left,
                     TextYAlignment = Enum.TextYAlignment.Center,
                     BackgroundTransparency = 1,
@@ -1820,12 +1870,22 @@ do
     function tab:select()
         self.selected = true
         self:_deselectOthers()
-        util.tween(self.TabSelectorColour, { BackgroundColor3 = theme.Accent }, 0.15)
+        util.tween(self.TabSelectorColour, { BackgroundColor3 = theme.Accent }, 0.2)
+        util.tween(self.TabSelector, { BackgroundTransparency = 0.1 }, 0.2)
+        util.tween(self.TabSelector.UIStroke, { Transparency = 0.6 }, 0.2)
         for i,v in pairs(self.panels) do v.PanelContainer.Visible = self.selected end
+        
+        -- Hide settings container when a tab is selected
+        local settingsContainer = self.library.TabContentContainer:FindFirstChild("SettingsContainer")
+        if settingsContainer then
+            settingsContainer.Visible = false
+        end
     end
     function tab:deselect()
         self.selected = false
-        util.tween(self.TabSelectorColour, { BackgroundColor3 = theme.NotSelectedTab }, 0.15)
+        util.tween(self.TabSelectorColour, { BackgroundColor3 = theme.NotSelectedTab }, 0.2)
+        util.tween(self.TabSelector, { BackgroundTransparency = 0.3 }, 0.2)
+        util.tween(self.TabSelector.UIStroke, { Transparency = 0.9 }, 0.2)
         for i,v in pairs(self.panels) do v.PanelContainer.Visible = self.selected end
     end
 
