@@ -921,14 +921,14 @@ do
                 TextColor3 = theme.SubTextColor,
                 TextSize = 10,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -16, 0, 14),
+                Size = UDim2.new(1, -24, 0, 14),
                 Position = UDim2.new(0, 12, 0, 8),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             })
         })
         
-        -- UI Scale Slider
+        -- UI Scale Display
         local ScaleFrame = util.new("Frame", {
             Parent = UISection,
             Size = UDim2.new(1, -24, 0, 28),
@@ -942,7 +942,7 @@ do
             TextColor3 = theme.TextColor,
             TextSize = 11,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(0.5, 0, 1, 0),
+            Size = UDim2.new(1, 0, 1, 0),
             TextXAlignment = Enum.TextXAlignment.Left,
             TextYAlignment = Enum.TextYAlignment.Center,
             BackgroundTransparency = 1,
@@ -954,7 +954,7 @@ do
             TextColor3 = theme.Accent,
             TextSize = 11,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(0.5, 0, 1, 0),
+            Size = UDim2.new(1, 0, 1, 0),
             TextXAlignment = Enum.TextXAlignment.Right,
             TextYAlignment = Enum.TextYAlignment.Center,
             BackgroundTransparency = 1,
@@ -974,7 +974,7 @@ do
             TextColor3 = theme.TextColor,
             TextSize = 11,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(0.5, 0, 1, 0),
+            Size = UDim2.new(1, 0, 1, 0),
             TextXAlignment = Enum.TextXAlignment.Left,
             TextYAlignment = Enum.TextYAlignment.Center,
             BackgroundTransparency = 1,
@@ -986,7 +986,7 @@ do
             TextColor3 = theme.Accent,
             TextSize = 11,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(0.5, 0, 1, 0),
+            Size = UDim2.new(1, 0, 1, 0),
             TextXAlignment = Enum.TextXAlignment.Right,
             TextYAlignment = Enum.TextYAlignment.Center,
             BackgroundTransparency = 1,
@@ -1113,7 +1113,7 @@ do
         -- Gameplay Section
         local GameplaySection = util.new("Frame", {
             Parent = SettingsContainer,
-            Size = UDim2.new(1, -30, 0, 90),
+            Size = UDim2.new(1, -30, 0, 120),
             Position = UDim2.new(0, 15, 0, 206),
             BackgroundColor3 = theme.UpperContainer,
             BackgroundTransparency = 0.3,
@@ -1129,7 +1129,7 @@ do
                 TextColor3 = theme.SubTextColor,
                 TextSize = 10,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -16, 0, 14),
+                Size = UDim2.new(1, -24, 0, 14),
                 Position = UDim2.new(0, 12, 0, 8),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
@@ -1204,8 +1204,8 @@ do
             end
         end)
         
-        -- Hide UI Toggle
-        local HideUIFrame = util.new("Frame", {
+        -- Unload Keybind
+        local UnloadKeybindFrame = util.new("Frame", {
             Parent = GameplaySection,
             Size = UDim2.new(1, -24, 0, 28),
             Position = UDim2.new(0, 12, 0, 58),
@@ -1213,231 +1213,90 @@ do
         })
         
         util.new("TextLabel", {
-            Parent = HideUIFrame,
-            Text = "Hide UI",
+            Parent = UnloadKeybindFrame,
+            Text = "Unload Keybind",
             TextColor3 = theme.TextColor,
             TextSize = 11,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(0.7, 0, 1, 0),
+            Size = UDim2.new(1, 0, 1, 0),
             TextXAlignment = Enum.TextXAlignment.Left,
             TextYAlignment = Enum.TextYAlignment.Center,
             BackgroundTransparency = 1,
         })
         
-        local HideUIToggle = util.new("TextButton", {
-            Parent = HideUIFrame,
-            Size = UDim2.new(0, 46, 0, 22),
-            Position = UDim2.new(1, -46, 0.5, -11),
-            BackgroundColor3 = theme.BackColor,
-            BackgroundTransparency = 0.4,
-            Text = "",
-        }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 11)}),
-            util.new("UIStroke", {
-                Color = theme.Accent,
-                Thickness = 1,
-                Transparency = 0.8,
-            })
-        })
-        
-        local HideUIIndicator = util.new("Frame", {
-            Parent = HideUIToggle,
-            Size = UDim2.new(0, 16, 0, 16),
-            Position = UDim2.new(0, 3, 0.5, -8),
-            BackgroundColor3 = theme.SubTextColor,
-        }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)})
-        })
-        
-        HideUIToggle.MouseButton1Click:Connect(function()
-            self.visible = not self.visible
-            self.MasterContainer.Visible = self.visible
-            if not self.visible then
-                util.tween(HideUIIndicator, { Position = UDim2.new(1, -19, 0.5, -8), BackgroundColor3 = theme.Accent }, 0.2)
-            else
-                util.tween(HideUIIndicator, { Position = UDim2.new(0, 3, 0.5, -8), BackgroundColor3 = theme.SubTextColor }, 0.2)
-            end
-        end)
-        
-        -- Actions Section
-        local ActionsSection = util.new("Frame", {
-            Parent = SettingsContainer,
-            Size = UDim2.new(1, -30, 0, 150),
-            Position = UDim2.new(0, 15, 0, 304),
-            BackgroundColor3 = theme.UpperContainer,
-            BackgroundTransparency = 0.3,
-        }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
-            util.new("UIStroke", {
-                Color = theme.Accent,
-                Thickness = 1,
-                Transparency = 0.7,
-            }),
-            util.new("TextLabel", {
-                Text = "Actions",
-                TextColor3 = theme.SubTextColor,
-                TextSize = 10,
-                Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -16, 0, 14),
-                Position = UDim2.new(0, 12, 0, 8),
-                TextXAlignment = Enum.TextXAlignment.Left,
-                BackgroundTransparency = 1,
-            })
-        })
-        
-        -- Reset UI Position Button
-        local ResetPosButton = util.new("TextButton", {
-            Parent = ActionsSection,
-            Size = UDim2.new(0.48, -6, 0, 28),
-            Position = UDim2.new(0, 12, 0, 28),
-            BackgroundColor3 = theme.BackColor,
-            BackgroundTransparency = 0.4,
-            Text = "Reset Position",
-            TextColor3 = theme.TextColor,
-            TextSize = 10,
+        local unloadKeybind = Enum.KeyCode.Delete
+        local UnloadKeybindButton = util.new("TextButton", {
+            Parent = UnloadKeybindFrame,
+            Text = unloadKeybind.Name,
+            TextColor3 = Color3.fromRGB(255, 100, 120),
+            TextSize = 11,
             Font = Enum.Font.GothamBold,
-        }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
-            util.new("UIStroke", {
-                Color = theme.Accent,
-                Thickness = 1,
-                Transparency = 0.8,
-            })
+            Size = UDim2.new(1, 0, 1, 0),
+            TextXAlignment = Enum.TextXAlignment.Right,
+            TextYAlignment = Enum.TextYAlignment.Center,
+            BackgroundTransparency = 1,
         })
         
-        ResetPosButton.MouseButton1Click:Connect(function()
-            self.MasterContainer.Position = UDim2.new(0.2, 0, 0.2, 0)
-            self:Notify("UI position reset!")
-        end)
-        
-        ResetPosButton.MouseEnter:Connect(function()
-            util.tween(ResetPosButton, { BackgroundTransparency = 0.2 }, 0.2)
-        end)
-        
-        ResetPosButton.MouseLeave:Connect(function()
-            util.tween(ResetPosButton, { BackgroundTransparency = 0.4 }, 0.2)
-        end)
-        
-        -- Copy Game Link Button
-        local CopyLinkButton = util.new("TextButton", {
-            Parent = ActionsSection,
-            Size = UDim2.new(0.48, -6, 0, 28),
-            Position = UDim2.new(0.52, 0, 0, 28),
-            BackgroundColor3 = theme.BackColor,
-            BackgroundTransparency = 0.4,
-            Text = "Copy Link",
-            TextColor3 = theme.TextColor,
-            TextSize = 10,
-            Font = Enum.Font.GothamBold,
-        }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
-            util.new("UIStroke", {
-                Color = theme.Accent,
-                Thickness = 1,
-                Transparency = 0.8,
-            })
-        })
-        
-        CopyLinkButton.MouseButton1Click:Connect(function()
-            setclipboard("https://www.roblox.com/games/" .. game.PlaceId)
-            self:Notify("Game link copied to clipboard!")
-        end)
-        
-        CopyLinkButton.MouseEnter:Connect(function()
-            util.tween(CopyLinkButton, { BackgroundTransparency = 0.2 }, 0.2)
-        end)
-        
-        CopyLinkButton.MouseLeave:Connect(function()
-            util.tween(CopyLinkButton, { BackgroundTransparency = 0.4 }, 0.2)
-        end)
-        
-        -- Rejoin Button
-        local RejoinButton = util.new("TextButton", {
-            Parent = ActionsSection,
-            Size = UDim2.new(0.48, -6, 0, 28),
-            Position = UDim2.new(0, 12, 0, 62),
-            BackgroundColor3 = theme.BackColor,
-            BackgroundTransparency = 0.4,
-            Text = "Rejoin",
-            TextColor3 = theme.TextColor,
-            TextSize = 10,
-            Font = Enum.Font.GothamBold,
-        }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
-            util.new("UIStroke", {
-                Color = theme.Accent,
-                Thickness = 1,
-                Transparency = 0.8,
-            })
-        })
-        
-        RejoinButton.MouseButton1Click:Connect(function()
-            game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer)
-        end)
-        
-        RejoinButton.MouseEnter:Connect(function()
-            util.tween(RejoinButton, { BackgroundTransparency = 0.2 }, 0.2)
-        end)
-        
-        RejoinButton.MouseLeave:Connect(function()
-            util.tween(RejoinButton, { BackgroundTransparency = 0.4 }, 0.2)
-        end)
-        
-        -- Server Hop Button
-        local ServerHopButton = util.new("TextButton", {
-            Parent = ActionsSection,
-            Size = UDim2.new(0.48, -6, 0, 28),
-            Position = UDim2.new(0.52, 0, 0, 62),
-            BackgroundColor3 = theme.BackColor,
-            BackgroundTransparency = 0.4,
-            Text = "Server Hop",
-            TextColor3 = theme.TextColor,
-            TextSize = 10,
-            Font = Enum.Font.GothamBold,
-        }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
-            util.new("UIStroke", {
-                Color = theme.Accent,
-                Thickness = 1,
-                Transparency = 0.8,
-            })
-        })
-        
-        ServerHopButton.MouseButton1Click:Connect(function()
-            local TeleportService = game:GetService("TeleportService")
-            local HttpService = game:GetService("HttpService")
-            local success, servers = pcall(function()
-                return HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"))
-            end)
-            if success and servers and servers.data then
-                for _, server in pairs(servers.data) do
-                    if server.id ~= game.JobId and server.playing < server.maxPlayers then
-                        TeleportService:TeleportToPlaceInstance(game.PlaceId, server.id, game.Players.LocalPlayer)
-                        return
-                    end
+        local isBindingUnload = false
+        UnloadKeybindButton.MouseButton1Click:Connect(function()
+            if isBindingUnload then return end
+            isBindingUnload = true
+            UnloadKeybindButton.Text = "..."
+            UnloadKeybindButton.TextColor3 = Color3.fromRGB(255, 200, 100)
+            
+            local connection
+            connection = input.InputBegan:Connect(function(inp, gpe)
+                if gpe then return end
+                if inp.UserInputType == Enum.UserInputType.Keyboard then
+                    connection:Disconnect()
+                    unloadKeybind = inp.KeyCode
+                    UnloadKeybindButton.Text = inp.KeyCode.Name
+                    UnloadKeybindButton.TextColor3 = Color3.fromRGB(255, 100, 120)
+                    isBindingUnload = false
+                    self:Notify("Unload keybind changed to " .. inp.KeyCode.Name)
                 end
+            end)
+        end)
+        
+        UnloadKeybindButton.MouseEnter:Connect(function()
+            if not isBindingUnload then
+                util.tween(UnloadKeybindButton, { TextColor3 = Color3.fromRGB(255, 150, 170) }, 0.2)
             end
-            self:Notify("No available servers found!")
         end)
         
-        ServerHopButton.MouseEnter:Connect(function()
-            util.tween(ServerHopButton, { BackgroundTransparency = 0.2 }, 0.2)
+        UnloadKeybindButton.MouseLeave:Connect(function()
+            if not isBindingUnload then
+                util.tween(UnloadKeybindButton, { TextColor3 = Color3.fromRGB(255, 100, 120) }, 0.2)
+            end
         end)
         
-        ServerHopButton.MouseLeave:Connect(function()
-            util.tween(ServerHopButton, { BackgroundTransparency = 0.4 }, 0.2)
-        end)
+        -- Register unload keybind
+        table.insert(self._connections, input.InputBegan:Connect(function(inp, gpe)
+            if gpe then return end
+            if inp.KeyCode == unloadKeybind then
+                -- Disconnect anti-AFK if enabled
+                if antiAFKConnection then
+                    antiAFKConnection:Disconnect()
+                end
+                
+                for _, connection in pairs(self._connections) do
+                    connection:Disconnect()
+                end
+                self.MasterContainer.Parent:Destroy()
+                getgenv()[self.MasterContainer.Parent.Name] = nil
+            end
+        end))
         
         -- Unload Button
         local UnloadButton = util.new("TextButton", {
-            Parent = ActionsSection,
+            Parent = GameplaySection,
             Size = UDim2.new(1, -24, 0, 28),
-            Position = UDim2.new(0, 12, 0, 96),
+            Position = UDim2.new(0, 12, 0, 88),
             BackgroundColor3 = Color3.fromRGB(180, 60, 80),
             BackgroundTransparency = 0.4,
             Text = "Unload UI",
             TextColor3 = theme.TextColor,
-            TextSize = 10,
+            TextSize = 11,
             Font = Enum.Font.GothamBold,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
@@ -1468,6 +1327,15 @@ do
         UnloadButton.MouseLeave:Connect(function()
             util.tween(UnloadButton, { BackgroundTransparency = 0.4 }, 0.2)
         end)
+        
+        -- Actions Section (empty, just for visual consistency if needed later)
+        local ActionsSection = util.new("Frame", {
+            Parent = SettingsContainer,
+            Size = UDim2.new(1, -30, 0, 0),
+            Position = UDim2.new(0, 15, 0, 334),
+            BackgroundTransparency = 1,
+            Visible = false,
+        })
         
         -- Settings button click handler
         SettingsButton.MouseButton1Click:Connect(function()
