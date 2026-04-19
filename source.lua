@@ -370,8 +370,8 @@ do
         -- Session Information Section
         local SessionInfo = util.new("Frame", {
             Parent = HomeContainer,
-            Size = UDim2.new(1, -20, 0, 95),
-            Position = UDim2.new(0, 10, 0, 10),
+            Size = UDim2.new(1, -20, 0, 80),
+            Position = UDim2.new(0, 10, 0, 8),
             BackgroundColor3 = theme.UpperContainer,
             Name = "SessionInfo"
         }, {
@@ -384,10 +384,10 @@ do
             util.new("TextLabel", {
                 Text = "SESSION INFORMATION",
                 TextColor3 = theme.SubTextColor,
-                TextSize = 11,
+                TextSize = 10,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -20, 0, 20),
-                Position = UDim2.new(0, 14, 0, 12),
+                Size = UDim2.new(1, -20, 0, 16),
+                Position = UDim2.new(0, 14, 0, 10),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             })
@@ -396,8 +396,8 @@ do
         -- Players info
         local PlayersFrame = util.new("Frame", {
             Parent = SessionInfo,
-            Size = UDim2.new(0.48, -5, 0, 50),
-            Position = UDim2.new(0, 12, 0, 38),
+            Size = UDim2.new(0.48, -5, 0, 42),
+            Position = UDim2.new(0, 12, 0, 32),
             BackgroundColor3 = theme.BackColor,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
@@ -412,10 +412,10 @@ do
             Parent = PlayersFrame,
             Text = "Players",
             TextColor3 = theme.TextColor,
-            TextSize = 12,
+            TextSize = 11,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(1, -16, 0, 16),
-            Position = UDim2.new(0, 10, 0, 8),
+            Size = UDim2.new(1, -16, 0, 14),
+            Position = UDim2.new(0, 10, 0, 6),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -424,10 +424,10 @@ do
             Parent = PlayersFrame,
             Text = #game:GetService("Players"):GetPlayers() .. " online",
             TextColor3 = Color3.fromRGB(150, 200, 255),
-            TextSize = 14,
+            TextSize = 13,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(1, -16, 0, 18),
-            Position = UDim2.new(0, 10, 0, 26),
+            Size = UDim2.new(1, -16, 0, 16),
+            Position = UDim2.new(0, 10, 0, 22),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -435,8 +435,8 @@ do
         -- Max players info
         local MaxPlayersFrame = util.new("Frame", {
             Parent = SessionInfo,
-            Size = UDim2.new(0.48, -5, 0, 50),
-            Position = UDim2.new(0.52, 0, 0, 38),
+            Size = UDim2.new(0.48, -5, 0, 42),
+            Position = UDim2.new(0.52, 0, 0, 32),
             BackgroundColor3 = theme.BackColor,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
@@ -451,10 +451,10 @@ do
             Parent = MaxPlayersFrame,
             Text = "Max Players",
             TextColor3 = theme.TextColor,
-            TextSize = 12,
+            TextSize = 11,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(1, -16, 0, 16),
-            Position = UDim2.new(0, 10, 0, 8),
+            Size = UDim2.new(1, -16, 0, 14),
+            Position = UDim2.new(0, 10, 0, 6),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -463,10 +463,10 @@ do
             Parent = MaxPlayersFrame,
             Text = game:GetService("Players").MaxPlayers .. " max",
             TextColor3 = Color3.fromRGB(255, 180, 120),
-            TextSize = 14,
+            TextSize = 13,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(1, -16, 0, 18),
-            Position = UDim2.new(0, 10, 0, 26),
+            Size = UDim2.new(1, -16, 0, 16),
+            Position = UDim2.new(0, 10, 0, 22),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -475,8 +475,8 @@ do
         local player = game:GetService("Players").LocalPlayer
         local UserInfo = util.new("Frame", {
             Parent = HomeContainer,
-            Size = UDim2.new(1, -20, 0, 80),
-            Position = UDim2.new(0, 10, 0, 113),
+            Size = UDim2.new(1, -20, 0, 70),
+            Position = UDim2.new(0, 10, 0, 94),
             BackgroundColor3 = theme.UpperContainer,
             Name = "UserInfo"
         }, {
@@ -491,8 +491,8 @@ do
         -- User avatar with glow effect
         local AvatarContainer = util.new("Frame", {
             Parent = UserInfo,
-            Size = UDim2.new(0, 64, 0, 64),
-            Position = UDim2.new(0, 12, 0, 8),
+            Size = UDim2.new(0, 54, 0, 54),
+            Position = UDim2.new(0, 10, 0, 8),
             BackgroundTransparency = 1,
         })
         
@@ -502,7 +502,7 @@ do
             BackgroundColor3 = theme.BackColor,
             Image = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. player.UserId .. "&width=150&height=150&format=png",
         }, {
-            util.new("UICorner", {CornerRadius = UDim.new(0, 12)}),
+            util.new("UICorner", {CornerRadius = UDim.new(0, 10)}),
             util.new("UIStroke", {
                 Color = Color3.fromRGB(150, 200, 255),
                 Thickness = 2,
@@ -515,10 +515,10 @@ do
             Parent = UserInfo,
             Text = player.DisplayName or player.Name,
             TextColor3 = theme.TextColor,
-            TextSize = 16,
+            TextSize = 15,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(1, -90, 0, 22),
-            Position = UDim2.new(0, 84, 0, 12),
+            Size = UDim2.new(1, -76, 0, 20),
+            Position = UDim2.new(0, 72, 0, 10),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -528,10 +528,10 @@ do
             Parent = UserInfo,
             Text = "@" .. player.Name,
             TextColor3 = Color3.fromRGB(150, 200, 255),
-            TextSize = 12,
+            TextSize = 11,
             Font = Enum.Font.Gotham,
-            Size = UDim2.new(1, -90, 0, 16),
-            Position = UDim2.new(0, 84, 0, 36),
+            Size = UDim2.new(1, -76, 0, 14),
+            Position = UDim2.new(0, 72, 0, 32),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -542,10 +542,10 @@ do
             Parent = UserInfo,
             Text = accountAge .. " days • Joined " .. os.date("%b %Y", os.time() - (accountAge * 86400)),
             TextColor3 = theme.SubTextColor,
-            TextSize = 10,
+            TextSize = 9,
             Font = Enum.Font.Gotham,
-            Size = UDim2.new(1, -90, 0, 14),
-            Position = UDim2.new(0, 84, 0, 54),
+            Size = UDim2.new(1, -76, 0, 12),
+            Position = UDim2.new(0, 72, 0, 48),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -553,8 +553,8 @@ do
         -- Game Information Section
         local GameInfo = util.new("Frame", {
             Parent = HomeContainer,
-            Size = UDim2.new(1, -20, 0, 95),
-            Position = UDim2.new(0, 10, 0, 201),
+            Size = UDim2.new(1, -20, 0, 80),
+            Position = UDim2.new(0, 10, 0, 170),
             BackgroundColor3 = theme.UpperContainer,
             Name = "GameInfo"
         }, {
@@ -567,10 +567,10 @@ do
             util.new("TextLabel", {
                 Text = "GAME INFORMATION",
                 TextColor3 = theme.SubTextColor,
-                TextSize = 11,
+                TextSize = 10,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -20, 0, 20),
-                Position = UDim2.new(0, 14, 0, 12),
+                Size = UDim2.new(1, -20, 0, 16),
+                Position = UDim2.new(0, 14, 0, 10),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             })
@@ -579,8 +579,8 @@ do
         -- Game Name
         local GameNameFrame = util.new("Frame", {
             Parent = GameInfo,
-            Size = UDim2.new(0.48, -5, 0, 50),
-            Position = UDim2.new(0, 12, 0, 38),
+            Size = UDim2.new(0.48, -5, 0, 42),
+            Position = UDim2.new(0, 12, 0, 32),
             BackgroundColor3 = theme.BackColor,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
@@ -595,10 +595,10 @@ do
             Parent = GameNameFrame,
             Text = "Game",
             TextColor3 = theme.TextColor,
-            TextSize = 12,
+            TextSize = 11,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(1, -16, 0, 16),
-            Position = UDim2.new(0, 10, 0, 8),
+            Size = UDim2.new(1, -16, 0, 14),
+            Position = UDim2.new(0, 10, 0, 6),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -608,10 +608,10 @@ do
             Parent = GameNameFrame,
             Text = gameName,
             TextColor3 = Color3.fromRGB(200, 150, 255),
-            TextSize = 13,
+            TextSize = 12,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(1, -16, 0, 18),
-            Position = UDim2.new(0, 10, 0, 26),
+            Size = UDim2.new(1, -16, 0, 16),
+            Position = UDim2.new(0, 10, 0, 22),
             TextXAlignment = Enum.TextXAlignment.Left,
             TextTruncate = Enum.TextTruncate.AtEnd,
             BackgroundTransparency = 1,
@@ -620,8 +620,8 @@ do
         -- Place ID
         local PlaceIDFrame = util.new("Frame", {
             Parent = GameInfo,
-            Size = UDim2.new(0.48, -5, 0, 50),
-            Position = UDim2.new(0.52, 0, 0, 38),
+            Size = UDim2.new(0.48, -5, 0, 42),
+            Position = UDim2.new(0.52, 0, 0, 32),
             BackgroundColor3 = theme.BackColor,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
@@ -636,10 +636,10 @@ do
             Parent = PlaceIDFrame,
             Text = "Place ID",
             TextColor3 = theme.TextColor,
-            TextSize = 12,
+            TextSize = 11,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(1, -16, 0, 16),
-            Position = UDim2.new(0, 10, 0, 8),
+            Size = UDim2.new(1, -16, 0, 14),
+            Position = UDim2.new(0, 10, 0, 6),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -648,10 +648,10 @@ do
             Parent = PlaceIDFrame,
             Text = tostring(game.PlaceId),
             TextColor3 = Color3.fromRGB(255, 200, 150),
-            TextSize = 13,
+            TextSize = 12,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(1, -16, 0, 18),
-            Position = UDim2.new(0, 10, 0, 26),
+            Size = UDim2.new(1, -16, 0, 16),
+            Position = UDim2.new(0, 10, 0, 22),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -659,8 +659,8 @@ do
         -- System Information Section
         local SystemInfo = util.new("Frame", {
             Parent = HomeContainer,
-            Size = UDim2.new(1, -20, 0, 95),
-            Position = UDim2.new(0, 10, 0, 304),
+            Size = UDim2.new(1, -20, 0, 80),
+            Position = UDim2.new(0, 10, 0, 256),
             BackgroundColor3 = theme.UpperContainer,
             Name = "SystemInfo"
         }, {
@@ -673,10 +673,10 @@ do
             util.new("TextLabel", {
                 Text = "SYSTEM INFORMATION",
                 TextColor3 = theme.SubTextColor,
-                TextSize = 11,
+                TextSize = 10,
                 Font = Enum.Font.GothamBold,
-                Size = UDim2.new(1, -20, 0, 20),
-                Position = UDim2.new(0, 14, 0, 12),
+                Size = UDim2.new(1, -20, 0, 16),
+                Position = UDim2.new(0, 14, 0, 10),
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BackgroundTransparency = 1,
             })
@@ -685,8 +685,8 @@ do
         -- FPS Counter
         local FPSFrame = util.new("Frame", {
             Parent = SystemInfo,
-            Size = UDim2.new(0.48, -5, 0, 50),
-            Position = UDim2.new(0, 12, 0, 38),
+            Size = UDim2.new(0.48, -5, 0, 42),
+            Position = UDim2.new(0, 12, 0, 32),
             BackgroundColor3 = theme.BackColor,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
@@ -701,10 +701,10 @@ do
             Parent = FPSFrame,
             Text = "FPS",
             TextColor3 = theme.TextColor,
-            TextSize = 12,
+            TextSize = 11,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(1, -16, 0, 16),
-            Position = UDim2.new(0, 10, 0, 8),
+            Size = UDim2.new(1, -16, 0, 14),
+            Position = UDim2.new(0, 10, 0, 6),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -713,10 +713,10 @@ do
             Parent = FPSFrame,
             Text = "60",
             TextColor3 = Color3.fromRGB(150, 255, 150),
-            TextSize = 18,
+            TextSize = 16,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(1, -16, 0, 20),
-            Position = UDim2.new(0, 10, 0, 24),
+            Size = UDim2.new(1, -16, 0, 18),
+            Position = UDim2.new(0, 10, 0, 20),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -724,8 +724,8 @@ do
         -- Ping Counter
         local PingFrame = util.new("Frame", {
             Parent = SystemInfo,
-            Size = UDim2.new(0.48, -5, 0, 50),
-            Position = UDim2.new(0.52, 0, 0, 38),
+            Size = UDim2.new(0.48, -5, 0, 42),
+            Position = UDim2.new(0.52, 0, 0, 32),
             BackgroundColor3 = theme.BackColor,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 8)}),
@@ -740,10 +740,10 @@ do
             Parent = PingFrame,
             Text = "Ping",
             TextColor3 = theme.TextColor,
-            TextSize = 12,
+            TextSize = 11,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(1, -16, 0, 16),
-            Position = UDim2.new(0, 10, 0, 8),
+            Size = UDim2.new(1, -16, 0, 14),
+            Position = UDim2.new(0, 10, 0, 6),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
@@ -752,10 +752,10 @@ do
             Parent = PingFrame,
             Text = "0 ms",
             TextColor3 = Color3.fromRGB(150, 255, 200),
-            TextSize = 18,
+            TextSize = 16,
             Font = Enum.Font.GothamBold,
-            Size = UDim2.new(1, -16, 0, 20),
-            Position = UDim2.new(0, 10, 0, 24),
+            Size = UDim2.new(1, -16, 0, 18),
+            Position = UDim2.new(0, 10, 0, 20),
             TextXAlignment = Enum.TextXAlignment.Left,
             BackgroundTransparency = 1,
         })
