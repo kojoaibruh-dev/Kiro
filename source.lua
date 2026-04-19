@@ -251,9 +251,10 @@ do
             Parent = MasterContainer,
             Size = UDim2.new(1, 0, 1, 0),
             BackgroundColor3 = theme.BackColor,
-            BackgroundTransparency = 0.15,
+            BackgroundTransparency = 0,
             ZIndex = 100,
-            Name = "LoadingScreen"
+            Name = "LoadingScreen",
+            Active = true,
         }, {
             util.new("UICorner", {CornerRadius = UDim.new(0, 20)})
         })
