@@ -271,6 +271,19 @@ do
             Name = "LoadingCircle"
         })
         
+        -- Add a purple glow effect
+        local LoadingGlow = util.new("ImageLabel", {
+            Parent = LoadingScreen,
+            Size = UDim2.new(0, 80, 0, 80),
+            Position = UDim2.new(0.5, -40, 0.5, -60),
+            BackgroundTransparency = 1,
+            Image = "rbxassetid://4965945816",
+            ImageColor3 = theme.Accent,
+            ImageTransparency = 0.7,
+            ZIndex = 100,
+            Name = "LoadingGlow"
+        })
+        
         local LoadingText = util.new("TextLabel", {
             Parent = LoadingScreen,
             Text = "Loading...",
@@ -291,6 +304,7 @@ do
         spinConnection = RunService.RenderStepped:Connect(function()
             if LoadingScreen.Visible then
                 LoadingCircle.Rotation = LoadingCircle.Rotation + 5
+                LoadingGlow.Rotation = LoadingGlow.Rotation + 3
             end
         end)
         table.insert(connections, spinConnection)
@@ -300,9 +314,11 @@ do
             wait(1.5)
             util.tween(LoadingScreen, { BackgroundTransparency = 1 }, 0.3)
             util.tween(LoadingCircle, { ImageTransparency = 1 }, 0.3)
+            util.tween(LoadingGlow, { ImageTransparency = 1 }, 0.3)
             util.tween(LoadingText, { TextTransparency = 1 }, 0.3)
             wait(0.3)
             LoadingScreen.Visible = false
+            LoadingScreen.Active = false
             LoadingScreen:Destroy()
         end)
 
