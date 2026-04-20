@@ -982,7 +982,12 @@ do
         end
         --
         library.began[#library.began + 1] = function(Input)
-            if Input.KeyCode == window.uibind then
+            if library.pointers["Settings_UIToggle"] and library.pointers["Settings_UIToggle"]:Get()[1] then
+                local keybind = library.pointers["Settings_UIToggle"]:Get()
+                if Input.KeyCode == Enum[keybind[1]][keybind[2]] or Input.UserInputType == Enum[keybind[1]][keybind[2]] then
+                    window:Fade()
+                end
+            elseif Input.KeyCode == window.uibind then
                 window:Fade()
             end
             --[[
@@ -4137,7 +4142,8 @@ do
                 Size = utility:Size(1, -8, 0, 18, section.section_frame),
                 Position = utility:Position(0, 4, 0, playerRow.axis, section.section_frame),
                 Color = theme.dark_contrast,
-                Visible = page.open
+                Visible = page.open,
+                Transparency = window.isVisible and 1 or 0
             }, section.visibleContent)
             --
             -- Row top line
@@ -4145,7 +4151,8 @@ do
                 Size = utility:Size(1, 0, 0, 1, row_frame),
                 Position = utility:Position(0, 0, 0, 0, row_frame),
                 Color = theme.outline,
-                Visible = page.open
+                Visible = page.open,
+                Transparency = window.isVisible and 1 or 0
             }, section.visibleContent)
             --
             -- Use stored column positions from header
@@ -4161,7 +4168,8 @@ do
                 Color = theme.textcolor,
                 OutlineColor = theme.textborder,
                 Position = utility:Position(0, nameXPos, 0, 2, row_frame),
-                Visible = page.open
+                Visible = page.open,
+                Transparency = window.isVisible and 1 or 0
             }, section.visibleContent)
             --
             -- Team
@@ -4172,7 +4180,8 @@ do
                 Color = theme.textcolor,
                 OutlineColor = theme.textborder,
                 Position = utility:Position(0, teamXPos, 0, 2, row_frame),
-                Visible = page.open
+                Visible = page.open,
+                Transparency = window.isVisible and 1 or 0
             }, section.visibleContent)
             --
             -- Status
@@ -4183,7 +4192,8 @@ do
                 Color = status == "Client" and Color3.fromRGB(100, 200, 255) or theme.textcolor,
                 OutlineColor = theme.textborder,
                 Position = utility:Position(0, statusXPos, 0, 2, row_frame),
-                Visible = page.open
+                Visible = page.open,
+                Transparency = window.isVisible and 1 or 0
             }, section.visibleContent)
             --
             playerRow.frame = row_frame
