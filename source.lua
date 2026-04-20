@@ -3992,6 +3992,7 @@ do
         }, section.visibleContent)
         --
         playerList.axis = playerList.axis + 24
+        local headerEndAxis = playerList.axis
         --
         function playerList:CloseMenu()
             if playerList.menuOpen then
@@ -4220,9 +4221,11 @@ do
         end
         --
         function playerList:Clear()
-            for i, player in pairs(playerList.players) do
-                -- Remove all player row drawings from visibleContent
-                for j, drawing in pairs(section.visibleContent) do
+            for i = #playerList.players, 1, -1 do
+                local player = playerList.players[i]
+                -- Remove from visibleContent
+                for j = #section.visibleContent, 1, -1 do
+                    local drawing = section.visibleContent[j]
                     if drawing == player.frame or drawing == player.nameLabel or drawing == player.teamLabel or drawing == player.statusLabel or drawing == player.line then
                         table.remove(section.visibleContent, j)
                     end
@@ -4236,7 +4239,6 @@ do
             end
             playerList.players = {}
             playerList.selectedPlayer = nil
-            playerList.axis = section.currentAxis - (#playerList.players * 18)
         end
         --
         function playerList:Refresh()
@@ -4247,7 +4249,7 @@ do
             playerList:Clear()
             --
             -- Reset axis to start position (after header)
-            playerList.axis = 24
+            playerList.axis = headerEndAxis
             --
             -- Add all current players
             for _, player in pairs(plrs:GetPlayers()) do
