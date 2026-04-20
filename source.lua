@@ -3926,7 +3926,12 @@ do
         local page = self.page
         local section = self
         --
-        local playerList = {axis = section.currentAxis, players = {}, selectedPlayer = nil}
+        local playerList = {axis = section.currentAxis, players = {}, selectedPlayer = nil, menuOpen = false, menuDrawings = {}}
+        --
+        -- Make section take full width by adjusting the section itself
+        section.section_inline.Size = utility:Size(1, -10, 0, 400, window.tab_frame)
+        section.section_outline.Size = utility:Size(1, -2, 1, -2, section.section_inline)
+        section.section_frame.Size = utility:Size(1, -2, 1, -2, section.section_outline)
         --
         -- Header background
         local header_frame = utility:Create("Frame", {Vector2.new(4, playerList.axis), section.section_frame}, {
@@ -3976,6 +3981,140 @@ do
         }, section.visibleContent)
         --
         playerList.axis = playerList.axis + 24
+        --
+        function playerList:CloseMenu()
+            if playerList.menuOpen then
+                for i, v in pairs(playerList.menuDrawings) do
+                    utility:Remove(v)
+                end
+                playerList.menuDrawings = {}
+                playerList.menuOpen = false
+                window.currentContent.frame = nil
+                window.currentContent.playerMenu = nil
+            end
+        end
+        --
+        function playerList:OpenMenu(playerRow, mouseX, mouseY)
+            playerList:CloseMenu()
+            playerList.menuOpen = true
+            --
+            local menuWidth = 150
+            local menuHeight = 90
+            --
+            -- Menu outline
+            local menu_outline = utility:Create("Frame", {Vector2.new(mouseX, mouseY)}, {
+                Size = utility:Size(0, menuWidth, 0, menuHeight),
+                Position = utility:Position(0, mouseX, 0, mouseY),
+                Color = theme.outline,
+                Visible = true,
+                ZIndex = 100
+            }, playerList.menuDrawings)
+            --
+            -- Menu inline
+            local menu_inline = utility:Create("Frame", {Vector2.new(1, 1), menu_outline}, {
+                Size = utility:Size(1, -2, 1, -2, menu_outline),
+                Position = utility:Position(0, 1, 0, 1, menu_outline),
+                Color = theme.inline,
+                Visible = true,
+                ZIndex = 100
+            }, playerList.menuDrawings)
+            --
+            -- Menu frame
+            local menu_frame = utility:Create("Frame", {Vector2.new(1, 1), menu_inline}, {
+                Size = utility:Size(1, -2, 1, -2, menu_inline),
+                Position = utility:Position(0, 1, 0, 1, menu_inline),
+                Color = theme.dark_contrast,
+                Visible = true,
+                ZIndex = 100
+            }, playerList.menuDrawings)
+            --
+            -- Menu title
+            local menu_title = utility:Create("TextLabel", {Vector2.new(menu_frame.Size.X / 2, 3), menu_frame}, {
+                Text = playerRow.name,
+                Size = theme.textsize,
+                Font = theme.font,
+                Color = theme.accent,
+                OutlineColor = theme.textborder,
+                Center = true,
+                Position = utility:Position(0.5, 0, 0, 3, menu_frame),
+                Visible = true,
+                ZIndex = 100
+            }, playerList.menuDrawings)
+            --
+            -- Menu options
+            local options = {
+                {name = "Fling Player", enabled = false},
+                {name = "Kill Player", enabled = false},
+                {name = "Teleport To", enabled = false}
+            }
+            --
+            local yOffset = 22
+            for i, option in pairs(options) do
+                -- Option background
+                local option_frame = utility:Create("Frame", {Vector2.new(4, yOffset), menu_frame}, {
+                    Size = utility:Size(1, -8, 0, 18, menu_frame),
+                    Position = utility:Position(0, 4, 0, yOffset, menu_frame),
+                    Color = theme.light_contrast,
+                    Visible = true,
+                    ZIndex = 100
+                }, playerList.menuDrawings)
+                --
+                -- Option text
+                local option_text = utility:Create("TextLabel", {Vector2.new(4, 2), option_frame}, {
+                    Text = option.name,
+                    Size = theme.textsize,
+                    Font = theme.font,
+                    Color = theme.textcolor,
+                    OutlineColor = theme.textborder,
+                    Position = utility:Position(0, 4, 0, 2, option_frame),
+                    Visible = true,
+                    ZIndex = 100
+                }, playerList.menuDrawings)
+                --
+                -- Toggle box outline
+                local toggle_outline = utility:Create("Frame", {Vector2.new(option_frame.Size.X - 18, 2), option_frame}, {
+                    Size = utility:Size(0, 14, 0, 14),
+                    Position = utility:Position(1, -18, 0, 2, option_frame),
+                    Color = theme.outline,
+                    Visible = true,
+                    ZIndex = 100
+                }, playerList.menuDrawings)
+                --
+                -- Toggle box inline
+                local toggle_inline = utility:Create("Frame", {Vector2.new(1, 1), toggle_outline}, {
+                    Size = utility:Size(1, -2, 1, -2, toggle_outline),
+                    Position = utility:Position(0, 1, 0, 1, toggle_outline),
+                    Color = theme.inline,
+                    Visible = true,
+                    ZIndex = 100
+                }, playerList.menuDrawings)
+                --
+                -- Toggle box frame
+                local toggle_frame = utility:Create("Frame", {Vector2.new(1, 1), toggle_inline}, {
+                    Size = utility:Size(1, -2, 1, -2, toggle_inline),
+                    Position = utility:Position(0, 1, 0, 1, toggle_inline),
+                    Color = option.enabled and theme.accent or theme.dark_contrast,
+                    Visible = true,
+                    ZIndex = 100
+                }, playerList.menuDrawings)
+                --
+                -- Click handler for toggle
+                library.began[#library.began + 1] = function(Input)
+                    if Input.UserInputType == Enum.UserInputType.MouseButton1 and window.isVisible and playerList.menuOpen then
+                        if utility:MouseOverDrawing({option_frame.Position.X, option_frame.Position.Y, option_frame.Position.X + option_frame.Size.X, option_frame.Position.Y + option_frame.Size.Y}) then
+                            option.enabled = not option.enabled
+                            toggle_frame.Color = option.enabled and theme.accent or theme.dark_contrast
+                            print(option.name, "toggled:", option.enabled, "for player:", playerRow.name)
+                        end
+                    end
+                end
+                --
+                yOffset = yOffset + 20
+            end
+            --
+            window.currentContent.frame = menu_outline
+            window.currentContent.playerMenu = playerList
+        end
         --
         function playerList:AddPlayer(playerName, team, status)
             local playerRow = {axis = playerList.axis, name = playerName, team = team or "Neutral", status = status or "None"}
@@ -4035,7 +4174,12 @@ do
             playerRow.statusLabel = row_status
             --
             library.began[#library.began + 1] = function(Input)
-                if Input.UserInputType == Enum.UserInputType.MouseButton1 and row_frame.Visible and window.isVisible and utility:MouseOverDrawing({section.section_frame.Position.X, section.section_frame.Position.Y + playerRow.axis, section.section_frame.Position.X + section.section_frame.Size.X, section.section_frame.Position.Y + playerRow.axis + 18}) and not window:IsOverContent() then
+                if Input.UserInputType == Enum.UserInputType.MouseButton1 and row_frame.Visible and window.isVisible and utility:MouseOverDrawing({section.section_frame.Position.X, section.section_frame.Position.Y + playerRow.axis, section.section_frame.Position.X + section.section_frame.Size.X, section.section_frame.Position.Y + playerRow.axis + 18}) then
+                    -- Close any existing menu
+                    if playerList.menuOpen then
+                        playerList:CloseMenu()
+                    end
+                    --
                     -- Deselect previous
                     if playerList.selectedPlayer and playerList.selectedPlayer.frame then
                         playerList.selectedPlayer.frame.Color = theme.dark_contrast
@@ -4043,6 +4187,11 @@ do
                     -- Select new
                     playerList.selectedPlayer = playerRow
                     row_frame.Color = theme.light_contrast
+                    --
+                    -- Open menu at mouse position
+                    local mouseLocation = utility:MouseLocation()
+                    playerList:OpenMenu(playerRow, mouseLocation.X, mouseLocation.Y)
+                    --
                     callback(playerName, team, status)
                 end
             end
@@ -4093,6 +4242,17 @@ do
             wait(0.1)
             playerList:Refresh()
         end)
+        --
+        -- Close menu when clicking outside
+        library.began[#library.began + 1] = function(Input)
+            if Input.UserInputType == Enum.UserInputType.MouseButton1 and playerList.menuOpen and window.isVisible then
+                if window.currentContent.frame then
+                    if not utility:MouseOverDrawing({window.currentContent.frame.Position.X, window.currentContent.frame.Position.Y, window.currentContent.frame.Position.X + window.currentContent.frame.Size.X, window.currentContent.frame.Position.Y + window.currentContent.frame.Size.Y}) then
+                        playerList:CloseMenu()
+                    end
+                end
+            end
+        end
         --
         section.currentAxis = playerList.axis + 4
         section:Update()
