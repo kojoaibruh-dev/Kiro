@@ -4185,6 +4185,7 @@ do
             }, section.visibleContent)
             --
             playerRow.frame = row_frame
+            playerRow.line = row_line
             playerRow.nameLabel = row_name
             playerRow.teamLabel = row_team
             playerRow.statusLabel = row_status
@@ -4214,35 +4215,50 @@ do
             --
             playerList.players[#playerList.players + 1] = playerRow
             playerList.axis = playerList.axis + 18
-            section.currentAxis = playerList.axis + 4
-            section:Update()
             --
             return playerRow
         end
         --
         function playerList:Clear()
             for i, player in pairs(playerList.players) do
-                -- Remove all player row drawings
+                -- Remove all player row drawings from visibleContent
+                for j, drawing in pairs(section.visibleContent) do
+                    if drawing == player.frame or drawing == player.nameLabel or drawing == player.teamLabel or drawing == player.statusLabel or drawing == player.line then
+                        table.remove(section.visibleContent, j)
+                    end
+                end
+                -- Remove from library drawings
                 if player.frame then utility:Remove(player.frame) end
+                if player.line then utility:Remove(player.line) end
                 if player.nameLabel then utility:Remove(player.nameLabel) end
                 if player.teamLabel then utility:Remove(player.teamLabel) end
                 if player.statusLabel then utility:Remove(player.statusLabel) end
             end
             playerList.players = {}
             playerList.selectedPlayer = nil
-            playerList.axis = section.currentAxis
+            playerList.axis = section.currentAxis - (#playerList.players * 18)
         end
         --
         function playerList:Refresh()
             local plrs = game:GetService("Players")
             local localPlayer = plrs.LocalPlayer
+            --
+            -- Clear existing players
             playerList:Clear()
             --
+            -- Reset axis to start position (after header)
+            playerList.axis = 24
+            --
+            -- Add all current players
             for _, player in pairs(plrs:GetPlayers()) do
                 local team = player.Team and player.Team.Name or "Neutral"
                 local status = player == localPlayer and "Client" or "None"
                 playerList:AddPlayer(player.Name, team, status)
             end
+            --
+            -- Update section size
+            section.currentAxis = playerList.axis + 4
+            section:Update()
         end
         --
         -- Initial population
