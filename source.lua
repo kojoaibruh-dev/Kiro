@@ -48,7 +48,7 @@ local sections = {}
 -- Theme Variables
 --local themes = {}
 local theme = {
-    accent = Color3.fromRGB(50, 100, 255),
+    accent = Color3.fromRGB(25, 240, 100),
     light_contrast = Color3.fromRGB(30, 30, 30),
     dark_contrast = Color3.fromRGB(20, 20, 20),
     outline = Color3.fromRGB(0, 0, 0),
@@ -57,17 +57,8 @@ local theme = {
     textborder = Color3.fromRGB(0, 0, 0),
     cursoroutline = Color3.fromRGB(10, 10, 10),
     font = 2,
-    textsize = 13,
-    rgbHue = 0
+    textsize = 13
 }
---
--- RGB Theme Updater
-spawn(function()
-    while wait() do
-        theme.rgbHue = (theme.rgbHue + 0.01) % 1
-        theme.accent = Color3.fromHSV(theme.rgbHue, 1, 1)
-    end
-end)
 -- // Utility Functions
 do
     function utility:Size(xScale,xOffset,yScale,yOffset,instance)
@@ -3958,18 +3949,23 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
+        -- Calculate column positions
+        local frameWidth = header_frame.Size.X
+        local nameXPos = 4
+        local teamXPos = frameWidth * 0.5
+        local statusXPos = frameWidth * 0.75
+        --
         -- Column headers with fixed positions
-        local header_name = utility:Create("TextLabel", {Vector2.new(4, 3), header_frame}, {
+        local header_name = utility:Create("TextLabel", {Vector2.new(nameXPos, 3), header_frame}, {
             Text = "Name",
             Size = theme.textsize,
             Font = theme.font,
             Color = theme.textcolor,
             OutlineColor = theme.textborder,
-            Position = utility:Position(0, 4, 0, 3, header_frame),
+            Position = utility:Position(0, nameXPos, 0, 3, header_frame),
             Visible = page.open
         }, section.visibleContent)
         --
-        local teamXPos = header_frame.Size.X * 0.5
         local header_team = utility:Create("TextLabel", {Vector2.new(teamXPos, 3), header_frame}, {
             Text = "Team",
             Size = theme.textsize,
@@ -3980,7 +3976,6 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        local statusXPos = header_frame.Size.X * 0.75
         local header_status = utility:Create("TextLabel", {Vector2.new(statusXPos, 3), header_frame}, {
             Text = "Status",
             Size = theme.textsize,
@@ -3993,6 +3988,11 @@ do
         --
         playerList.axis = playerList.axis + 24
         local headerEndAxis = playerList.axis
+        --
+        -- Store column positions for use in AddPlayer
+        playerList.nameXPos = nameXPos
+        playerList.teamXPos = teamXPos
+        playerList.statusXPos = statusXPos
         --
         function playerList:CloseMenu()
             if playerList.menuOpen then
@@ -4011,7 +4011,7 @@ do
             playerList.menuOpen = true
             --
             local menuWidth = 150
-            local menuHeight = 90
+            local menuHeight = 110
             --
             -- Menu outline
             local menu_outline = utility:Create("Frame", {Vector2.new(mouseX, mouseY)}, {
@@ -4055,6 +4055,7 @@ do
             --
             -- Menu options
             local options = {
+                {name = "Whitelist", enabled = false},
                 {name = "Fling Player", enabled = false},
                 {name = "Kill Player", enabled = false},
                 {name = "Teleport To", enabled = false}
@@ -4147,19 +4148,19 @@ do
                 Visible = page.open
             }, section.visibleContent)
             --
-            -- Calculate column positions to match header
-            local frameWidth = row_frame.Size.X
-            local teamXPos = frameWidth * 0.5
-            local statusXPos = frameWidth * 0.75
+            -- Use stored column positions from header
+            local nameXPos = playerList.nameXPos
+            local teamXPos = playerList.teamXPos
+            local statusXPos = playerList.statusXPos
             --
             -- Player name
-            local row_name = utility:Create("TextLabel", {Vector2.new(4, 2), row_frame}, {
+            local row_name = utility:Create("TextLabel", {Vector2.new(nameXPos, 2), row_frame}, {
                 Text = playerName,
                 Size = theme.textsize,
                 Font = theme.font,
                 Color = theme.textcolor,
                 OutlineColor = theme.textborder,
-                Position = utility:Position(0, 4, 0, 2, row_frame),
+                Position = utility:Position(0, nameXPos, 0, 2, row_frame),
                 Visible = page.open
             }, section.visibleContent)
             --
